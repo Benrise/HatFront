@@ -1,0 +1,12 @@
+@import 'tailwind.css';
+
+#app {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+html, body {
+    height: 100%;
+    background-color: white;
+}
