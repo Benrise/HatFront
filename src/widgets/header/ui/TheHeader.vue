@@ -37,7 +37,6 @@
     &__left {
         display: flex;
         align-items: center;
-        gap: 24px;
         @include adaptiveValue('gap', 24, 12);
     }
 

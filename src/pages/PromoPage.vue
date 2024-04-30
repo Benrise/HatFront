@@ -168,7 +168,7 @@ const steps: IStep[] = [
 .features {
     display: flex;
     flex-direction: column;
-    gap: 24px;
+    @include adaptiveValue('gap', 24, 16);
 
     &__title {
         @include title();
@@ -179,7 +179,7 @@ const steps: IStep[] = [
         display: grid;
         grid-template-columns: repeat(2, 1fr);
         grid-template-rows: repeat(2, 1fr);
-        gap: 24px;
+        @include adaptiveValue('gap', 24, 6);
     }
 
     &__item {
@@ -232,7 +232,7 @@ const steps: IStep[] = [
 .steps {
     display: flex;
     flex-direction: column;
-    gap: 24px;
+    @include adaptiveValue('gap', 24, 16);
 
     &__title {
         @include title();
