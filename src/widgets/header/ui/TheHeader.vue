@@ -4,8 +4,9 @@
             <div class="header__left">
                 <router-link to="/"><img src="/images/svg/logo/logo.svg" alt="Logo"/></router-link>
                 <div class="header__menu menu">
-                    <ul clas="=menu__list">
-                        <li class="menu__item"><router-link class="header__link" to="/">Функции</router-link></li>
+                    <ul class="menu__list">
+                        <li class="menu__item"><a class="header__link" href="#features">Функции</a></li>
+                        <li class="menu__item"><a class="header__link" href="#steps">Шаги</a></li>
                     </ul>
                 </div>
             </div>
@@ -43,6 +44,15 @@
         &:hover {
             color: $text;
         }
+    }
+}
+
+.menu {
+    &__list {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 24px;
     }
 }
 

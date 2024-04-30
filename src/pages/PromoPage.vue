@@ -15,7 +15,7 @@
                     <img src="/images/svg/logo/logo-abb.svg" />
                 </div>
             </div>
-            <div class="promo__features features">
+            <div id="features" class="promo__features features">
                 <div class="features__title">
                     Функции сервиса
                 </div>
@@ -29,6 +29,22 @@
                     </div>  
                 </div>
             </div>
+            <div id="steps" class="promo__steps steps">
+                <div ref="el" class="steps__title">
+                    Как достигнуть цели?
+                </div>
+                <div class="steps__list">
+                    <div v-for="(step, index) in steps" :key="index" class="steps__item">
+                        <img class="steps__item-bg" :src="`/images/svg/promo/step-${step.step}.svg`">
+                        <div class="steps__item-text">
+                            <div class="steps__item-title">
+                                {{ step.title }}
+                            </div>
+                            <div v-html="step.description" class="steps__item-description"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -36,18 +52,27 @@
 <script setup lang="ts">
 import { Button } from '@/shared/ui/button'
 
-import type { Component } from 'vue';
+import type { Component, Ref } from 'vue';
+import { ref } from 'vue'
 
 import IconGroup from '~icons/heroicons/user-group-20-solid?width=48px&height=48px';
 import IconCup from '~icons/solar/cup-bold?width=48px&height=48px';
 import IconPerson from '~icons/heroicons/user-circle-16-solid?width=48px&height=48px';
 import IconPersonPlus from '~icons/heroicons/user-plus-20-solid?width=48px&height=48px';
 
+import { useScroll } from '@vueuse/core'
+
 
 interface IFeature {
     title: string;
     description: string;
     icon: Component
+}
+
+interface IStep {
+    step: string;
+    title: string;
+    description: string;
 }
 
 const features: IFeature[] = [
@@ -73,6 +98,23 @@ const features: IFeature[] = [
     },
 ]
 
+const steps: IStep[] = [
+    {
+        step: '1',
+        title: 'Авторизируйся',
+        description: 'При помощи <br> ЛКС МИРЭА или VK'
+    },
+    {
+        step: '2',
+        title: 'Заполни данные',
+        description: 'Они пригодятся для более точного поиска и подбора команд'
+    },
+    {
+        step: '3',
+        title: 'Перейди на главную',
+        description: 'Определи тип поиска: хакатоны или команды'
+    }
+]
 </script>
 
 <style scoped lang="scss">
@@ -83,15 +125,19 @@ const features: IFeature[] = [
     &__container {
         display: flex;
         flex-direction: column;
-        gap: 192px;
+        gap: 168px;
     }
 }
 
 .greeting {
+    display: flex;
+    flex-direction: column;
+    gap: 128px;
+
     &__info {
         display: flex;
         flex-direction: column;
-        gap: 32px;
+        gap: 24px;
     }
 
     &__header {
@@ -119,10 +165,11 @@ const features: IFeature[] = [
 .features {
     display: flex;
     flex-direction: column;
-    gap: 32px;
+    gap: 24px;
 
     &__title {
         @include title();
+        margin-top: 24px;
     }
 
     &__list {
@@ -172,4 +219,51 @@ const features: IFeature[] = [
     }
 }
 
+.steps {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+
+    &__title {
+        @include title();
+        margin-top: 24px;
+    }
+
+    &__list {
+        display: flex;
+        flex-direction: row;
+        gap: 96px;
+    }
+
+    &__item {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        width: 336px;
+
+        &-text {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+        }
+
+        &-title {
+            @include title();
+        }
+
+        &-description {
+            @include body();
+            max-width: 312px;
+            font-weight: 400;
+        }
+
+        &-bg {
+            opacity: 0.5;
+        }
+    }
+}
 </style>
