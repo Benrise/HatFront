@@ -25,7 +25,7 @@
 	font-weight: 400;
 	color: $text;
 	@include adaptiveValue("font-size", 32, 24, 700, 280, 1);
-	@include adaptiveValue("line-height", 39, 20, 700, 280, 1);
+	@include adaptiveValue("line-height", 39, 29, 700, 280, 1);
 }
 
 @mixin body {

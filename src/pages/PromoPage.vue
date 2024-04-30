@@ -35,10 +35,12 @@
                 </div>
                 <div class="steps__list">
                     <div v-for="(step, index) in steps" :key="index" class="steps__item">
-                        <img class="steps__item-bg" :src="`/images/svg/promo/step-${step.step}.svg`">
+                        <div class="steps__item-bg">
+                            <img :src="`/images/svg/promo/step-${step.step}.svg`">
+                        </div>
                         <div class="steps__item-text">
                             <div class="steps__item-title">
-                                {{ step.title }}
+                                <span class="steps__item-number">{{ step.step }}.</span> {{ step.title }}
                             </div>
                             <div v-html="step.description" class="steps__item-description"/>
                         </div>
@@ -126,14 +128,14 @@ const steps: IStep[] = [
     &__container {
         display: flex;
         flex-direction: column;
-        gap: 168px;
+        @include adaptiveValue('gap', 168, 84);
     }
 }
 
 .greeting {
     display: flex;
     flex-direction: column;
-    gap: 128px;
+    @include adaptiveValue('gap', 128, 64);
 
     &__info {
         display: flex;
@@ -183,7 +185,7 @@ const steps: IStep[] = [
     &__item {
         display: flex;
         flex-direction: column;
-        padding: 64px;
+        @include adaptiveValue('padding', 64, 24);
         background: $foreground;
         border-radius: 12px;
         color: $text;
@@ -218,6 +220,13 @@ const steps: IStep[] = [
         align-items: center;
         max-width: 312px;
     }
+
+    @media only screen and (max-width: em(767.98)) {
+        &__list {
+            grid-template-columns: repeat(1, 1fr);
+            grid-template-rows: repeat(4, 1fr);
+        }
+    }
 }
 
 .steps {
@@ -233,7 +242,7 @@ const steps: IStep[] = [
     &__list {
         display: flex;
         flex-direction: row;
-        gap: 96px;
+        @include adaptiveValue('gap', 96, 12);
     }
 
     &__item {
@@ -246,25 +255,63 @@ const steps: IStep[] = [
         &-text {
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            @include adaptiveValue('gap', 8, 4);
             position: absolute;
             bottom: 0;
             left: 0;
         }
 
+        &-number,
         &-title {
-            @include title();
+            @include subtitle();
         }
 
         &-description {
             @include body();
             max-width: 312px;
             font-weight: 400;
+            color: $text-secondary;
         }
 
         &-bg {
             opacity: 0.5;
         }
+
+        @media only screen and (min-width: em(608)) {
+            &-number {
+                display: none;
+            }
+        }
+    }
+
+    @media only screen and (max-width: em(980)) {
+        &__list {
+            flex-direction: column;
+        }
+
+        &__item {
+            width: 100%;
+            gap: 24px;
+
+            &-text {
+                position: static; 
+            }
+        }
+    }
+
+    &__item-bg {
+        display: flex;
+        align-items: center;
+        width: 217px;
+
+        @media only screen and (max-width: em(980)) {
+            justify-content: center;
+        }
+
+        @media screen and (max-width: em(608)) {
+            display: none;
+        }
     }
 }
+
 </style>

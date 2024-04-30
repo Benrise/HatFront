@@ -11,13 +11,14 @@
                 </div>
             </div>
             <div class="header__right">
-                <router-link class="header__link" to="/login">Войти</router-link>
+                <router-link class="header__link" to="/login">Вход</router-link>
             </div>
         </div>
     </div>
 </template>
 
 <script setup lang="ts">
+
 
 </script>
 <style scoped lang="scss">
@@ -37,6 +38,7 @@
         display: flex;
         align-items: center;
         gap: 24px;
+        @include adaptiveValue('gap', 24, 12);
     }
 
     &__link {
@@ -44,6 +46,7 @@
         &:hover {
             color: $text;
         }
+        @include adaptiveValue('font-size', 16, 12);
     }
 }
 
@@ -52,7 +55,7 @@
         display: flex;
         flex-direction: row;
         align-items: center;
-        gap: 24px;
+        @include adaptiveValue('gap', 24, 8);
     }
 }
 

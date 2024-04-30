@@ -25,7 +25,7 @@
                     Вход
                 </div>
                 <div class="form__description">
-                    Авторизируйтесь, чтобы получить доступ к функциям <a class="form__link" href="#">сервиса</a>
+                    Авторизируйтесь, чтобы получить доступ к функциям <router-link class="form__link" to="/promo">сервиса</router-link>
                 </div>
             </div>
             <div class="form__actions">
@@ -47,10 +47,6 @@ import { Button } from '@/shared/ui/button'
 @import '@/app/styles/mixins.scss';
 
 .login-promo {
-    @media only screen and (max-width: rem(936)) {
-        display: none !important;
-    }
-
     display: flex;
     flex-direction: column;
     gap: 36px;
@@ -87,13 +83,13 @@ import { Button } from '@/shared/ui/button'
             color: $text;
         }
     }
+
+    @media only screen and (max-width: rem(936)) {
+        display: none !important;
+    }
 }
 
 .login-form {
-    @media only screen and (max-width: rem(936)) {
-        background: $background;
-    }
-
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -113,6 +109,10 @@ import { Button } from '@/shared/ui/button'
         opacity: 0.05;
         display: none
     }
+
+    @media only screen and (max-width: rem(936)) {
+        background: $background;
+    }
 }
 
 .form {
@@ -120,7 +120,7 @@ import { Button } from '@/shared/ui/button'
     flex-direction: column;
     background: $background;
     align-items: center;
-    border-radius: 12px;
+    border-radius: 16px;
     padding: 64px 36px;
     z-index: 1;
     max-width: 396px;
