@@ -1,14 +1,14 @@
 <template>
-    <div>
+    <div class="login-layout">
         <slot />
     </div>
 </template>
 
-<script setup lang="ts">
-
-</script>
-
-<style scoped lang="scss">
-
+<style lang="scss">
+.login-layout {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    flex: 1;
+}
 </style>
-  

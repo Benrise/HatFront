@@ -1,0 +1,25 @@
+$background: #171717;
+$foreground: #1F1F1F;
+$border: #292929;
+$primary: #7C3AED;
+$accent: #C026D3;
+$text: #F1F5F9;
+$text-secondary: #A1A1AA;
+
+$minWidth: 320;
+
+$maxWidth: 1920;
+
+$maxWidthContainer: 1536;
+
+$containerPadding: 30;
+
+$containerWidth: $maxWidthContainer + $containerPadding;
+
+
+$pc: em($containerWidth);
+$tablet: em(1091.98);
+$mobile: em(767.98);
+$mobileSmall: em(479.98);
+$mobileXSmall: em(339.98);
+$mobileXSSmall: em(281.98);
