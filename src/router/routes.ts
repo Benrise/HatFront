@@ -5,7 +5,7 @@ import { AppPages } from './router.types';
 const routes: Array<RouteRecordRaw> = [
     {
         path: '/:catchAll(.*)*',
-        redirect: { name: AppPages.home},
+        redirect: { name: AppPages.promo},
     },
     {
         name: AppPages.login,
@@ -15,14 +15,14 @@ const routes: Array<RouteRecordRaw> = [
             layout: AppLayoutsEnum.login
         }
     },
-    {
-        name: AppPages.home,
-        path: '/',
-        component: () => import('@/pages/HomePage.vue'),
-        meta: {
-            layout: AppLayoutsEnum.default
-        }
-    },
+    // {
+    //     name: AppPages.home,
+    //     path: '/',
+    //     component: () => import('@/pages/HomePage.vue'),
+    //     meta: {
+    //         layout: AppLayoutsEnum.default
+    //     }
+    // },
     {
         name: AppPages.promo,
         path: '/promo',

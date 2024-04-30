@@ -128,7 +128,7 @@ const steps: IStep[] = [
     &__container {
         display: flex;
         flex-direction: column;
-        @include adaptiveValue('gap', 168, 84);
+        @include adaptiveValue('gap', 168, 48);
     }
 }
 
