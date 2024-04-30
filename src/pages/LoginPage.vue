@@ -1,25 +1,24 @@
 <template>
     <div class="login-promo">
         <div class="login-promo__wrapper">
+            <div class="login-promo__logo">
+                <img class="login-promo__img" src="/images/svg/logo/logo-abb.svg" alt="logo" />
+            </div>
             <div class="login-promo__header">
                 <div class="login-promo__title">
                     <h1>Объединяйся & Побеждай
                     </h1>
                     <h2>
-                        Сервис по поиску и подбору команд для участия в хакатонах
+                        Найди хакатон, собери команду
                     </h2>
                 </div>
                 <router-link to="/promo">
-                    <Button class="border-fuchsia-600 max-w-fit" variant="secondary" >Узнать подробнее</Button>
+                    <Button class="max-w-fit" >Узнать подробнее</Button>
                 </router-link>
-            </div>
-            <div class="login-promo__footer">
-                <img class="login-promo__logo" src="/images/svg/logo/logo-abb.svg" alt="logo" />
             </div>
         </div>
     </div>
     <div class="login-form">
-        <img class="login-form__logo" src="/images/svg/logo/logo-abb.svg" alt="logo" />
         <div class="login-form__body form">
             <div class="form__header">
                 <div class="form__title">
@@ -61,24 +60,16 @@ import { Button } from '@/shared/ui/button'
     &__wrapper {
         display: flex;
         flex-direction: column;
-        justify-content: space-between;
         height: 100%;
-    }
-
-    &__footer {
-        display: flex;
-        justify-content: flex-end;
-    }
-
-    &__logo {
-        max-width: 100%;
+        justify-content: center;
+        padding: 48px;
+        gap: 48px;
     }
 
     &__header {
         display: flex;
         flex-direction: column;
         gap: 24px;
-        padding: 48px;
     }
 
     &__title {
@@ -121,13 +112,6 @@ import { Button } from '@/shared/ui/button'
         height: 100%;
         opacity: 0.05;
         display: none
-    }
-
-    &__logo {
-        @media only screen and (min-width: rem(936)) {
-            display: none;
-        }
-        max-width: 60%;
     }
 }
 
