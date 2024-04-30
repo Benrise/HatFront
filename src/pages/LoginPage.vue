@@ -3,9 +3,7 @@
         <div class="login-promo__wrapper">
             <div class="login-promo__header">
                 <div class="login-promo__title">
-                    <h1>Находи & <br>
-                        Объединяйся & <br>
-                        Побеждай
+                    <h1>Объединяйся & Побеждай
                     </h1>
                     <h2>
                         Сервис по поиску и подбору команд для участия в хакатонах
@@ -81,21 +79,21 @@ import { Button } from '@/shared/ui/button'
         flex-direction: column;
         gap: 24px;
         padding: 48px;
+    }
 
-        .login-promo__title {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
+    &__title {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
 
-            h1 {
-                color: $text;
-                @include title();
-            }
-    
-            h2 {
-                @include body();
-                color: $text;
-            }
+        h1 {
+            color: $text;
+            @include title();
+        }
+
+        h2 {
+            @include body();
+            color: $text;
         }
     }
 }
