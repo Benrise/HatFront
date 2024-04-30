@@ -1,22 +1,30 @@
 <template>
     <div class="default-layout">
-      <div class="default-layout__content">
+      <TheHeader></TheHeader>
+      <main class="default-layout__main">
         <slot />
-      </div>
+      </main>
     </div>
   </template>
   
   <script setup lang="ts">
+  import TheHeader from "@/widgets/header";
   </script>
   
   <style lang="scss">
+  @import '@/app/styles/variables.scss';
+  @import '@/app/styles/mixins.scss';
+
   .default-layout {
     display: flex;
     flex-direction: column;
     min-height: 100%;
-    gap: 40px;
-  
-    &__content {}
+    overflow: hidden;
+
+    &__main {
+      flex: 1 1 auto;
+      @include adaptiveValue("padding", 24,6);
+    }
   }
   </style>
   

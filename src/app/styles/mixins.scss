@@ -10,27 +10,27 @@
 }
 
 @mixin subtitle(
-	$font-weight: 500,
+	$font-weight: 400,
 	$font-size: 24,
 	$font-size-mobile: 16,
 	$line-height: 29,
-	$opacity: 0.8
 ) {
 	font-weight: $font-weight;
 	@include adaptiveValue("font-size", $font-size, $font-size-mobile);
 	@include adaptiveValue("line-height", $line-height, 19);
-	color: $color;
-	opacity: $opacity;
+	color: $text;
 }
 
 @mixin title {
 	font-weight: 400;
+	color: $text;
 	@include adaptiveValue("font-size", 32, 24, 700, 280, 1);
 	@include adaptiveValue("line-height", 39, 20, 700, 280, 1);
 }
 
 @mixin body {
     font-weight: 300;
+	color: $text;
     @include adaptiveValue("font-size", 16, 12);
 }
 

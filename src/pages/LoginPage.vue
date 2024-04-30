@@ -11,7 +11,9 @@
                         Сервис по поиску и подбору команд для участия в хакатонах
                     </h2>
                 </div>
-                <Button class="border-fuchsia-600 max-w-fit" variant="secondary" >Узнать подробнее</Button>
+                <router-link to="/promo">
+                    <Button class="border-fuchsia-600 max-w-fit" variant="secondary" >Узнать подробнее</Button>
+                </router-link>
             </div>
             <div class="login-promo__footer">
                 <img class="login-promo__logo" src="/images/svg/logo/logo-abb.svg" alt="logo" />
