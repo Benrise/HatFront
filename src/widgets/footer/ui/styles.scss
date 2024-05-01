@@ -1,0 +1,31 @@
+.footer {
+    border-top: 1px solid $border;
+    @include adaptiveValue('margin-top', 192, 48);
+
+    &__container {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+
+         @media screen and (max-width: 379px) {
+            flex-direction: column !important;
+            gap: 12px;
+        }
+    }
+
+    &__text {
+        font-size: 14px;
+        color: $text-secondary;
+    }
+
+    &__resources {
+        display: flex;
+        flex-direction: row;
+        gap: 12px;
+
+        img {
+            max-width: 24px;
+        }
+    }
+}

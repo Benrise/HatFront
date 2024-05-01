@@ -30,7 +30,7 @@
             @include title();
         }
 
-        h2 {
+        p {
             @include body();
             color: $text;
         }

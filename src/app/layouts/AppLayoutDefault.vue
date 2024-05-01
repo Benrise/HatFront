@@ -4,11 +4,13 @@
       <main class="default-layout__main">
         <slot />
       </main>
+      <TheFooter></TheFooter>
     </div>
   </template>
   
   <script setup lang="ts">
   import TheHeader from "@/widgets/header";
+  import TheFooter from "@/widgets/footer";
   </script>
   
   <style lang="scss">

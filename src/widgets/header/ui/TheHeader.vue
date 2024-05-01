@@ -1,5 +1,5 @@
 <template>
-    <div class="header">
+    <header class="header">
         <div class="header__container">
             <router-link to="/"><img src="/images/svg/logo/logo.svg" alt="Logo"/></router-link>
             <div class="header__content header__content_default">
@@ -36,7 +36,7 @@
                   </Sheet>
             </div>
         </div>
-    </div>
+    </header>
 </template>
 
 <script setup lang="ts">
