@@ -1,13 +1,17 @@
 <template>
   <transition name="fade" mode="out-in">
     <div @click="scrollTop" v-show="visible" class="bottom-right">
-      <slot></slot>
+      <div class="w-fit p-4 rounded-full bg-violet-600">
+        <IconArrowUp class="text-primary-foreground"/>
+      </div>
   </div>
   </transition>
 </template>
 
 <script setup lang="ts">
 import { onBeforeUnmount, onMounted, ref } from 'vue';
+
+import IconArrowUp from '~icons/heroicons/arrow-up-16-solid?width=24px&height=24px';
 
 const visible = ref(false);
 
@@ -33,9 +37,13 @@ onBeforeUnmount(() => {
 
 <style scoped>
 .bottom-right {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
+  position: sticky;
+  bottom: 0;
+  padding: 20px;
   cursor: pointer;
+  border-radius: 99px;
+  width: 100%;
+  display: flex;
+  justify-content: end;
 }
 </style>

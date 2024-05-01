@@ -49,21 +49,16 @@
             </div>
         </div>
     </div>
-    <ScrollTopButton>
-        <Button class="rounded-full w-16 h-16" size="icon"><IconArrowUp/></Button>
-    </ScrollTopButton>
 </template>
 
 <script setup lang="ts">
 import { Button } from '@/shared/ui/button'
-import { ScrollTopButton } from '@/shared/ui/scroll-top-button'
 
 import type { Component } from 'vue';
 import IconGroup from '~icons/heroicons/user-group-20-solid?width=48px&height=48px';
 import IconCup from '~icons/solar/cup-bold?width=48px&height=48px';
 import IconPerson from '~icons/heroicons/user-circle-16-solid?width=48px&height=48px';
 import IconPersonPlus from '~icons/heroicons/user-plus-20-solid?width=48px&height=48px';
-import IconArrowUp from '~icons/heroicons/arrow-up-16-solid?width=24px&height=24px';
 
 
 interface IFeature {

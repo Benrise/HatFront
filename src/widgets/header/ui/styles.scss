@@ -72,6 +72,8 @@
 
         border-left: 1px solid $border;
 
+        width: 50%;
+
         @media screen and (max-width: 380px){ 
             width: 100%;
         }

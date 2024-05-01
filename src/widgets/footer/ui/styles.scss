@@ -1,6 +1,5 @@
 .footer {
     border-top: 1px solid $border;
-    @include adaptiveValue('margin-top', 192, 48);
 
     &__container {
         display: flex;
