@@ -10,7 +10,7 @@ const routes: Array<RouteRecordRaw> = [
     {
         name: AppPages.login,
         path: '/login',
-        component: () => import('@/pages/LoginPage.vue'),
+        component: () => import('@/pages/login'),
         meta: {
             layout: AppLayoutsEnum.login
         }
@@ -26,7 +26,7 @@ const routes: Array<RouteRecordRaw> = [
     {
         name: AppPages.promo,
         path: '/promo',
-        component: () => import('@/pages/PromoPage.vue'),
+        component: () => import('@/pages/promo'),
         meta: {
             layout: AppLayoutsEnum.default
         }

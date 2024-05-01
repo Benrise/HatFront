@@ -22,8 +22,8 @@
 
 </script>
 <style scoped lang="scss">
-@import '@/app/styles/variables.scss';
-@import '@/app/styles/mixins.scss';
+@import '@/app/style/variables.scss';
+@import '@/app/style/mixins.scss';
 
 .header {
     z-index: 999;
@@ -42,9 +42,19 @@
 
     &__link {
         color: $text-secondary;
-        &:hover {
-            color: $text;
+
+        @media (hover: hover) {
+            &:hover {
+                color: $text;
+            }
         }
+
+        @media (hover: none) {
+            &:active {
+                color: $text;
+            }
+        }
+        
         @include adaptiveValue('font-size', 16, 12);
     }
 }

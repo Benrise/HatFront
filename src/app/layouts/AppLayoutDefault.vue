@@ -12,8 +12,8 @@
   </script>
   
   <style lang="scss">
-  @import '@/app/styles/variables.scss';
-  @import '@/app/styles/mixins.scss';
+  @import '@/app/style/variables.scss';
+  @import '@/app/style/mixins.scss';
 
   .default-layout {
     display: flex;
