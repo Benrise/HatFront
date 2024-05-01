@@ -46,8 +46,9 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits)
       :onCloseAutoFocus="(e: Event) => e.preventDefault()"
     >
     <div class="flex w-full justify-end">
+
       <DialogClose
-      class="rounded-sm opacity-70 transition-opacity hover:opacity-100 disabled:pointer-events-none data-[state=open]:bg-secondary"
+      class="rounded-sm disabled:pointer-events-none"
       >
         <Cross2Icon class="text-primary-foreground w-6 h-6" />
       </DialogClose>

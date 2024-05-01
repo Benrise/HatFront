@@ -16,19 +16,22 @@
                 </div>
             </div>
             <div class="header__content header__content_mobile">
-                <Sheet>
-                    <SheetTrigger><IconBars class="text-primary-foreground"/></SheetTrigger>
-                    <SheetContent class="z-[999] sm:max-w-sm bg-neutral-900 border-none flex flex-col gap-4">
+                <Sheet class="header__sheet sheet">
+                    <SheetTrigger><IconBars class="sheet__trigger"/></SheetTrigger>
+                    <SheetContent class="sheet__content">
                         <div class="header__menu menu">
                             <ul class="menu__list menu__list_mobile">
                                 <SheetClose>
-                                    <li class="menu__item"><a class="header__link" href="#features">Функции</a></li>
+                                    <li class="menu__item menu__item_mobile"><a class="header__link" href="#features">Функции</a></li>
                                 </SheetClose> 
                                 <SheetClose>
-                                    <li class="menu__item"><a class="header__link" href="#steps">Шаги</a></li>
+                                    <li class="menu__item menu__item_mobile"><a class="header__link" href="#steps">Шаги</a></li>
                                 </SheetClose>
                             </ul>
                         </div>
+                        <router-link class="header__link header__link_mobile" to="/login">
+                            <Button>Вход</Button>
+                        </router-link>
                     </SheetContent>
                   </Sheet>
             </div>
@@ -43,6 +46,8 @@ import {
   SheetTrigger,
   SheetClose
 } from '@/shared/ui/sheet';
+
+import { Button } from '@/shared/ui/button';
 
 import IconBars from '~icons/heroicons/bars-3-bottom-right-16-solid?width=24px&height=24px';
 </script>

@@ -48,22 +48,54 @@
             }
         }
         
-        @include adaptiveValue('font-size', 16, 12);
+        font-size: rem(16);
+    }
+
+    &__link_mobile {
+        display: flex;
+        justify-content: flex-end;
+    }
+}
+
+.sheet {
+    &__trigger {
+        color: $text;
+    }
+
+    &__content {
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+        
+        z-index: 999;
+        background: $foreground;
+
+        border-left: 1px solid $border;
+
+        @media screen and (max-width: 380px){ 
+            width: 100%;
+        }
     }
 }
 
 .menu {
-    &__list_default {
+    &__list {
         display: flex;
+        @include adaptiveValue('gap', 16, 12);
+    }
+
+    &__item_mobile {
+        padding-bottom: 6px;
+        border-bottom: 1px solid rgb(68, 68, 68);
+    }
+
+    &__list_default {
         flex-direction: row;
         align-items: center;
-        @include adaptiveValue('gap', 24, 8);
     }
 
     &__list_mobile {
-        display: flex;
         flex-direction: column;
         align-items: end;
-        @include adaptiveValue('gap', 24, 8);
     }
 }
