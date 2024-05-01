@@ -1,18 +1,15 @@
-@import '@/app/style/variables.scss';
-@import '@/app/style/mixins.scss';
-
 .promo {
     &__container {
         display: flex;
         flex-direction: column;
-        @include adaptiveValue('gap', 168, 48);
+        @include adaptiveValue('gap', 180, 48);
     }
 }
 
 .greeting {
     display: flex;
     flex-direction: column;
-    @include adaptiveValue('gap', 128, 64);
+    @include adaptiveValue('gap', 72, 32);
 
     &__info {
         display: flex;

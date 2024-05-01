@@ -39,9 +39,8 @@
 
 <script setup lang="ts">
 import { Button } from '@/shared/ui/button'
-
 </script>
 
 <style scoped lang="scss">
-@import './style';
+@import './styles';
 </style>

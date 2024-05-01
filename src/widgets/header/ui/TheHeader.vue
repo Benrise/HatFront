@@ -17,55 +17,6 @@
     </div>
 </template>
 
-<script setup lang="ts">
-
-
-</script>
-<style scoped lang="scss">
-@import '@/app/style/variables.scss';
-@import '@/app/style/mixins.scss';
-
-.header {
-    z-index: 999;
-    border-bottom: 1px solid $border;
-    &__container {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-    }
-
-    &__left {
-        display: flex;
-        align-items: center;
-        @include adaptiveValue('gap', 24, 12);
-    }
-
-    &__link {
-        color: $text-secondary;
-
-        @media (hover: hover) {
-            &:hover {
-                color: $text;
-            }
-        }
-
-        @media (hover: none) {
-            &:active {
-                color: $text;
-            }
-        }
-        
-        @include adaptiveValue('font-size', 16, 12);
-    }
-}
-
-.menu {
-    &__list {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        @include adaptiveValue('gap', 24, 8);
-    }
-}
-
+<style lang="scss">
+@import './styles.scss';
 </style>
