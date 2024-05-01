@@ -1,10 +1,30 @@
 .header {
-    z-index: 999;
     border-bottom: 1px solid $border;
+
     &__container {
         display: flex;
         align-items: center;
         justify-content: space-between;
+        @include adaptiveValue('gap', 24, 12);
+    }
+
+    &__content {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    &__content_default {
+        width: 100%;
+        @media screen and (max-width: 479.98px) {
+            display: none;
+        }
+    }
+
+    &__content_mobile {
+        @media screen and (min-width: 480px) {
+            display: none;
+        }
     }
 
     &__left {
@@ -33,10 +53,17 @@
 }
 
 .menu {
-    &__list {
+    &__list_default {
         display: flex;
         flex-direction: row;
         align-items: center;
+        @include adaptiveValue('gap', 24, 8);
+    }
+
+    &__list_mobile {
+        display: flex;
+        flex-direction: column;
+        align-items: end;
         @include adaptiveValue('gap', 24, 8);
     }
 }
