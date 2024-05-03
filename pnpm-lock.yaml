@@ -5,6 +5,9 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
+  '@internationalized/date':
+    specifier: ^3.5.3
+    version: 3.5.3
   '@radix-icons/vue':
     specifier: ^1.0.0
     version: 1.0.0(vue@3.4.25)
@@ -785,8 +788,8 @@ packages:
       - supports-color
     dev: true
 
-  /@internationalized/date@3.5.2:
-    resolution: {integrity: sha512-vo1yOMUt2hzp63IutEaTUxROdvQg1qlMRsbCvbay2AK2Gai7wIgCyK5weEX3nHkiLgo4qCXHijFNC/ILhlRpOQ==}
+  /@internationalized/date@3.5.3:
+    resolution: {integrity: sha512-X9bi8NAEHAjD8yzmPYT2pdJsbe+tYSEBAfowtlxJVJdZR3aK8Vg7ZUT1Fm5M47KLzp/M1p1VwAaeSma3RT7biw==}
     dependencies:
       '@swc/helpers': 0.5.11
     dev: false
@@ -2882,7 +2885,7 @@ packages:
     dependencies:
       '@floating-ui/dom': 1.6.4
       '@floating-ui/vue': 1.0.6(vue@3.4.25)
-      '@internationalized/date': 3.5.2
+      '@internationalized/date': 3.5.3
       '@tanstack/vue-virtual': 3.4.1(vue@3.4.25)
       '@vueuse/core': 10.9.0(vue@3.4.25)
       '@vueuse/shared': 10.9.0(vue@3.4.25)

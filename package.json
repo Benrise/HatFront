@@ -16,6 +16,7 @@
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore"
   },
   "dependencies": {
+    "@internationalized/date": "^3.5.3",
     "@radix-icons/vue": "^1.0.0",
     "@vueuse/core": "^10.9.0",
     "axios": "^1.6.8",

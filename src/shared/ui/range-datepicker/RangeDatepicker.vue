@@ -29,11 +29,11 @@ const value = ref({
       <Button
         variant="outline"
         :class="cn(
-          'w-[280px] justify-start text-left font-normal',
+          'w-full justify-start text-left font-normal',
           !value && 'text-muted-foreground',
         )"
       >
-        <IconCalendar class="mr-2 h-4 w-4" />
+        <IconCalendar :class="cn('mr-2 h-4 w-4', !(value.start || value.end) && 'text-muted-foreground')"/>
         <template v-if="value.start">
           <template v-if="value.end">
             {{ df.format(value.start.toDate(getLocalTimeZone())) }} - {{ df.format(value.end.toDate(getLocalTimeZone())) }}
@@ -44,7 +44,7 @@ const value = ref({
           </template>
         </template>
         <template v-else>
-          Выберите дату
+          <span class="text-muted-foreground">Выберите дату</span>
         </template>
       </Button>
     </PopoverTrigger>

@@ -15,14 +15,14 @@ const routes: Array<RouteRecordRaw> = [
             layout: AppLayoutsEnum.login
         }
     },
-    // {
-    //     name: AppPages.home,
-    //     path: '/',
-    //     component: () => import('@/pages/HomePage.vue'),
-    //     meta: {
-    //         layout: AppLayoutsEnum.default
-    //     }
-    // },
+    {
+        name: AppPages.home,
+        path: '/',
+        component: () => import('@/pages/home'),
+        meta: {
+            layout: AppLayoutsEnum.default
+        }
+    },
     {
         name: AppPages.promo,
         path: '/promo',

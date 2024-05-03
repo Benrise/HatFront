@@ -10,6 +10,7 @@
             </TabsTrigger>
           </TabsList>
         </div>
+        <slot/>
         <TabsContent v-for="tab in tabs" :key="tab.value" :value="tab.value">
           <component :key="tab.value" :is="tab.content" />
         </TabsContent>
@@ -43,8 +44,8 @@ const defaultTab = props.tabs && props.tabs[0].value;
   display: flex;
   flex-direction: column;
   border-radius: 24px;
-  padding: 24px;
   height: 100%;
+  width: 100%;
 
   &__header {
     display: flex;

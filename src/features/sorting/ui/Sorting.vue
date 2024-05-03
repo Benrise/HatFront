@@ -1,7 +1,7 @@
 <template>
     <DropdownMenu>
       <DropdownMenuTrigger as-child>
-        <Button variant="ghost">
+        <Button variant="outline">
             <IconSort class="size-6 mr-2"/>
           {{sortConfig[selectedValue]}}
         </Button>
