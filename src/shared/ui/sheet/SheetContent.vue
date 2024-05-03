@@ -50,7 +50,7 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits)
       <DialogClose
       class="rounded-sm disabled:pointer-events-none"
       >
-        <Cross2Icon class="text-primary-foreground w-6 h-6" />
+        <Cross2Icon class="text-primary w-6 h-6" />
       </DialogClose>
     </div>
       <slot />
