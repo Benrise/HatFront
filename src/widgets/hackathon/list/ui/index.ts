@@ -1,0 +1,1 @@
+export { default as HackathonsList } from './HackathonsList.vue'

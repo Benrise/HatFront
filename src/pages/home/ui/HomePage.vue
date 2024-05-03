@@ -6,7 +6,8 @@
                 <div class="home__search">
                     <SearchBar/>
                     <Sorting/>
-                </div> 
+                </div>
+                <HackathonsList/>
             </ContentSection>
         </div>
     </div>  
@@ -21,6 +22,7 @@ import { SearchBar } from '@/features/search-bar';
 import { Sorting } from '@/features/sorting';
 
 import { Filters } from '@/widgets/filters';
+import { HackathonsList } from '@/widgets/hackathon/list';
 
 const title = "Поиск";
 
@@ -56,6 +58,7 @@ const tabs: ITabsConfig[] = [
         display: flex;
         flex-direction: row;
         gap: 48px;
+        @include adaptiveValue('padding-top', 64, 24);
     }
 }
 
