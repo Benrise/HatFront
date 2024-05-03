@@ -1,7 +1,7 @@
 <template>
   <div class="content-section">
     <div class="content-section__tabs">
-      <Tabs v-if="tabs" :default-value="defaultTab" class="flex flex-col w-full gap-6">
+      <Tabs v-if="tabs" :default-value="defaultTab" class="flex flex-col w-full gap-4">
         <div class="content-section__header">
           <div class="text-3xl font-medium">{{ title }}</div>
           <TabsList>

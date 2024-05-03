@@ -33,7 +33,7 @@
                 <Button variant="outline">Вход через Вконтакте</Button>
             </div>
         </div>
-        <img src="/images/png/login-bg.png" class="login-form__bg-image"/>
+        <img src="/images/png/noise-bg-20-b4b4b4.png" class="login-form__bg-image"/>
     </div>
   </template>
 
