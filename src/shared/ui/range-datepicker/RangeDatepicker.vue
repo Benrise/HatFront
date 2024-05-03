@@ -25,11 +25,11 @@ const value = ref({
 
 <template>
   <Popover>
-    <PopoverTrigger as-child>
+    <PopoverTrigger as-child >
       <Button
         variant="outline"
         :class="cn(
-          'w-full justify-start text-left font-normal',
+          'w-full justify-start text-left font-normal border-border',
           !value && 'text-muted-foreground',
         )"
       >

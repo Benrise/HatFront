@@ -2,7 +2,7 @@
   <transition name="fade" mode="out-in">
     <div @click="scrollTop" v-show="visible" class="bottom-right">
       <div class="w-fit p-4 rounded-full bg-violet-600">
-        <IconArrowUp class="text-primary"/>
+        <IconArrowUp class="text-foreground"/>
       </div>
   </div>
   </transition>

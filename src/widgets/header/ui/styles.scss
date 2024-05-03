@@ -1,5 +1,5 @@
 .header {
-    border-bottom: 1px solid $border;
+    border-bottom: 1px solid hsl(var(--border));
 
     &__container {
         display: flex;
@@ -34,17 +34,17 @@
     }
 
     &__link {
-        color: $text-secondary;
+        color: hsl(var(--muted-foreground));
 
         @media (hover: hover) {
             &:hover {
-                color: $text;
+                color: hsl(var(--foreground));
             }
         }
 
         @media (hover: none) {
             &:active {
-                color: $text;
+                color: hsl(var(--foreground));
             }
         }
         
@@ -59,7 +59,7 @@
 
 .sheet {
     &__trigger {
-        color: $text;
+        color: var(--foreground);
     }
 
     &__content {
@@ -68,9 +68,9 @@
         gap: 24px;
         
         z-index: 999;
-        background: $foreground;
+        background: var(--foreground);
 
-        border-left: 1px solid $border;
+        border-left: 1px solid var(--border);
 
         width: 50%;
 

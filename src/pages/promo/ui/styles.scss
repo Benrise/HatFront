@@ -3,6 +3,7 @@
         display: flex;
         flex-direction: column;
         @include adaptiveValue('gap', 192, 48);
+        @include adaptiveValue('padding-top', 64, 24);
     }
 }
 
@@ -60,20 +61,20 @@
         display: flex;
         flex-direction: column;
         @include adaptiveValue('padding', 64, 24);
-        background: $foreground;
+        background: hsl(var(--secondary));
         border-radius: 12px;
-        color: $text;
+        color: var(--foreground);
         gap: 24px;
         align-items: center;
 
         &:nth-child(4n+1) &-icon,
         &:nth-child(4n+4) &-icon {
-            color: $accent;
+            color: hsl(var(--accent));
         }
 
         &:nth-child(4n+2) &-icon,
         &:nth-child(4n+3) &-icon {
-            color: $primary;
+            color: hsl(var(--primary));
         }
     }
 
@@ -144,7 +145,7 @@
             @include body();
             max-width: 312px;
             font-weight: 400;
-            color: $text-secondary;
+            color: hsl(var(--muted-foreground));
         }
 
         &-bg {

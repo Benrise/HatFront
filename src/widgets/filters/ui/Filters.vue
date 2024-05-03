@@ -76,6 +76,7 @@ const filters: FilterConfig[] = [
     gap: 36px;
     width: 100%;
     max-width: 276px;
+    padding-top: 104px;
 }
 
 .item {

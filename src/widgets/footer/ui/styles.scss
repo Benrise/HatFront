@@ -1,5 +1,5 @@
 .footer {
-    border-top: 1px solid $border;
+    border-top: 1px solid hsl(var(--border));
 
     &__container {
         display: flex;
@@ -15,7 +15,7 @@
 
     &__text {
         font-size: 14px;
-        color: $text-secondary;
+        color: hsl(var(--muted-foreground));
     }
 
     &__resources {

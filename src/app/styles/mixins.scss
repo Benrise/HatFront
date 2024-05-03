@@ -18,19 +18,19 @@
 	font-weight: $font-weight;
 	@include adaptiveValue("font-size", $font-size, $font-size-mobile);
 	@include adaptiveValue("line-height", $line-height, 19);
-	color: $text;
+	color: var(--foreground);
 }
 
 @mixin title {
 	font-weight: 400;
-	color: $text;
+	color: var(--foreground);
 	@include adaptiveValue("font-size", 32, 24, 700, 280, 1);
 	@include adaptiveValue("line-height", 39, 29, 700, 280, 1);
 }
 
 @mixin body {
     font-weight: 400;
-	color: $text;
+	color: var(--foreground);
     @include adaptiveValue("font-size", 16, 12);
 }
 

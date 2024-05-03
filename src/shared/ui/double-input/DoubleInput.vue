@@ -1,7 +1,7 @@
 <template>
     <div class="double-input">
         <Input :class="props.class"/>
-        <Separator class="w-4 bg-primary"/>
+        <Separator class="w-4 bg-foreground"/>
         <Input :class="props.class"/>
     </div>
 </template>
