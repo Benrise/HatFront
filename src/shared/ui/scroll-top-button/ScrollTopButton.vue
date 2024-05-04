@@ -35,11 +35,12 @@ onBeforeUnmount(() => {
 });
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .bottom-right {
   position: sticky;
   bottom: 0;
-  padding: 20px;
+  @include adaptiveValue('padding-right', 24, 16);
+  @include adaptiveValue('padding-bottom', 24, 16);
   cursor: pointer;
   border-radius: 99px;
   width: 100%;
