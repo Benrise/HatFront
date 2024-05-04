@@ -1,12 +1,19 @@
-import { defineConfig } from 'vite'
-import vue from '@vitejs/plugin-vue'
-import VueDevTools from 'vite-plugin-vue-devtools'
-import path from 'path'
+import { defineConfig, loadEnv } from 'vite';
+import vue from '@vitejs/plugin-vue';
+import VueDevTools from 'vite-plugin-vue-devtools';
+import path from 'path';
 
-import tailwind from "tailwindcss"
-import autoprefixer from "autoprefixer"
+import tailwind from "tailwindcss";
+import autoprefixer from "autoprefixer";
 
-import Icons from 'unplugin-icons/vite'
+import Icons from 'unplugin-icons/vite';
+
+const env = loadEnv('', process.cwd(), '')
+
+const apiUrl = env?.VITE_APP_API_BASE_URL || '/api';
+const apiProtocol = env?.VITE_APP_API_PROTOCOL || 'http';
+const apiService = env?.VITE_APP_API_SERVICE_URL || 'localhost';
+const apiPort = env?.VITE_APP_API_PORT || '9090';
 
 export default defineConfig({
   plugins: [
@@ -18,6 +25,17 @@ export default defineConfig({
     alias: {
       "@": path.resolve(__dirname, "./src"),
     },
+  },
+  server: {
+    proxy: {
+      [apiUrl]: {
+        target: `${apiProtocol}://${apiService}:${apiPort}/${apiUrl}`,
+        changeOrigin: true,
+        ws: false,
+        rewrite: path => path.replace(/^\/api/, '')
+      },
+    },
+    port: 8085
   },
   css: {
     postcss: {
