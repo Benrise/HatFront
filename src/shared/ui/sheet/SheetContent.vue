@@ -57,7 +57,3 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits)
     </DialogContent>
   </DialogPortal>
 </template>
-
-<style lang="scss">
-
-</style>

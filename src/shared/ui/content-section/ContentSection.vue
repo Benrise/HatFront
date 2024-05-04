@@ -84,38 +84,6 @@ const updateTab = (value: StringOrNumber) => {
 }
 </script>
 
-<style lang="scss" scoped>
-.content-section {
-  display: flex;
-  flex-direction: column;
-  border-radius: 24px;
-  height: 100%;
-  width: 100%;
-
-  &__header {
-    display: flex;
-    flex-direction: row;
-    gap: 12px;
-    align-items: center;
-  }
-
-  &__title {
-    @include title();
-  }
-}
-
-.tabs {
-
-  @media screen and (max-width: 416px) {
-    &__list_desktop {
-      display: none;
-    }
-  }
-
-  @media screen and (min-width: 416px) {
-    &__list_mobile {
-      display: none;
-    }
-  }
-}
+<style scoped lang="scss">
+@import './styles';
 </style>

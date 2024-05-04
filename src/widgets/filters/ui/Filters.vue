@@ -69,8 +69,6 @@ const filters: FilterConfig[] = [
         options: options
     }
 ]
-
-
 </script>
 
 <style scoped lang="scss">

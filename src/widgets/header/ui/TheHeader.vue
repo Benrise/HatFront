@@ -53,6 +53,6 @@ import IconBars from '~icons/heroicons/bars-3-bottom-right-16-solid?width=24px&h
 import { UserBadge } from '@/entities/user';
 </script>
 
-<style lang="scss">
+<style scoped lang="scss">
 @import './styles.scss';
 </style>

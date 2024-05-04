@@ -15,7 +15,7 @@
   import { ScrollTopButton } from '@/shared/ui/scroll-top-button'
   </script>
   
-  <style lang="scss">
+  <style scoped lang="scss">
   .default-layout {
     display: flex;
     flex-direction: column;

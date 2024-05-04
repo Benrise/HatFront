@@ -115,6 +115,6 @@ const steps: IStep[] = [
 ]
 </script>
 
-<style lang="scss">
-@import './styles.scss';
+<style scoped lang="scss">
+@import './styles';
 </style>

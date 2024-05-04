@@ -61,5 +61,5 @@ import IconClipboardCheck from '~icons/heroicons/clipboard-document-check';
 </script>
 
 <style scoped lang="scss">
-@import './styles.scss';
+@import './styles';
 </style>

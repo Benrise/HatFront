@@ -21,11 +21,5 @@ const props = defineProps<{
 </script>
 
 <style scoped lang="scss">
-.double-input {
-    display: flex;
-    flex-direction: row;
-    gap: 6px;
-    align-items: center;
-}
-
+@import './styles';
 </style>

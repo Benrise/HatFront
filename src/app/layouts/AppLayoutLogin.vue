@@ -4,7 +4,7 @@
     </div>
 </template>
 
-<style lang="scss">
+<style scoped lang="scss">
 .login-layout {
     display: flex;
     flex-direction: row;

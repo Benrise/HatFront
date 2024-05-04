@@ -45,5 +45,5 @@ import IconGroup from '~icons/heroicons/user-group';
 </script>
 
 <style scoped lang="scss">
-@import './styles.scss';
+@import './styles';
 </style>
