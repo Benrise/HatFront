@@ -74,46 +74,5 @@ const filters: FilterConfig[] = [
 </script>
 
 <style scoped lang="scss">
-
-.filters {
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
-    width: 100%;
-    max-width: 276px;
-
-    &__actions {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        gap: 12px;
-    }
-
-    &__action {
-        width: 100%;
-    }
-
-    &__title {
-        @include title();
-        align-items: flex-start;
-    }
-
-    @media screen and (max-width: 479.98px) {
-        &__actions {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
-        }
-    }
-}
-
-.item {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-
-    &__title {
-        @include body();
-    }
-}
-
+@import './styles';
 </style>

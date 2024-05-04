@@ -11,9 +11,4 @@
 import { Input } from '@/shared/ui/input';
 
 import IconSearch from '~icons/radix-icons/magnifying-glass?width=6px&height=6px';
-
 </script>
-
-<style scoped lang="scss">
-
-</style>

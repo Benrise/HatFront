@@ -53,7 +53,3 @@ const sortConfig: Record<string, string> = {
 
 const selectedValue = ref(Object.keys(sortConfig)[0])
 </script>
-
-<style scoped lang="scss">
-
-</style>

@@ -1,5 +1,5 @@
 <template>
-    <div class="hackathon-list">
+    <div class="hackathons-list">
         <HackathonCard></HackathonCard>
         <HackathonCard></HackathonCard>
         <HackathonCard></HackathonCard>
@@ -12,9 +12,5 @@ import { HackathonCard } from '@/entities/hackathon/ui/card';
 </script>
 
 <style scoped lang="scss">
-.hackathon-list {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-}
+@import './styles';
 </style>

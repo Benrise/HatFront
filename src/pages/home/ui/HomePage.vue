@@ -25,21 +25,20 @@
                       <Sorting/>
                     </div>
                 </div>
-                <HackathonsList/>
             </ContentSection>
         </div>
     </div>  
 </template>
 
 <script setup lang="ts">
-import { ContentSection } from '@/shared/ui/content-section'
-import { Button } from '@/shared/ui/button'
+import { ContentSection } from '@/shared/ui/content-section';
+import { Button } from '@/shared/ui/button';
 import {
   Sheet,
   SheetContent,
   SheetHeader,
   SheetTrigger,
-} from '@/shared/ui/sheet'
+} from '@/shared/ui/sheet';
 
 import type { ITabsConfig } from "@/shared/ui/tabs";
 
@@ -48,6 +47,7 @@ import { Sorting } from '@/features/sorting';
 
 import { Filters } from '@/widgets/filters';
 import { HackathonsList } from '@/widgets/hackathon/list';
+import { TeamsList } from '@/widgets/team/list';
 
 const title = "Поиск";
 
@@ -55,12 +55,12 @@ const tabs: ITabsConfig[] = [
   {
     value: "hackathons",
     title: "Хакатоны",
-    content: {},
+    content: HackathonsList,
   },
   {
     value: "teams",
     title: " Команды",
-    content: {},
+    content: TeamsList,
   },
   {
     value: "teammates",
@@ -72,72 +72,5 @@ const tabs: ITabsConfig[] = [
 </script>
 
 <style scoped lang="scss">
-.home {
-    &__search {
-        display: flex;
-        flex-direction: row;
-        gap: 12px;
-        width: 100%;
-    }
-
-    &__container {
-        display: flex;
-        flex-direction: row;
-        gap: 48px;
-        @include adaptiveValue('padding-top', 64, 24);
-    }
-    &__controls {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: space-between;
-        @include adaptiveValue('gap', 12, 6);
-        width: 100%;
-    }
-
-    &__filters_desktop {
-      padding-top: 104px;
-    }
-
-    @media screen and (max-width: 1199.98px) {
-      &__filters_desktop,
-      &__sorting_desktop {
-        display: none;
-      }
-    }
-
-    @media screen and (min-width: 1200px) {
-      &__sorting_mobile {
-        display: none;
-      }
-    }
-
-    @media screen and (max-width: 379.98px) {
-      &__controls {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(100%, 1fr));
-      }
-    }
-}
-
-.sheet {
-    &__header {
-      @include title();
-    }
-
-    &__content {
-        display: flex;
-        flex-direction: column;
-        gap: 24px;
-        padding: 24px;
-        width: 100%;
-    }
-
-    @media screen and (min-width: 1200px) {
-      &__button {
-        display: none;
-      }
-    }
-}
-
+@import './styles.scss';
 </style>
