@@ -3,7 +3,7 @@
     <div class="content-section__tabs tabs">
       <Tabs v-if="tabs" :default-value="defaultTab" @update:model-value="updateTab" class="flex flex-col w-full gap-4">
         <div class="content-section__header">
-          <div class="text-3xl font-medium">{{ title }}</div>
+          <div class="content-section__title">{{ title }}</div>
           <TabsList class="tabs__list tabs__list_desktop">
             <TabsTrigger v-for="tab in tabs" :key="tab.value" :value="tab.value">
               {{ tab.title }}
@@ -97,6 +97,10 @@ const updateTab = (value: StringOrNumber) => {
     flex-direction: row;
     gap: 12px;
     align-items: center;
+  }
+
+  &__title {
+    @include title();
   }
 }
 

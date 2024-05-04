@@ -4,9 +4,12 @@
             <div class="item__title">
                 {{ filter.title }}
             </div>
-            <component :is="filter.component" :options="filter.options" :class="filter.class"/>
+            <component :is="filter.component" :placeholders="filter.placeholders" :options="filter.options" :class="filter.class"/>
         </div>
-        <Button variant="secondary" class="w-fit">Сброс</Button>
+        <div class="filters__actions">
+            <Button class="filters__action" variant="secondary">Сброс</Button>
+            <Button class="filters__action">Применить</Button>
+        </div>
     </div>
 </template>
 
@@ -30,7 +33,7 @@ interface FilterConfig {
     type: FilterType,
     class?: string,
     options?: ITagsInputComboboxOption[]
-    placeholder?: string
+    placeholders?: string[]
 }
 
 const options: ITagsInputComboboxOption[] = [
@@ -45,7 +48,8 @@ const filters: FilterConfig[] = [
         title: 'Участники',
         component: DoubleInput,
         type: FilterType.Input,
-        class: 'max-w-[64px]'
+        class: 'max-w-[64px]',
+        placeholders: ['1', '5'],
     },
     {
         title: 'Дата проведения',
@@ -56,6 +60,7 @@ const filters: FilterConfig[] = [
         title: 'Призовой фонд',
         component: DoubleInput,
         type: FilterType.Input,
+        placeholders: ['100 000', '1 000 000'],
     },
     {
         title: 'Теги',
@@ -73,10 +78,32 @@ const filters: FilterConfig[] = [
 .filters {
     display: flex;
     flex-direction: column;
-    gap: 36px;
+    gap: 24px;
     width: 100%;
     max-width: 276px;
-    padding-top: 104px;
+
+    &__actions {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 12px;
+    }
+
+    &__action {
+        width: 100%;
+    }
+
+    &__title {
+        @include title();
+        align-items: flex-start;
+    }
+
+    @media screen and (max-width: 479.98px) {
+        &__actions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+        }
+    }
 }
 
 .item {

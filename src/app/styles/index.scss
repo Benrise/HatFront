@@ -15,5 +15,9 @@ html, body {
 [class*="__container"] {
     max-width: 1536px;
     margin: 0 auto;
-    padding: 24px;
+    @include adaptiveValue('padding', 24, 16);
+
+    @media screen and (max-width: 1536px) {
+        max-width: 1280px;
+    }
   }

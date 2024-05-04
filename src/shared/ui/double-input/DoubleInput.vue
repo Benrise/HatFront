@@ -1,8 +1,8 @@
 <template>
     <div class="double-input">
-        <Input :class="props.class"/>
+        <Input :placeholder="props.placeholders[0]" :class="props.class"/>
         <Separator class="w-4 bg-foreground"/>
-        <Input :class="props.class"/>
+        <Input :placeholder="props.placeholders[1]" :class="props.class"/>
     </div>
 </template>
 
@@ -14,7 +14,8 @@ const props = defineProps<{
     class: {
         type: [String, Number] | 'full',
         required: false,
-    }
+    },
+    placeholders: string[],
 }>()
 
 </script>

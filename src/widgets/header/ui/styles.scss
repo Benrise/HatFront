@@ -59,7 +59,7 @@
 
 .sheet {
     &__trigger {
-        color: var(--foreground);
+        color: hsl(var(--foreground));
     }
 
     &__content {
@@ -68,7 +68,7 @@
         gap: 24px;
         
         z-index: 999;
-        background: var(--foreground);
+        background: hsl(var(--background));
 
         border-left: 1px solid var(--border);
 

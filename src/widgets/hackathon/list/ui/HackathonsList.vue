@@ -15,6 +15,6 @@ import { HackathonCard } from '@/entities/hackathon/ui/card';
 .hackathon-list {
     display: flex;
     flex-direction: column;
-    gap: 24px;
+    gap: 16px;
 }
 </style>
