@@ -29,7 +29,7 @@
                 <Badge class="team-card__role">Фронт (0/1)</Badge>
             </div>
             <div class="team-card__actions">
-                <Button>Подробнее</Button>
+                <Button class="w-full">Подробнее</Button>
             </div>
         </div>
     </div>
@@ -45,70 +45,5 @@ import IconGroup from '~icons/heroicons/user-group';
 </script>
 
 <style scoped lang="scss">
-.team-card {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    padding: 24px;
-    background-color: hsl(var(--card));
-    border-radius: 12px;
-
-    &__info {
-        display: flex;
-        flex-direction: column;
-        gap: 6px;
-    }
-
-    &__roles,
-    &__tags {
-        display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
-        gap: 8px;
-        white-space: nowrap;
-    }
-    
-    overflow-x: hidden;
-
-    @media screen and (max-width: 579.98px) {
-        &__roles,
-        &__tags {
-            flex-wrap: nowrap;
-            overflow-y: hidden;
-            overflow-x: scroll;
-            padding-bottom: 4px;
-        }
-    }
-
-    &__image {
-        img {
-            width: 100%;
-        }
-    }
-
-    &__role {
-        background: none;
-        border-left: 1px solid hsl(var(--accent));
-        border-radius: 0;
-    }
-
-    &__main {
-        display: flex;
-        flex-direction: column;
-        gap: 16px;
-    }
-
-    &__title {
-        @include subtitle();
-    }
-
-    &__description {
-        display: -webkit-box; 
-        -webkit-box-orient: vertical; 
-        -webkit-line-clamp: 3; 
-        overflow: hidden; 
-        text-overflow: ellipsis; 
-        @include body();
-    }
-}
+@import './styles.scss';
 </style>

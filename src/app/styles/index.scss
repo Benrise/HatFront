@@ -14,11 +14,11 @@ html, body {
 }
 
 [class*="__container"] {
-    max-width: 1536px;
+    max-width: 1584px;
     margin: 0 auto;
     @include adaptiveValue('padding', 24, 16);
 
     @media screen and (max-width: 1536px) {
-        max-width: 1280px;
+        max-width: 1328px;
     }
   }

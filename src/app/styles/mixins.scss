@@ -31,7 +31,7 @@
 @mixin body {
     font-weight: 400;
 	color: var(--foreground);
-    @include adaptiveValue("font-size", 16, 12);
+    @include adaptiveValue("font-size", 14, 12);
 }
 
 @mixin adaptiveValue($property, $startSize, $minSize, $widthFrom: $containerWidth, $widthTo: $minWidth, $keepSize: 0) {

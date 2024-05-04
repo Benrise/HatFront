@@ -2,10 +2,10 @@
     <header class="header">
         <div class="header__container">
             <router-link to="/"><img src="/images/svg/logo/logo.svg" alt="Logo"/></router-link>
-            <div class="header__content header__content_default">
+            <div class="header__content header__content_desktop">
                 <div class="header__left">
                     <div class="header__menu menu">
-                        <ul class="menu__list menu__list_default">
+                        <ul class="menu__list menu__list_desktop">
                             <li class="menu__item"><a class="header__link" href="#features">Функции</a></li>
                             <li class="menu__item"><a class="header__link" href="#steps">Шаги</a></li>
                         </ul>
@@ -46,10 +46,11 @@ import {
   SheetTrigger,
   SheetClose
 } from '@/shared/ui/sheet';
-
 import { Button } from '@/shared/ui/button';
 
 import IconBars from '~icons/heroicons/bars-3-bottom-right-16-solid?width=24px&height=24px';
+
+import { UserBadge } from '@/entities/user';
 </script>
 
 <style lang="scss">

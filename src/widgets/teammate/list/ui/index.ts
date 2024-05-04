@@ -1,0 +1,1 @@
+export { default as TeammatesList } from './TeammatesList.vue'

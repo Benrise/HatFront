@@ -18,6 +18,9 @@
                     <Badge>go</Badge>
                     <Badge>backend</Badge>
                     <Badge>ml</Badge>
+                    <Badge>go</Badge>
+                    <Badge>backend</Badge>
+                    <Badge>ml</Badge>
                 </div>
                 <div class="hackathon-card__additionals">
                     <Badge variant="outline">

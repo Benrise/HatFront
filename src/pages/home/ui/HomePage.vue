@@ -14,11 +14,9 @@
                       <SheetTrigger as-child>
                         <Button variant="outline" class="sheet__button">Фильтры</Button>
                       </SheetTrigger>
-                      <SheetContent side="left">
-                        <div class="sheet__content">
+                      <SheetContent  class="sheet__content" side="left">
                           <SheetHeader class="sheet__header">Фильтры</SheetHeader>
-                            <Filters class="sheet__filters"/>
-                        </div>
+                          <Filters class="sheet__filters"/>
                       </SheetContent>
                     </Sheet>
                     <div class="home_sorting home__sorting_mobile">
@@ -48,6 +46,7 @@ import { Sorting } from '@/features/sorting';
 import { Filters } from '@/widgets/filters';
 import { HackathonsList } from '@/widgets/hackathon/list';
 import { TeamsList } from '@/widgets/team/list';
+import { TeammatesList } from '@/widgets/teammate/list';
 
 const title = "Поиск";
 
@@ -65,7 +64,7 @@ const tabs: ITabsConfig[] = [
   {
     value: "teammates",
     title: "Тиммейты",
-    content: {},
+    content: TeammatesList,
   }
 ];
 

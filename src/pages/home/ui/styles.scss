@@ -50,6 +50,7 @@
 .sheet {
     &__header {
       @include title();
+      align-self: flex-start;
     }
 
     &__content {
@@ -65,4 +66,10 @@
         display: none;
       }
     }
+
+    @media screen and (max-width: 479.98px) {
+      &__content {
+          width: 100%;
+      }
+  }
 }

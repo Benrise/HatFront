@@ -14,7 +14,7 @@
         justify-content: space-between;
     }
 
-    &__content_default {
+    &__content_desktop {
         width: 100%;
         @media screen and (max-width: 479.98px) {
             display: none;
@@ -73,8 +73,10 @@
         border-left: 1px solid var(--border);
 
         width: 50%;
+    }
 
-        @media screen and (max-width: 380px){ 
+    @media screen and (max-width: 380px){ 
+        &__content {
             width: 100%;
         }
     }
@@ -90,7 +92,7 @@
         padding-bottom: 6px;
     }
 
-    &__list_default {
+    &__list_desktop {
         flex-direction: row;
         align-items: center;
     }

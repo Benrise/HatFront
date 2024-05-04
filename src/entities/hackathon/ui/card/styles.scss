@@ -16,6 +16,12 @@
         gap: 8px;
     }
 
+    &__image {
+        img {
+            width: 100%
+        }
+    }
+
     &__title {
         @include subtitle();
     }
@@ -27,6 +33,7 @@
         overflow: hidden; 
         text-overflow: ellipsis; 
         @include body();
+        color: hsl(var(--muted-foreground));
     }
 
     &__text {
@@ -70,6 +77,15 @@
     @media screen and (max-width: 768px) {
         flex-direction: column;
     }
+
+    @media screen and (max-width: 579.98px) {
+        &__tags {
+            flex-wrap: nowrap;
+            overflow-y: hidden;
+            overflow-x: scroll;
+            padding-bottom: 4px;
+        }
+    }
 }
 
 .image {
@@ -80,6 +96,7 @@
     justify-content: center;
     overflow: hidden;
     border-radius: 12px;
+    width: 100%;
 
     &__bg {
         position: absolute;
