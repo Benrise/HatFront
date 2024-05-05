@@ -50,15 +50,14 @@
 .sheet {
     &__header {
       @include title();
-      align-self: flex-start;
+      align-items: flex-start;
     }
-
+    
     &__content {
         display: flex;
         flex-direction: column;
-        gap: 24px;
-        padding: 24px;
-        width: 100%;
+        @include adaptiveValue('gap', 24, 12);
+        @include adaptiveValue('padding', 24, 12);
     }
 
     @media screen and (min-width: 1200px) {

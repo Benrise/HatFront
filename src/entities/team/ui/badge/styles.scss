@@ -1,0 +1,10 @@
+.team-badge {
+    display: flex;
+    flex-direction: row;
+    gap: 12px;
+    align-items: center;
+
+    &__name {
+        @include body();
+    }
+}

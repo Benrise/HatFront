@@ -1,6 +1,6 @@
 .team-card {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     gap: 16px;
     @include adaptiveValue('padding', 24, 12);
     background-color: hsl(var(--card));
@@ -63,5 +63,17 @@
         text-overflow: ellipsis; 
         @include body();
         color: hsl(var(--muted-foreground));
+    }
+
+    &__actions {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        @include adaptiveValue('gap', 12, 6);
+    }
+
+    @media screen and (max-width: 579.98px) {
+        flex-direction: column;
     }
 }

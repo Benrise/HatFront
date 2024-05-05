@@ -1,8 +1,24 @@
 <template>
     <div class="hackathon-card">
         <div class="hackathon-card__image image">
-            <img src="/images/png/hackathon-cover.png" class="image__bg"  alt="Задний фон постера хакатона">
-            <img src="/images/png/hackathon-cover.png" class="image__main" alt="Постер хакатона">
+                <img
+                    src="https://source.unsplash.com/random/1280x720" 
+                    class="image__bg"  
+                    alt="Задний фон постера хакатона"
+                >
+                <img
+                    src="https://source.unsplash.com/random/1280x720" 
+                    class="image__main" 
+                    alt="Постер хакатона"
+                    @load="onLoad"
+                >
+                <img 
+                    v-if="!isImageLoaded"
+                    src="/images/png/hackathon-bg-fallback.png"
+                    alt="Постер хакатона"
+                    class="rounded-md"
+                >
+                
         </div>
         <div class="hackathon-card__main">
             <div class="hackathon-card__info">
@@ -57,6 +73,13 @@ import IconCalendar from '~icons/heroicons/calendar-days-20-solid';
 import IconRuble from '~icons/solar/ruble-linear';
 import IconGroup from '~icons/heroicons/user-group';
 import IconClipboardCheck from '~icons/heroicons/clipboard-document-check';
+import { ref } from 'vue';
+
+const isImageLoaded = ref(false)
+
+const onLoad = () => {
+    isImageLoaded.value = true
+}
 
 </script>
 

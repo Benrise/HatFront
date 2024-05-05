@@ -14,7 +14,7 @@
                       <SheetTrigger as-child>
                         <Button variant="outline" class="sheet__button">Фильтры</Button>
                       </SheetTrigger>
-                      <SheetContent  class="sheet__content" side="left">
+                      <SheetContent class="sheet__content" side="left" >
                           <SheetHeader class="sheet__header">Фильтры</SheetHeader>
                           <Filters class="sheet__filters"/>
                       </SheetContent>
@@ -71,5 +71,5 @@ const tabs: ITabsConfig[] = [
 </script>
 
 <style scoped lang="scss">
-@import './styles';
+@import './styles.scss';
 </style>
