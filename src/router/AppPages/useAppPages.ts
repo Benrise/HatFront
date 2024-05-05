@@ -1,7 +1,7 @@
 import { inject } from 'vue'
-import { EAppProviders } from '@/router/router.types'
+import { EAppProviders } from '@/router/types'
 
-function useAppPages() {
+export function useAppPages() {
   const appPages = inject(EAppProviders.AppPages)
 
   if (!appPages) {
@@ -10,5 +10,3 @@ function useAppPages() {
 
   return appPages
 }
-
-export default useAppPages

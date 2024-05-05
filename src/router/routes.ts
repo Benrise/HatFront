@@ -1,6 +1,6 @@
 import { AppLayoutsEnum } from '@/app/layouts/layouts.types';
 import type { RouteRecordRaw } from 'vue-router';
-import { AppPages } from './router.types';
+import { AppPages } from './types';
 
 const routes: Array<RouteRecordRaw> = [
     {
@@ -27,6 +27,14 @@ const routes: Array<RouteRecordRaw> = [
         name: AppPages.promo,
         path: '/promo',
         component: () => import('@/pages/promo'),
+        meta: {
+            layout: AppLayoutsEnum.default
+        }
+    },
+    {
+        name: AppPages.profile,
+        path: '/profile',
+        component: () => import('@/pages/profile'),
         meta: {
             layout: AppLayoutsEnum.default
         }

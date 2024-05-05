@@ -1,4 +1,4 @@
-import { AppPages } from "@/router/router.types"
+import { AppPages } from "@/router/types"
 
 
 interface IRoute<T extends object = {}> {
@@ -16,6 +16,9 @@ export class AppRoutes {
   }
   static getPromo() {
     return getRoute(AppPages.promo, {})
+  }
+  static getProfile() {
+    return getRoute(AppPages.profile, {})
   }
 }
 

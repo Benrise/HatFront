@@ -14,7 +14,7 @@ import { useAppStore } from "@/store/app";
 import AppLayout from "@/app/layouts/AppLayout.vue";
 import Toaster from "@/shared/ui/toast/Toaster.vue";
 import { provide } from "vue";
-import { EAppProviders, AppPages } from "@/router/router.types";
+import { EAppProviders, AppPages } from "@/router/types";
 import { AppRoutes } from "@/router/AppRoutes/AppRoutes";
 
 provide(EAppProviders.AppRoutes, AppRoutes);

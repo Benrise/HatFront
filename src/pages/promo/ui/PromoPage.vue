@@ -7,7 +7,7 @@
                             <h1>Найди команду для участия в хакатонах</h1>
                             <h2>Сервис по поиску и подбору команд для участия в хакатонах</h2>
                     </div>
-                    <router-link to="/login">
+                    <router-link :to="appRoutes?.getLogin()">
                         <Button class="max-w-fit">Начать</Button> 
                     </router-link>
                 </div>
@@ -59,6 +59,7 @@ import IconGroup from '~icons/heroicons/user-group-20-solid?width=48px&height=48
 import IconCup from '~icons/solar/cup-bold?width=48px&height=48px';
 import IconPerson from '~icons/heroicons/user-circle-16-solid?width=48px&height=48px';
 import IconPersonPlus from '~icons/heroicons/user-plus-20-solid?width=48px&height=48px';
+import { useAppRoutes } from '@/router';
 
 
 interface IFeature {
@@ -113,6 +114,8 @@ const steps: IStep[] = [
         description: 'Определи тип поиска: хакатоны или команды'
     }
 ]
+
+const appRoutes = useAppRoutes()
 </script>
 
 <style scoped lang="scss">

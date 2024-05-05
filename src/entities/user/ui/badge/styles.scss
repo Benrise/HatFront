@@ -3,8 +3,18 @@
     flex-direction: row;
     gap: 12px;
     align-items: center;
+    width: fit-content;
 
     &__name {
         @include body();
+    }
+}
+
+.avatar {
+    cursor: pointer;
+
+    &:hover {
+        transition: 0.2s ease-in-out;
+        border: 1px solid hsl(var(--muted-foreground));
     }
 }

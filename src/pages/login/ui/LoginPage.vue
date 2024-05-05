@@ -12,7 +12,7 @@
                         Сервис по поиску и подбору команд для участия в хакатонах
                     </p>
                 </div>
-                <router-link to="/promo">
+                <router-link :to="appRoutes?.getPromo()">
                     <Button class="max-w-fit" >Узнать подробнее</Button>
                 </router-link>
             </div>
@@ -45,6 +45,9 @@
 import { Button } from '@/shared/ui/button'
 
 import { AUTH_VK_URL } from '@/app/config';
+import { useAppRoutes } from '@/router';
+
+const appRoutes = useAppRoutes()
 </script>
 
 <style scoped lang="scss">

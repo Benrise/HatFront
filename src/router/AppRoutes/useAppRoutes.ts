@@ -1,5 +1,5 @@
 import { inject } from 'vue'
-import { EAppProviders } from '@/router/router.types'
+import { EAppProviders } from '@/router/types'
 
 export function useAppRoutes() {
   const appRoutes = inject(EAppProviders.AppRoutes)

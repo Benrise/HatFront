@@ -13,7 +13,8 @@ declare module "vue-router" {
 export enum AppPages {
   login = "LoginPage",
   home = "HomePage",
-  promo = "PromoPage"
+  promo = "PromoPage",
+  profile = "ProfilePage"
 }
 
 export const EAppProviders = {
