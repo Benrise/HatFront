@@ -36,7 +36,7 @@ import type { ITeam } from '@/entities/team/model';
 const mockTeam: ITeam = {
     id: 1,
     name: 'MISIS x MIREA Koptevo!',
-    avatar: 'https://source.unsplash.com/random/48x48',
+    avatar: 'https://source.unsplash.com/random',
     active_hackathon: 'Phystech Radar Tech Challenge',
     members_count: 2
 }

@@ -1,10 +1,7 @@
 <template>
   <div class="user-badge">
-    <router-link :to="appRoutes?.getProfile()">
-      <Avatar class="user-badge__avatar avatar">
-        <AvatarImage class="avatar__image" :src="avatarSrc" alt="Аватар" />
-        <AvatarFallback class="avatar__fallback">{{ avatarFallback }}</AvatarFallback>
-      </Avatar>
+    <router-link class="flex" :to="appRoutes?.getProfile()">
+      <UserAvatar class="user-badge__avatar" :user="user"/>
     </router-link>
     <span v-if="!props.hideName" class="user-badge__name">{{ user.name }}</span>
   </div>
@@ -14,9 +11,8 @@
 <script setup lang="ts">
 import type { IUser } from '../../model';
 
-import { computed } from 'vue';
+import { UserAvatar } from '@/entities/user/ui/avatar';
 
-import { Avatar, AvatarFallback, AvatarImage } from '@/shared/ui/avatar';
 import { useAppRoutes } from '@/router';
 
 interface IProps {
@@ -24,15 +20,6 @@ interface IProps {
   hideName?: boolean
 }
 const props = defineProps<IProps>()
-const avatarFallback = props.user.name.charAt(0).toUpperCase()
-
-const avatarSrc = computed(() => {
-  if (props.user.avatar) {
-    return props.user.avatar
-  }
-  return '#'
-})
-
 const appRoutes = useAppRoutes()
 </script>
 

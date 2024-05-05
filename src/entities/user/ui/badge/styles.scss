@@ -8,13 +8,21 @@
     &__name {
         @include body();
     }
-}
 
-.avatar {
-    cursor: pointer;
-
-    &:hover {
-        transition: 0.2s ease-in-out;
-        border: 1px solid hsl(var(--muted-foreground));
-    }
+    &__avatar {
+        border-radius: 999px;
+        transition: outline 0.2s ease-in-out;
+        outline: 2px solid hsl(var(--background));
+        @media (hover: hover) {
+            &:hover {
+                outline-color: hsl(var(--primary));
+              }
+        }
+        @media (hover: none) {
+            &:active {
+                outline-color: hsl(var(--primary));
+            }
+        }
+      }
+    
 }

@@ -14,7 +14,7 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/shared/ui/popover'
 import { cn } from '@/shared/lib/utils'
 
 const df = new DateFormatter('ru-RU', {
-  dateStyle: 'medium',
+  dateStyle: 'short',
 })
 
 const value = ref({

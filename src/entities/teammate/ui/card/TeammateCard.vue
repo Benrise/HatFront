@@ -37,7 +37,7 @@ const mockUser: IUser = {
     patronymic: 'Doe',
     gender: EGender.male,
     birthday: new Date(),
-    avatar: '',
+    avatar: 'https://source.unsplash.com/random',
     city: 'Moscow',
     university: 'Moscow State University',
     specialization: 'Computer Science',
