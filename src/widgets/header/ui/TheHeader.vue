@@ -18,20 +18,23 @@
             <div class="header__content header__content_mobile">
                 <Sheet class="header__sheet sheet">
                     <SheetTrigger><IconBars class="sheet__trigger"/></SheetTrigger>
-                    <SheetContent class="sheet__content">
-                        <div class="header__menu menu">
-                            <ul class="menu__list menu__list_mobile">
-                                <SheetClose>
-                                    <li class="menu__item menu__item_mobile"><a class="header__link" href="#features">Функции</a></li>
-                                </SheetClose> 
-                                <SheetClose>
-                                    <li class="menu__item menu__item_mobile"><a class="header__link" href="#steps">Шаги</a></li>
-                                </SheetClose>
-                            </ul>
+                    <SheetContent side="right">
+                        <div class="sheet__content">
+                            <SheetHeader class="sheet__header">Меню</SheetHeader>
+                            <div class="header__menu menu">
+                                <ul class="menu__list menu__list_mobile">
+                                    <SheetClose>
+                                        <li class="menu__item menu__item_mobile"><a class="header__link" href="#features">Функции</a></li>
+                                    </SheetClose> 
+                                    <SheetClose>
+                                        <li class="menu__item menu__item_mobile"><a class="header__link" href="#steps">Шаги</a></li>
+                                    </SheetClose>
+                                </ul>
+                            </div>
+                            <router-link class="header__link header__link_mobile" to="/login">
+                                <Button>Вход</Button>
+                            </router-link>
                         </div>
-                        <router-link class="header__link header__link_mobile" to="/login">
-                            <Button>Вход</Button>
-                        </router-link>
                     </SheetContent>
                   </Sheet>
             </div>
@@ -44,7 +47,8 @@ import {
   Sheet,
   SheetContent,
   SheetTrigger,
-  SheetClose
+  SheetClose,
+  SheetHeader,
 } from '@/shared/ui/sheet';
 import { Button } from '@/shared/ui/button';
 

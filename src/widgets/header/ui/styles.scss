@@ -58,6 +58,11 @@
 }
 
 .sheet {
+    &__header {
+        @include title();
+        align-items: flex-end;
+    }
+
     &__trigger {
         color: hsl(var(--foreground));
     }
@@ -65,12 +70,8 @@
     &__content {
         display: flex;
         flex-direction: column;
-        gap: 24px;
-        
-        z-index: 999;
-        background: hsl(var(--background));
-
-        border-left: 1px solid var(--border);
+        @include adaptiveValue('gap', 24, 12);
+        border-right: 1px solid var(--border);
     }
 
     @media screen and (max-width: 380px){ 

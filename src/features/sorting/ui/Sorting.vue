@@ -2,7 +2,7 @@
     <DropdownMenu>
       <DropdownMenuTrigger as-child>
         <Button variant="outline" class="border-border w-full">
-            <IconSort class="size-6 mr-2"/>
+            <IconSort class="mr-2"/>
           {{sortConfig[selectedValue]}}
         </Button>
       </DropdownMenuTrigger>

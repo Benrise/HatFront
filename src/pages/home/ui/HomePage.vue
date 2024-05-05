@@ -12,11 +12,16 @@
                 <div class="home__controls home__controls_mobile">
                     <Sheet class="home__sheet sheet">
                       <SheetTrigger as-child>
-                        <Button variant="outline" class="sheet__button">Фильтры</Button>
+                        <Button variant="outline" class="sheet__button">
+                          <IconAdjustments class="mr-2"></IconAdjustments>
+                          Фильтры
+                        </Button>
                       </SheetTrigger>
-                      <SheetContent class="sheet__content" side="left" >
+                      <SheetContent side="left" >
+                        <div class="sheet__content">
                           <SheetHeader class="sheet__header">Фильтры</SheetHeader>
                           <Filters class="sheet__filters"/>
+                        </div>
                       </SheetContent>
                     </Sheet>
                     <div class="home_sorting home__sorting_mobile">
@@ -47,6 +52,8 @@ import { Filters } from '@/widgets/filters';
 import { HackathonsList } from '@/widgets/hackathon/list';
 import { TeamsList } from '@/widgets/team/list';
 import { TeammatesList } from '@/widgets/teammate/list';
+
+import IconAdjustments from '~icons/heroicons/adjustments-horizontal';
 
 const title = "Поиск";
 
