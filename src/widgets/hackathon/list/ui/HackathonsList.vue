@@ -1,10 +1,9 @@
 <template>
-    <div class="hackathons-list">
-        <HackathonCard></HackathonCard>
-        <HackathonCard></HackathonCard>
-        <HackathonCard></HackathonCard>
-        <HackathonCard></HackathonCard>
-    </div>
+        <div class="hackathons-list">
+            <TransitionGroup name="list" appear>
+                <HackathonCard v-for="(_, index) in 10" :key="index"/>
+            </TransitionGroup>
+        </div>
 </template>
 
 <script setup lang="ts">

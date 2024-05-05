@@ -53,17 +53,17 @@ const title = "Поиск";
 const tabs: ITabsConfig[] = [
   {
     value: "hackathons",
-    title: "Хакатоны",
+    title: "Хакатонов",
     content: HackathonsList,
   },
   {
     value: "teams",
-    title: " Команды",
+    title: "Команд",
     content: TeamsList,
   },
   {
     value: "teammates",
-    title: "Тиммейты",
+    title: "Напарников",
     content: TeammatesList,
   }
 ];

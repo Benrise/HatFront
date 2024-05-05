@@ -1,14 +1,8 @@
 <template>
     <div class="teams-list">
-        <TeamCard></TeamCard>
-        <TeamCard></TeamCard>
-        <TeamCard></TeamCard>
-        <TeamCard></TeamCard>
-        <TeamCard></TeamCard>
-        <TeamCard></TeamCard>
-        <TeamCard></TeamCard>
-        <TeamCard></TeamCard>
-        <TeamCard></TeamCard>
+        <TransitionGroup name="list" appear>
+            <TeamCard v-for="(_, index) in 10" :key="index"/>
+        </TransitionGroup>
     </div>
 </template>
 

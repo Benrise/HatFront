@@ -19,9 +19,9 @@
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent>
-                  <DropdownMenuRadioGroup :model-value="dropdownTabsValue" >
+                  <DropdownMenuRadioGroup :model-value="String(dropdownTabsValue)" >
                     <div class="flex flex-col">
-                      <TabsTrigger v-for="tab in tabs" :key="tab.value" :value="tab.value">
+                      <TabsTrigger as-child v-for="tab in tabs" :key="tab.value" :value="tab.value">
                         <DropdownMenuRadioItem :value="tab.value">
                           {{  tab.title }}
                         </DropdownMenuRadioItem>
