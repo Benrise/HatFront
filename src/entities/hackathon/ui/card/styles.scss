@@ -44,7 +44,7 @@
 
     &__actions {
         display: flex;
-        flex-direction: column;
+        flex-direction: row;
         @include adaptiveValue('gap', 12, 6);
         align-items: center;
         justify-content: center;
@@ -52,7 +52,7 @@
 
     &__main {
         display: flex;
-        flex-direction: row;
+        flex-direction: column;
         gap: 16px;
         width: 100%;
         justify-content: space-between;
@@ -62,10 +62,6 @@
         &__actions {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
-        }
-
-        &__main {
-            flex-direction: column;
         }
     }
 

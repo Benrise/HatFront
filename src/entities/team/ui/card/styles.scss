@@ -1,6 +1,6 @@
 .team-card {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     gap: 16px;
     @include adaptiveValue('padding', 24, 12);
     background-color: hsl(var(--card));
@@ -22,16 +22,6 @@
     }
     
     overflow-x: hidden;
-
-    @media screen and (max-width: 579.98px) {
-        &__roles,
-        &__tags {
-            flex-wrap: nowrap;
-            overflow-y: hidden;
-            overflow-x: scroll;
-            padding-bottom: 4px;
-        }
-    }
 
     &__image {
         img {
@@ -67,13 +57,25 @@
 
     &__actions {
         display: flex;
-        flex-direction: column;
+        flex-direction: row;
         align-items: center;
         justify-content: center;
         @include adaptiveValue('gap', 12, 6);
     }
 
     @media screen and (max-width: 579.98px) {
-        flex-direction: column;
+        &__roles,
+        &__tags {
+            flex-wrap: nowrap;
+            overflow-y: hidden;
+            overflow-x: scroll;
+            padding-bottom: 4px;
+        }
+    }
+
+    @media screen and (max-width: 479.98px) {
+        &__actions {
+            flex-direction: column;
+        }
     }
 }
