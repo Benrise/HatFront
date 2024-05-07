@@ -3,10 +3,9 @@
       <div class="profile__container">
         <div class="profile__image">
           <UserAvatar size="xl" :user="mockUser" editable/>
+          <Button variant="outline">Публичный просмотр</Button>
         </div>
-        <ContentSection :title="title" :tabs="tabs">
-
-        </ContentSection>
+        <ContentSection :title="title" :tabs="tabs"/>
       </div>
     </div>
 </template>
@@ -14,9 +13,12 @@
 <script setup lang="ts">
 import { ContentSection } from '@/shared/ui/content-section';
 import type { ITabsConfig } from '@/shared/ui/tabs';
+import { Button } from '@/shared/ui/button';
 
 import { UserAvatar } from '@/entities/user/ui/avatar';
 import { EGender, type IUser } from '@/entities/user/model';
+
+import { UserDetail } from '@/widgets/user/detail';
 
 const title = "Профиль";
 
@@ -24,7 +26,7 @@ const tabs: ITabsConfig[] = [
   {
     value: "about",
     title: "О себе",
-    content: {},
+    content: UserDetail,
   },
   {
     value: "requests",
@@ -74,11 +76,16 @@ const mockUser: IUser = {
     display: flex;
     flex-direction: column;
     gap: 24px;
+    height: fit-content;
 
     @media screen and (min-width: 1200px) {
       padding: 24px;
       border: 1px solid hsl(var(--border));
       border-radius: 16px;
+    }
+
+    @media screen and (max-width: 779.98px) {
+      display: none;
     }
   }
 }

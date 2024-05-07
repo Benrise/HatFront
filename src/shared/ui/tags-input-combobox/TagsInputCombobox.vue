@@ -29,7 +29,7 @@ const filteredFrameworks = computed(() => props.options.filter(i => !modelValue.
 
     <ComboboxRoot v-model="modelValue" v-model:open="open" v-model:searchTerm="searchTerm" class="w-full">
       <ComboboxAnchor as-child>
-        <ComboboxInput placeholder="Найти тег" as-child>
+        <ComboboxInput placeholder="Поиск" as-child>
           <TagsInputInput class="w-full px-3" :class="modelValue.length > 0 ? 'mt-2' : ''" @keydown.enter.prevent />
         </ComboboxInput>
       </ComboboxAnchor>

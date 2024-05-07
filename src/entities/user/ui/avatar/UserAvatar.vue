@@ -41,6 +41,8 @@ const avatarSrc = computed(() => {
 
   cursor: pointer;
 
+  width: fit-content;
+
   &__edit {
     position: absolute;
     border-radius: 999px;
