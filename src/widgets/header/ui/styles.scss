@@ -34,6 +34,11 @@
     }
 
     &__link {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+        align-items: center;
+        
         color: hsl(var(--muted-foreground));
 
         @media (hover: hover) {
@@ -63,6 +68,13 @@
         align-items: flex-end;
     }
 
+    &__footer {
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        gap: 12px;
+    }
+
     &__trigger {
         color: hsl(var(--foreground));
     }
@@ -90,6 +102,9 @@
 
     &__item_mobile {
         padding-bottom: 6px;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
     }
 
     &__list_desktop {
