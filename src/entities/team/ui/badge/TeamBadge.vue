@@ -19,17 +19,18 @@
   import { Avatar, AvatarFallback, AvatarImage } from '@/shared/ui/avatar';
   import { Badge } from '@/shared/ui/badge';
 
+  import { STATIC_URL } from '@/app/config'
+
   import IconGroup from '~icons/heroicons/user-group';
-  
   interface IProps {
     team: ITeam
   }
   const props = defineProps<IProps>()
   const avatarFallback = props.team.name.charAt(0).toUpperCase()
-  
+
   const avatarSrc = computed(() => {
     if (props.team.avatar) {
-      return props.team.avatar
+      return STATIC_URL + props.team.avatar
     }
     return '#'
   })

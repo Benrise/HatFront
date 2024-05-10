@@ -2,7 +2,7 @@
     <div class="profile">
       <div class="profile__container">
         <div class="profile__image">
-          <UserAvatar size="xl" :user="undefined" editable/>
+          <UserAvatar size="xl" editable/>
           <UserPreview>
             <Button variant="outline">Публичный просмотр</Button>
           </UserPreview>
@@ -20,7 +20,6 @@ import { Button } from '@/shared/ui/button';
 import { UserPreview } from '@/features/user/preview';
 
 import { UserAvatar } from '@/entities/user/ui/avatar';
-import { UserModel } from '@/entities/user';
 
 import { UserDetail } from '@/widgets/user/detail';
 
