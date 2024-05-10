@@ -9,6 +9,7 @@ const axiosInstance = axios.create({
   headers: {
     "Content-Type": "application/json",
   },
+  withCredentials: true,
   timeout: 3000,
 })
 
@@ -19,10 +20,9 @@ axiosInstance.interceptors.request.use(
     (error: AxiosError): Promise<AxiosError> => {
         return Promise.reject(error);
     }
-);
+)
 
 axiosInstance.interceptors.response.use(
-  
     /**
      * 
      *  Success response
@@ -38,16 +38,17 @@ axiosInstance.interceptors.response.use(
      * 
      */
     async (error: AxiosError) => {
-      console.error(error)
+      const statusCode = error.response?.status;
 
-      toast({
-        variant: 'destructive',
-        title: 'Непредвиденная ошибка сервера',
-        description: error.message,
-      })
+      if (statusCode && statusCode >= 500) {
+        toast({
+          variant: 'destructive',
+          title: 'Непредвиденная ошибка сервера',
+          description: `Ошибка ${statusCode} - сервер недоступен`,
+        })
+      }
 
       Promise.reject(error);
     },
   );
-
   export default axiosInstance

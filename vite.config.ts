@@ -12,7 +12,8 @@ const env = loadEnv('', process.cwd(), '')
 
 const apiUrl = env?.VITE_APP_API_BASE_URL || '/api';
 const apiProtocol = env?.VITE_APP_API_PROTOCOL || 'http';
-const apiService = env?.VITE_APP_API_SERVICE_URL || 'localhost';
+const apiService = env?.VITE_APP_API_HOST || 'localhost';
+const apiPort = env?.VITE_APP_API_SERVICE_PORT || '80';
 
 export default defineConfig({
   plugins: [
@@ -25,16 +26,16 @@ export default defineConfig({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  logLevel: 'info',
   server: {
     proxy: {
       [apiUrl]: {
-        target: `${apiProtocol}://${apiService}/${apiUrl}`,
+        target: `${apiProtocol}://${apiService}:${apiPort}/${apiUrl}`,
         changeOrigin: true,
-        ws: false,
         rewrite: path => path.replace(/^\/api/, '')
       },
     },
-    port: 8085
+    port: 8080
   },
   css: {
     postcss: {
