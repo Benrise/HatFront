@@ -18,18 +18,16 @@ import { Button } from '@/shared/ui/button';
 import IconPencil from '~icons/heroicons/pencil';
 
 interface IProps {
-    user: IUser,
+    user?: IUser,
     editable?: boolean,
-    size?: 'sm' | 'base' | 'lg' | 'xl'
+    size?: 'sm' | 'base' | 'lg' | 'xl',
+    avatar?: string
 }
 const props = defineProps<IProps>()
-const avatarFallback = props.user.name.charAt(0).toUpperCase()
+const avatarFallback = props.user?.name?.charAt(0).toUpperCase() || '?'
 
 const avatarSrc = computed(() => {
-  if (props.user.avatar) {
-    return props.user.avatar
-  }
-  return '#'
+  return props.avatar ? props.avatar : '#'
 })
 
 </script>
@@ -49,7 +47,7 @@ const avatarSrc = computed(() => {
     bottom: 12px;
     right: 12px;
     outline: 6px solid hsl(var(--background));
-    z-index: 999;
+    z-index: 50;
   }
 }
 </style>
