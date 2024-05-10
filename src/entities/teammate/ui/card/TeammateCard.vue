@@ -2,7 +2,7 @@
     <div class="teammate-card">
         <div class="teammate-card__main">
             <div class="teammate-card__info">
-                <UserBadge :user="mockUser"/>
+                <UserBadge :user="undefined"/>
                 <div class="teammate-card__description">
                     UI/UX-дизайнер с опытом около года. Специализируюсь на интерфейсах и презентациях. Также есть опыт в разработке логотипов и favicon. 
                 </div>
@@ -26,29 +26,10 @@
 </template>
 
 <script setup lang="ts">
-import { EGender, UserBadge, type IUser } from '@/entities/user';
+import { UserBadge, UserModel} from '@/entities/user';
 import { Button } from '@/shared/ui/button';
 import { Badge } from '@/shared/ui/badge';
 
-const mockUser: IUser = {
-    id: 1,
-    name: 'John Doe',
-    surname: 'Doe',
-    patronymic: 'Doe',
-    gender: EGender.male,
-    birthday: new Date(),
-    avatar: 'https://source.unsplash.com/random',
-    city: 'Moscow',
-    university: 'Moscow State University',
-    specialization: 'Computer Science',
-    roles: [],
-    technologies: [],
-    vk: '',
-    telegram: '',
-    email: '',
-    github: '',
-    about: ''
-}
 </script>
 
 <style scoped lang="scss">

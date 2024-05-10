@@ -18,33 +18,14 @@
             </div>
         </div>
     </div>
-    <div class="login-form">
-        <div class="login-form__body form">
-            <div class="form__header">
-                <div class="form__title">
-                    Вход
-                </div>
-                <div class="form__description">
-                    Авторизируйтесь, чтобы получить доступ к функциям <router-link class="form__link" to="/promo">сервиса</router-link>
-                </div>
-            </div>
-            <div class="form__actions">
-                <a href="#">
-                    <Button class="w-full">Вход через ЛКС МИРЭА</Button>
-                </a>
-                <a :href="AUTH_VK_URL">
-                    <Button class="w-full" variant="outline">Вход через Вконтакте</Button>
-                </a>
-            </div>
-        </div>
-        <img src="/images/png/noise-bg-20-b4b4b4.png" class="login-form__bg-image"/>
-    </div>
+    <LoginForm />
   </template>
 
 <script setup lang="ts">
+import { LoginForm } from '@/features/login'
+
 import { Button } from '@/shared/ui/button'
 
-import { AUTH_VK_URL } from '@/app/config';
 import { useAppRoutes } from '@/router';
 
 const appRoutes = useAppRoutes()

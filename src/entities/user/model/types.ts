@@ -1,24 +1,18 @@
-export enum EGender {
-    male = 'male',
-    female = 'female'
-  }
-
 export interface IUser {
-    id: number
-    name: string,
-    surname: string,
-    patronymic: string,
-    birthday: Date,
-    gender: EGender,
-    avatar: string,
-    city: string,
-    university: string,
-    specialization: string,
-    roles: string[],
-    technologies: string[],
-    vk: string,
-    telegram: string,
-    email: string,
-    github: string,
-    about: string
-  }
+    id?: number;
+    university?: string;
+    education?: string;
+    contacts?: IContacts;
+    name?: string;
+    age?: number;
+    about?: string;
+    city?: string;
+    photo_url?: string;
+    skills?: string[];
+    specializations?: string[];
+}
+interface IContacts {
+    github_url: string | null;
+    vk_url: string | null;
+    telegram: string | null;
+}

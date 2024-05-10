@@ -2,8 +2,10 @@
     <div class="profile">
       <div class="profile__container">
         <div class="profile__image">
-          <UserAvatar size="xl" :user="mockUser" editable/>
-          <Button variant="outline">Публичный просмотр</Button>
+          <UserAvatar size="xl" :user="undefined" editable/>
+          <UserPreview>
+            <Button variant="outline">Публичный просмотр</Button>
+          </UserPreview>
         </div>
         <ContentSection :title="title" :tabs="tabs"/>
       </div>
@@ -15,8 +17,10 @@ import { ContentSection } from '@/shared/ui/content-section';
 import type { ITabsConfig } from '@/shared/ui/tabs';
 import { Button } from '@/shared/ui/button';
 
+import { UserPreview } from '@/features/user/preview';
+
 import { UserAvatar } from '@/entities/user/ui/avatar';
-import { EGender, type IUser } from '@/entities/user/model';
+import { UserModel } from '@/entities/user';
 
 import { UserDetail } from '@/widgets/user/detail';
 
@@ -39,26 +43,6 @@ const tabs: ITabsConfig[] = [
     content: {},
   }
 ];
-
-const mockUser: IUser = {
-    id: 1,
-    name: 'John Doe',
-    surname: 'Doe',
-    patronymic: 'Doe',
-    gender: EGender.male,
-    birthday: new Date(),
-    avatar: 'https://source.unsplash.com/random',
-    city: 'Moscow',
-    university: 'Moscow State University',
-    specialization: 'Computer Science',
-    roles: [],
-    technologies: [],
-    vk: '',
-    telegram: '',
-    email: '',
-    github: '',
-    about: ''
-}
 </script>
 
 <style scoped lang="scss">

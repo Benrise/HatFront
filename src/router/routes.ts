@@ -20,7 +20,8 @@ const routes: Array<RouteRecordRaw> = [
         path: '/',
         component: () => import('@/pages/home'),
         meta: {
-            layout: AppLayoutsEnum.default
+            layout: AppLayoutsEnum.default,
+            authRequired: true,
         }
     },
     {
@@ -36,8 +37,9 @@ const routes: Array<RouteRecordRaw> = [
         path: '/profile',
         component: () => import('@/pages/profile'),
         meta: {
-            layout: AppLayoutsEnum.default
-        }
+            layout: AppLayoutsEnum.default,
+            authRequired: true,
+        },
     }
 ]
 

@@ -12,12 +12,15 @@
                     </div>
                 </div>
                 <div class="header__right">
-                    <UserBadge :user="mockUser" hide-name/>
-                    <router-link :to="appRoutes?.getLogin()" class="header__link">
-                        <Button size="icon" variant="secondary" class="rounded-full w-10 h-10 ">
+                    <UserBadge v-if="isAuthorized" :user="undefined" hide-name/>
+                    <router-link v-if="!isAuthorized" :to="appRoutes?.getLogin()" class="header__link">
+                        <Button size="icon" class="rounded-full w-10 h-10 ">
                             <IconLogin/>
                         </Button>
                     </router-link>
+                    <Button v-if="isAuthorized" @click="logout" size="icon" variant="secondary" class="rounded-full w-10 h-10 ">
+                        <IconLogout/>
+                    </Button>
                 </div>
             </div>
             <div class="header__content header__content_mobile">
@@ -62,31 +65,19 @@ import { Button } from '@/shared/ui/button';
 
 import IconBars from '~icons/heroicons/bars-3-bottom-right-16-solid?width=24px&height=24px';
 import IconLogin from '~icons/heroicons/arrow-right-end-on-rectangle-20-solid';
+import IconLogout from '~icons/heroicons/arrow-right-start-on-rectangle-20-solid';
 
-import { EGender, UserBadge, type IUser } from '@/entities/user';
-import { useAppRoutes } from '@/router';
-
-const mockUser: IUser = {
-    id: 1,
-    name: 'John Doe',
-    surname: 'Doe',
-    patronymic: 'Doe',
-    gender: EGender.male,
-    birthday: new Date(),
-    avatar: 'https://source.unsplash.com/random',
-    city: 'Moscow',
-    university: 'Moscow State University',
-    specialization: 'Computer Science',
-    roles: [],
-    technologies: [],
-    vk: '',
-    telegram: '',
-    email: '',
-    github: '',
-    about: ''
-}
+import { UserBadge, UserModel } from '@/entities/user';
+import { AppPages, router, useAppRoutes } from '@/router';
 
 const appRoutes = useAppRoutes()
+const userStore = UserModel.useUserStore();
+const isAuthorized = userStore.isAuthorized;
+
+const logout = () => {
+    userStore.logout()
+    router.push({ name: AppPages.login, query: { logout: 'true' } })
+}
 </script>
 
 <style scoped lang="scss">

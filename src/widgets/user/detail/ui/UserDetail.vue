@@ -1,7 +1,7 @@
 <template>
     <Form class="user-detail" @submit="() => {}">
         <div class="user-detail__image">
-          <UserAvatar size="lg" :user="mockUser" editable/>
+          <UserAvatar size="lg" :user="undefined" editable/>
           <Button class="w-fit" variant="outline">Публичный просмотр</Button>
         </div>
         <div class="user-detail__field-group">
@@ -302,7 +302,7 @@ import { cn } from '@/shared/lib/utils'
 
 import { ref } from 'vue'
 
-import { EGender, type IUser } from '@/entities/user/model'
+import { UserModel } from '@/entities/user'
 
 const dateValue = ref()
 
@@ -336,27 +336,6 @@ const technologies = [
 const cities = [
   { value: 'moscow', label: 'Москва' },
 ]
-
-const mockUser: IUser = {
-    id: 1,
-    name: 'John Doe',
-    surname: 'Doe',
-    patronymic: 'Doe',
-    gender: EGender.male,
-    birthday: new Date(),
-    avatar: 'https://source.unsplash.com/random',
-    city: 'Moscow',
-    university: 'Moscow State University',
-    specialization: 'Computer Science',
-    roles: [],
-    technologies: [],
-    vk: '',
-    telegram: '',
-    email: '',
-    github: '',
-    about: ''
-}
-
 
 </script>
 
