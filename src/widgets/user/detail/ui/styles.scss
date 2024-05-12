@@ -1,0 +1,44 @@
+.user-detail {
+    display: flex;
+    flex-direction: column;
+    @include adaptiveValue('gap', 64, 36);
+    &__title {
+        @include subtitle();
+    }
+
+    &__field-group {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    &__fields {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(224px, 1fr));
+        gap: 24px;
+        grid-auto-flow: dense;
+    }
+
+    &__image {
+        display: flex;
+        flex-direction: column;
+        @include adaptiveValue('gap', 24, 12);
+        height: fit-content;
+        width: 100%;
+        align-items: center;
+
+        @media screen and (min-width: 779.98px) {
+          display: none;
+        }
+    }
+
+    &__field {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    &__field-label {
+      @include body();
+    }
+}

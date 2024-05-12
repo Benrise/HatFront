@@ -1,7 +1,7 @@
 <template>
-    <Form class="user-detail" @submit="() => {}">
+    <form class="user-detail" @submit="onSubmit">
         <div class="user-detail__image">
-          <UserAvatar size="lg" :user="undefined" editable/>
+          <UserAvatar size="lg" editable/>
           <Button class="w-fit" variant="outline">Публичный просмотр</Button>
         </div>
         <div class="user-detail__field-group">
@@ -9,87 +9,42 @@
                 Личные данные
             </div>
             <div class="user-detail__fields">
-                <FormField v-slot="{ componentField }" name="name">
-                    <FormItem class="user-detail__field">
-                        <FormLabel class="user-detail__field-label">Фамилия</FormLabel>
-                        <FormControl>
-                            <Input type="text" placeholder="Иванов" v-bind="componentField" />
-                        </FormControl>
-                        <FormMessage />
-                    </FormItem>
-                </FormField>
-                <FormField v-slot="{ componentField }" name="surname">
+                <FormField name="first_name" v-slot="{ componentField }">
                     <FormItem class="user-detail__field">
                         <FormLabel class="user-detail__field-label">Имя</FormLabel>
                         <FormControl>
-                            <Input type="text" placeholder="Иван" v-bind="componentField" />
+                            <Input type="text" placeholder="Введите имя" v-bind="componentField"/>
                         </FormControl>
                         <FormMessage />
                     </FormItem>
                 </FormField>
-                <FormField v-slot="{ componentField }" name="patronymic">
-                    <FormItem class="user-detail__field">
-                        <FormLabel class="user-detail__field-label">Отчество</FormLabel>
-                        <FormControl>
-                            <Input type="text" placeholder="Иванович" v-bind="componentField" />
-                        </FormControl>
-                        <FormMessage />
-                    </FormItem>
-                </FormField>
-                <FormField v-slot="{ field, value }" name="birthday">
+                <FormField name="second_name" v-slot="{ componentField }">
                   <FormItem class="user-detail__field">
-                    <FormLabel class="user-detail__field-label">Дата рождения</FormLabel>
-                    <Popover>
-                      <PopoverTrigger as-child>
-                        <FormControl>
-                          <Button
-                            variant="outline" :class="cn(
-                              'justify-start text-left font-normal border-border',
-                              !value && 'text-muted-foreground',
-                            )"
-                          >
-                            <IconCalendar class="mr-2 h-4 w-4 opacity-50" />
-                            <span>{{ value ? df.format(toDate(dateValue, getLocalTimeZone())) : "Введите дату рождения" }}</span>
-                          </Button>
-                        </FormControl>
-                      </PopoverTrigger>
-                      <PopoverContent class="p-0">
-                        <ExtendedCalendar/>
-                      </PopoverContent>
-                    </Popover>
-                    <FormMessage />
-                  </FormItem>
-                  <input type="hidden" v-bind="field">
-                </FormField>
-                <FormField v-slot="{ componentField }" type="radio" name="type">
-                    <FormItem class="user-detail__field">
-                      <FormLabel class="user-detail__field-label">Пол</FormLabel>
+                      <FormLabel class="user-detail__field-label">Фамилия</FormLabel>
                       <FormControl>
-                        <RadioGroup
-                          class="flex flex-row gap-4"
-                          v-bind="componentField"
-                        >
-                          <FormItem class="flex items-center space-x-3 h-9">
-                            <FormControl>
-                              <RadioGroupItem value="male" />
-                            </FormControl>
-                            <FormLabel class="font-normal">
-                              Мужской
-                            </FormLabel>
-                          </FormItem>
-                          <FormItem class="flex items-center space-x-3 h-9">
-                            <FormControl>
-                              <RadioGroupItem value="female" />
-                            </FormControl>
-                            <FormLabel class="font-normal">
-                              Женский
-                            </FormLabel>
-                          </FormItem>
-                        </RadioGroup>
+                          <Input type="text" placeholder="Введите фамилия" v-bind="componentField"/>
                       </FormControl>
                       <FormMessage />
-                    </FormItem>
-                </FormField>
+                  </FormItem>
+              </FormField>
+              <FormField name="patronymic" v-slot="{ componentField }">
+                <FormItem class="user-detail__field">
+                    <FormLabel class="user-detail__field-label">Отчество</FormLabel>
+                    <FormControl>
+                        <Input type="text" placeholder="Введите отчество" v-bind="componentField"/>
+                    </FormControl>
+                    <FormMessage />
+                </FormItem>
+              </FormField>
+                <FormField name="age" v-slot="{ componentField }">
+                  <FormItem class="user-detail__field">
+                      <FormLabel class="user-detail__field-label">Возраст</FormLabel>
+                      <FormControl>
+                          <Input type="number" placeholder="Введите возраст" v-bind="componentField"/>
+                      </FormControl>
+                      <FormMessage />
+                  </FormItem>
+              </FormField>
             </div>
         </div>
         <div class="user-detail__field-group">
@@ -97,67 +52,49 @@
             Образование
           </div>
           <div class="user-detail__fields">
-            <FormField type="select" name="type">
+            <FormField name="education[0].study_place" v-slot="{ componentField }">
               <FormItem class="user-detail__field">
                 <FormLabel class="user-detail__field-label">Университет</FormLabel>
                 <FormControl>
-                  <Combobox :items="universities" :placeholder="'Выберите университет'"/>
+                  <Input type="text" placeholder="Введите университет" v-bind="componentField"/>
                 </FormControl>
+                <FormMessage />
               </FormItem>
             </FormField>
-            <FormField type="select" name="type">
+            <FormField name="education[0].education_program" v-slot="{ componentField }">
               <FormItem class="user-detail__field">
-                <FormLabel class="user-detail__field-label">Программа</FormLabel>
+                <FormLabel class="user-detail__field-label">Направление подготовки</FormLabel>
                 <FormControl>
-                  <Combobox :items="programms" :placeholder="'Выберите направление'"/>
+                  <Input type="text" placeholder="Введите направление подготовки" v-bind="componentField"/>
                 </FormControl>
+                <FormMessage />
               </FormItem>
             </FormField>
-            <FormField type="select" name="course">
+            <FormField type="select" name="education[0].education_level.id" v-slot="{ componentField }">
               <FormItem class="user-detail__field">
-                <FormLabel class="user-detail__field-label">Курс</FormLabel>
+                <FormLabel class="user-detail__field-label">Уровень образования
+                </FormLabel>
                 <FormControl>
-                  <Select>
+                  <Select v-bind="componentField">
                     <SelectTrigger>
-                      <SelectValue placeholder="Выберите курс" />
+                      <SelectValue placeholder="Выберите уровень образования" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectGroup>
-                        <SelectLabel>Высшее образование - бакалавриат</SelectLabel>
-                        <SelectItem value="hb-1">
-                          1 курс
-                        </SelectItem>
-                        <SelectItem value="hb-2">
-                          2 курс
-                        </SelectItem>
-                        <SelectItem value="hb-3">
-                          3 курс
-                        </SelectItem>
-                        <SelectItem value="hb-4">
-                          4 курс
-                        </SelectItem>
-                      </SelectGroup>
-                      <SelectGroup>
-                        <SelectLabel>Высшее образование - магистратура</SelectLabel>
-                        <SelectItem value="hm-1">
-                          1 курс
-                        </SelectItem>
-                        <SelectItem value="hm-2">
-                          2 курс
-                        </SelectItem>
-                      </SelectGroup>
-                      <SelectGroup>
-                        <SelectLabel>Высшее образование - аспирантура</SelectLabel>
-                        <SelectItem value="hp-1">
-                          1 курс
-                        </SelectItem>
-                        <SelectItem value="hp-2">
-                          2 курс
-                        </SelectItem>
-                      </SelectGroup>
+                      <SelectItem v-for="level in education_levels" :key="level.id" :value="level.id">
+                        {{ level.name }}
+                      </SelectItem>
                     </SelectContent>
                   </Select>
                 </FormControl>
+              </FormItem>
+            </FormField>
+            <FormField name="education[0].course" v-slot="{ componentField }">
+              <FormItem class="user-detail__field">
+                  <FormLabel class="user-detail__field-label">Курс</FormLabel>
+                  <FormControl>
+                      <Input type="number" placeholder="Введите курс" v-bind="componentField"/>
+                  </FormControl>
+                  <FormMessage />
               </FormItem>
             </FormField>
           </div>
@@ -167,19 +104,19 @@
             Компетенции
           </div>
           <div class="user-detail__fields">
-            <FormField type="select" name="type">
+            <FormField name="specializations" v-slot="{ componentField }">
               <FormItem class="user-detail__field">
-                <FormLabel class="user-detail__field-label">Роли</FormLabel>
+                <FormLabel class="user-detail__field-label">Специализации</FormLabel>
                 <FormControl>
-                  <TagsInputCombobox :options="roles"/>
+                  <TagsInputCombobox v-model="componentField.modelValue" @update:modelValue="componentField['onUpdate:modelValue']" :objects="specializations"/>
                 </FormControl>
               </FormItem>
             </FormField>
-            <FormField type="select" name="type">
+            <FormField name="skills" v-slot="{ componentField }">
               <FormItem class="user-detail__field">
-                <FormLabel class="user-detail__field-label">Технологии</FormLabel>
+                <FormLabel class="user-detail__field-label">Навыки</FormLabel>
                 <FormControl>
-                  <TagsInputCombobox :options="technologies"/>
+                  <TagsInputCombobox v-model="componentField.modelValue" @update:modelValue="componentField['onUpdate:modelValue']" :objects="skills"/>
                 </FormControl>
               </FormItem>
             </FormField>
@@ -188,26 +125,27 @@
         <div class="user-detail__field-group">
           <div class="user-detail__title">
             Контакты
-          </div>
+          </div> 
           <div class="user-detail__fields">
-            <FormField type="select" name="type">
+            <FormField name="city" v-slot="{ componentField }">
               <FormItem class="user-detail__field">
-                <FormLabel class="user-detail__field-label">Город</FormLabel>
-                <FormControl>
-                  <Combobox :items="cities" :placeholder="'Выберите город'"/>
-                </FormControl>
+                  <FormLabel class="user-detail__field-label">Город</FormLabel>
+                  <FormControl>
+                      <Input type="text" placeholder="Введите город" v-bind="componentField"/>
+                  </FormControl>
+                  <FormMessage />
               </FormItem>
-            </FormField>
-            <FormField v-slot="{ componentField }" name="vk">
+          </FormField>
+            <FormField v-slot="{ componentField }" name="contacts.vk_url">
               <FormItem class="user-detail__field">
                   <FormLabel class="user-detail__field-label">Вконтакте</FormLabel>
                   <FormControl>
-                      <Input type="text" placeholder="vk.com/example" v-bind="componentField" />
+                      <Input type="text" placeholder="https://vk.com/example" v-bind="componentField" />
                   </FormControl>
                   <FormMessage />
               </FormItem>
             </FormField>
-            <FormField v-slot="{ componentField }" name="tg">
+            <FormField v-slot="{ componentField }" name="contacts.telegram">
               <FormItem class="user-detail__field">
                   <FormLabel class="user-detail__field-label">Telegram</FormLabel>
                   <FormControl>
@@ -216,20 +154,20 @@
                   <FormMessage />
               </FormItem>
             </FormField>
-            <FormField v-slot="{ componentField }" name="email">
+            <FormField v-slot="{ componentField }" name="contacts.github_url">
               <FormItem class="user-detail__field">
-                  <FormLabel class="user-detail__field-label">Электронная почта</FormLabel>
+                  <FormLabel class="user-detail__field-label">Github</FormLabel>
                   <FormControl>
-                      <Input type="email" placeholder="example@mal.ru" v-bind="componentField" />
+                      <Input type="text" placeholder="https://github.com/example" v-bind="componentField" />
                   </FormControl>
                   <FormMessage />
               </FormItem>
             </FormField>
-            <FormField v-slot="{ componentField }" name="github">
+            <FormField v-slot="{ componentField }" name="contacts.email">
               <FormItem class="user-detail__field">
-                  <FormLabel class="user-detail__field-label">Github</FormLabel>
+                  <FormLabel class="user-detail__field-label">Электронная почта</FormLabel>
                   <FormControl>
-                      <Input type="email" placeholder="example" v-bind="componentField" />
+                      <Input type="email" placeholder="example@mail.ru" v-bind="componentField" />
                   </FormControl>
                   <FormMessage />
               </FormItem>
@@ -244,20 +182,21 @@
             <FormField v-slot="{ componentField }" name="about">
               <FormItem>
                 <FormControl>
-                  <Textarea placeholder="Вкратце о себе" v-bind="componentField" />
+                  <Textarea placeholder="Напишите вкратце о себе" v-bind="componentField" />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             </FormField>
           </div>
         </div>
-    </Form>
+        <Button class="w-fit" :loading="isLoading" type="submit">Сохранить</Button>
+    </form>
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue'
 
 import {
-    Form,
     FormControl,
     FormField,
     FormItem,
@@ -265,123 +204,58 @@ import {
     FormMessage,
 } from '@/shared/ui/form'
 
-import { RadioGroup, RadioGroupItem } from '@/shared/ui/radio-group'
+import { useForm } from 'vee-validate';
+
 import { Button } from '@/shared/ui/button'
 
 import { Input } from '@/shared/ui/input'
 import { Textarea } from '@/shared/ui/textarea'
 
-import { ExtendedCalendar } from '@/shared/ui/extended-calendar'
-import { Combobox } from '@/shared/ui/combobox'
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from '@/shared/ui/popover'
-
 import {
   Select,
   SelectContent,
-  SelectGroup,
   SelectItem,
-  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from '@/shared/ui/select'
 
-import { TagsInputCombobox } from '@/shared/ui/tags-input-combobox'
+import { TagsInputCombobox } from '@/shared/ui/tags-input-combobox';
 import { UserAvatar } from '@/entities/user/ui/avatar';
 
-import { toDate } from 'radix-vue/date'
-
-import { DateFormatter, getLocalTimeZone } from '@internationalized/date'
-
-import IconCalendar from '~icons/heroicons/calendar-days-20-solid';
-
-import { cn } from '@/shared/lib/utils'
-
-import { ref } from 'vue'
-
 import { UserModel } from '@/entities/user'
+import type { IUser } from '@/entities/user/model'
+import { type IBase } from "@/shared/api/types";
 
-const dateValue = ref()
+import { formSchema } from '../model'
 
-const df = new DateFormatter('en-US', {
-  dateStyle: 'long',
+const userStore = UserModel.useUserStore();
+const educationLevelsStore = UserModel.useEducationLevelsStore();
+const skillsStore = UserModel.useSkillsStore();
+const specializationsStore = UserModel.useSpecializationsStore();
+
+const isLoading = computed<boolean>( () => userStore.isLoading);
+
+const fetch = async () => {
+  await educationLevelsStore.fetchEducationLevels();
+  await skillsStore.fetchSkills();
+  await specializationsStore.fetchSpecializations();
+}
+fetch();
+
+const specializations = computed<IBase[]>(() => specializationsStore.getSpecializations)
+const skills = computed<IBase[]>(() => skillsStore.getSkills)
+const education_levels = computed<IBase[]>(() => educationLevelsStore.getEducationLevels)
+const user = computed<IUser>(() => userStore.getUser);
+
+const { handleSubmit } = useForm({
+  validationSchema: computed(() => formSchema),
+  initialValues: computed(() => (user.value)),
 })
 
-const date = ref()
-
-const universities = [
-  { value: 'rtu-mirea', label: 'РТУ МИРЭА' },
-  { value: 'mgtu', label: 'МГТУ' },
-]
-
-const programms = [
-  { value: 'programming-engineering', label: 'Программная инженерия' },
-]
-
-const roles = [
-  { value: 'designer', label: 'Дизайнер' },
-  { value: 'frontend', label: 'Фронтенд' },
-  { value: 'backend', label: 'Бэкенд' },
-]
-
-const technologies = [
-  { value: 'figma', label: 'Figma' },
-  { value: 'go', label: 'Go' },
-  { value: 'python', label: 'Python' },
-]
-
-const cities = [
-  { value: 'moscow', label: 'Москва' },
-]
-
+const onSubmit = handleSubmit((values) => {
+  userStore.updateUser(values);
+})
 </script>
-
 <style scoped lang="scss">
-.user-detail {
-    display: flex;
-    flex-direction: column;
-    @include adaptiveValue('gap', 64, 36);
-    &__title {
-        @include subtitle();
-    }
-
-    &__field-group {
-        display: flex;
-        flex-direction: column;
-        gap: 12px;
-    }
-
-    &__fields {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(224px, 1fr));
-        gap: 24px;
-        grid-auto-flow: dense;
-    }
-
-    &__image {
-        display: flex;
-        flex-direction: column;
-        @include adaptiveValue('gap', 24, 12);
-        height: fit-content;
-        width: 100%;
-        align-items: center;
-
-        @media screen and (min-width: 779.98px) {
-          display: none;
-        }
-    }
-
-    &__field {
-        display: flex;
-        flex-direction: column;
-        gap: 12px;
-    }
-
-    &__field-label {
-      @include body();
-    }
-}
+@import './styles';
 </style>

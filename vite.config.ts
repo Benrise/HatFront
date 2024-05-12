@@ -18,7 +18,6 @@ const apiPort = env?.VITE_APP_API_SERVICE_PORT || '80';
 export default defineConfig({
   plugins: [
     vue(),
-    VueDevTools(),
     Icons({ compiler: 'vue3' }),
   ],
   resolve: {

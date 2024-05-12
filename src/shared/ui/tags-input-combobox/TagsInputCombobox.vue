@@ -1,33 +1,48 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { computed, ref, type PropType } from 'vue'
 import { ComboboxAnchor, ComboboxInput, ComboboxPortal, ComboboxRoot } from 'radix-vue'
 import { CommandEmpty, CommandGroup, CommandItem, CommandList } from '@/shared/ui/command'
 import { TagsInput, TagsInputInput, TagsInputItem, TagsInputItemDelete, TagsInputItemText } from '@/shared/ui/tags-input'
+import { type IBase } from "@/shared/api/types";
 
-export interface ITagsInputComboboxOption {
-  value: string
-  label: string
-}
+const props = defineProps<{
+  objects: IBase[]
+}>()
 
-const props = defineProps<{ options: ITagsInputComboboxOption[] }>()
+const modelValue = defineModel({
+  type: Array as PropType<IBase[]>,
+  default: () => [],
+  required: true
+})
 
-const modelValue = ref<string[]>([])
 const open = ref(false)
 const searchTerm = ref('')
 
-const filteredFrameworks = computed(() => props.options.filter(i => !modelValue.value.includes(i.label)))
+const emits = defineEmits<{
+  (e: 'update:modelValue', payload: string | number): void
+}>()
+
+const filteredItems = computed(() => props.objects.filter(i => !modelValue.value.includes(i)))
+
+const filterFunction = (objects: IBase[], search: string) => {
+  return objects.filter(i => i.name.toLowerCase().includes(search.toLowerCase()))
+}
+
+const removeItem = (item: IBase) => {
+  modelValue.value.splice(modelValue.value.findIndex(i => i.id === item.id), 1)
+}
 </script>
 
 <template>
   <TagsInput class="px-0 gap-0 w-ful" :model-value="modelValue">
     <div class="flex gap-2 flex-wrap items-center px-3">
-      <TagsInputItem v-for="item in modelValue" :key="item" :value="item">
+      <TagsInputItem v-for="item in modelValue" :key="item.id" :value="item.name">
         <TagsInputItemText />
-        <TagsInputItemDelete />
+        <TagsInputItemDelete @click="removeItem(item)" />
       </TagsInputItem>
     </div>
 
-    <ComboboxRoot v-model="modelValue" v-model:open="open" v-model:searchTerm="searchTerm" class="w-full">
+    <ComboboxRoot :filter-function="filterFunction" v-model="modelValue" v-model:open="open" v-model:searchTerm="searchTerm" class="w-full">
       <ComboboxAnchor as-child>
         <ComboboxInput placeholder="Поиск" as-child>
           <TagsInputInput class="w-full px-3" :class="modelValue.length > 0 ? 'mt-2' : ''" @keydown.enter.prevent />
@@ -42,19 +57,16 @@ const filteredFrameworks = computed(() => props.options.filter(i => !modelValue.
           <CommandEmpty>Ничего не найдено</CommandEmpty>
           <CommandGroup>
             <CommandItem
-              v-for="framework in filteredFrameworks" :key="framework.value" :value="framework.label"
+              v-for="item in filteredItems" :key="item.id" :value="item"
               @select.prevent="(ev) => {
-                if (typeof ev.detail.value === 'string') {
-                  searchTerm = ''
-                  modelValue.push(ev.detail.value)
-                }
-
-                if (filteredFrameworks.length === 0) {
+                searchTerm = ''
+                modelValue.push(ev.detail.value as IBase)
+                if (filteredItems.length === 0) {
                   open = false
                 }
               }"
             >
-              {{ framework.label }}
+              {{ item.name }}
             </CommandItem>
           </CommandGroup>
         </CommandList>
@@ -62,3 +74,4 @@ const filteredFrameworks = computed(() => props.options.filter(i => !modelValue.
     </ComboboxRoot>
   </TagsInput>
 </template>
+

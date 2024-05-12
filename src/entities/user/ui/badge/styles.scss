@@ -23,6 +23,9 @@
                 outline-color: hsl(var(--primary));
             }
         }
+        &:active {
+            scale: 0.98;
+        }
       }
     
 }

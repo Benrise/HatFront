@@ -232,6 +232,18 @@ const calculateFileSize = (bytes: number) => {
     line-height: 0;
   }
 
+  &__text {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__name {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    max-width: 264px;
+  }
+
   &__main {
     display: flex;
     gap: 12px;
