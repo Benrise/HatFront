@@ -25,10 +25,20 @@ export interface IContacts {
 
 export interface IEducation {
     education_id?: number;
-    education_level_id?: number;
+    education_level_id?: number; //TODO: remove
+    education_level?: IBase;
     education_program?: string;
     study_place?: string;
     class?: number;
     course?: number;
 }
 
+export interface IProvider {
+    name: string;
+    imgUrl: string;
+}
+
+export enum EProvider {
+    VK = "/images/svg/vk-color.svg",
+    MIREA = "/images/png/mirea.png"
+}

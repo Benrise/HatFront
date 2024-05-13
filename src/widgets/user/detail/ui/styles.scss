@@ -1,9 +1,15 @@
 .user-detail {
     display: flex;
     flex-direction: column;
+    position: relative;
     @include adaptiveValue('gap', 64, 36);
     &__title {
         @include subtitle();
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        align-items: center;
+        gap: 8px;
     }
 
     &__field-group {
@@ -40,5 +46,14 @@
 
     &__field-label {
       @include body();
+    }
+
+    &__provider{
+      @include body();
+      display: flex;
+      flex-direction: row;
+      gap: 8px;
+      align-items: center;
+      width: fit-content;
     }
 }

@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
-import { computed, ref, type ComputedRef } from 'vue'
-import { type IUser } from './types'
+import { computed, ref } from 'vue'
+import { EProvider, type IUser } from './types'
 import { type IBase } from "@/shared/api/types";
 import { http } from '../api/http'
 
@@ -57,9 +57,17 @@ export const useUserStore = defineStore("user", () => {
         try {
             isLoading.value = true;
             const mainResponse = await http.user.updateMain(payload);
-            const educationResponse = await http.user.updateEducation(payload.education[0]);
-            const skillsResponse = await http.user.updateSkills(payload.skills);
-            const specializationResponse = await http.user.updateSpecializations(payload.specializations);
+            //TODO: remove after correct api3
+            const educationResponse = await http.user.updateEducation({
+                class: payload.education[0].class || 1,
+                course: payload.education[0].course,
+                education_id: payload.education[0].education_id,
+                education_level_id: payload.education[0].education_level.id,
+                education_program: payload.education[0].education_program,
+                study_place: payload.education[0].study_place
+            });
+            const skillsResponse = await http.user.updateSkills(payload.skills.map((skill) => skill.id));
+            const specializationResponse = await http.user.updateSpecializations(payload.specializations.map((skill) => skill.id));
 
             if (
                 mainResponse.status === StatusCodes.OK 
@@ -106,8 +114,16 @@ export const useUserStore = defineStore("user", () => {
     }
 
     const getUser = computed(() => user.value);
+    const getProvider = computed<Record<string, string> | undefined>(() => {
+        const providerName = user.value.providers?.[0]?.name;
+        if (providerName) {
+            const imgUrl = EProvider[providerName as keyof typeof EProvider];
+            return { name: providerName, imgUrl };
+        }
+        return undefined;
+    });
 
-    return { logout, isAuthorized, isLoading, fetchUser, getUser, updateAvatar, updateUser }
+    return { logout, isAuthorized, isLoading, fetchUser, getUser, updateAvatar, updateUser, getProvider }
 })
 
 export const useEducationLevelsStore = defineStore("educationLevels", () => {

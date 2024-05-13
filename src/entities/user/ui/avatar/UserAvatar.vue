@@ -103,6 +103,8 @@ const avatarSrc = computed(() => {
   return user.value.photo_url ? STATIC_URL + user.value.photo_url : '#';
 })
 
+const providerImg = computed<string | undefined>(() => userStore.getProviderImg);
+
 const uploadedFile = ref<File>();
 
 const clearFile = (e: Event) => {
