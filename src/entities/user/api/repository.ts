@@ -1,5 +1,5 @@
 import type { AxiosInstance } from 'axios';
-import type { IEducation, IUser } from '../model';
+import type { EducationDto, UserDto } from '../model';
 import type { IBaseCursorList, IBase } from '@/shared/api/types';
 import type { ComputedRef } from 'vue';
 
@@ -15,7 +15,7 @@ export class  UserRepository{
     constructor(protected endpoint: string, private axiosInstance: AxiosInstance) {}
 
     async me(){
-        return this.axiosInstance.get<IUser>(`${this.endpoint}/me`);
+        return this.axiosInstance.get<UserDto>(`${this.endpoint}/me`);
     }
 
     async uploadPhoto(payload: File) {
@@ -24,12 +24,20 @@ export class  UserRepository{
         return this.axiosInstance.put(`${this.endpoint}/photo`, fromData, fileRequestConfig.config);
     }
 
-    async updateMain(payload: IUser) {
+    async updateMain(payload: UserDto) {
         return this.axiosInstance.put(`${this.endpoint}/main`, payload);
     }
 
-    async updateEducation(payload: IEducation[]) {
+    async updateEducation(payload: EducationDto) {
         return this.axiosInstance.put(`${this.endpoint}/education`, payload);
+    }
+
+    async createEducation(payload: EducationDto) {
+        return this.axiosInstance.post(`${this.endpoint}/education`, payload);
+    }
+
+    async deleteEduction(id: number) {
+        return this.axiosInstance.delete(`${this.endpoint}/education/${id}`); 
     }
 
     async updateSkills(payload: IBase[]) {

@@ -31,7 +31,8 @@
     "vaul-vue": "^0.1.0",
     "vee-validate": "^4.12.7",
     "vue": "^3.4.21",
-    "vue-router": "^4.3.0"
+    "vue-router": "^4.3.0",
+    "yup": "^1.4.0"
   },
   "devDependencies": {
     "@iconify/json": "^2.2.205",

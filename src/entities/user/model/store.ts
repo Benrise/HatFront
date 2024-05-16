@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { computed, ref } from 'vue'
-import { EProvider, type IUser } from './types'
+import { EProvider, type EducationDto, type UserDto } from './types'
 import { type IBase } from "@/shared/api/types";
 import { http } from '../api/http'
 
@@ -11,17 +11,61 @@ import { StatusCodes } from 'http-status-codes';
 export const useUserStore = defineStore("user", () => {
     const { toast } = useToast();
 
-    const user = ref<IUser>({})
+    const user = ref<UserDto>({})
     const isLoading = ref(false)
     const isAuthorized = ref(false)
 
-    const setUser = (payload: IUser) => {
+    const deleteEducation = async (education_id: number, callback: () => void) => {
+        try {
+            isLoading.value = true;
+            const response = await http.user.deleteEduction(education_id);
+            if (response.status === StatusCodes.OK) {
+                callback();
+                toast({
+                    variant: 'warning',
+                    title: 'Внимание',
+                    description: `Образование удалено`,
+                });
+            }
+        }
+        catch (e) {
+            console.error('Error on deleting education:', e);
+        }
+        finally {
+            fetchUser();
+            isLoading.value = false;
+        }
+    }
+
+    const setUser = (payload: UserDto) => {
         user.value = payload;
     }
 
     const clearUser = () => {
         user.value = {};
         isAuthorized.value = false;
+    }
+
+    const sendEducations = async (educations: EducationDto[] | undefined): Promise<StatusCodes> => {    
+        if (!educations) return StatusCodes.OK;
+
+        try {
+            for (const education of educations) {
+                if (education.education_id) {
+                    education.education_level_id = education.education_level.id;
+                    delete education.education_level;
+                    await http.user.updateEducation(education);
+                } else {
+                    education.education_level_id = education.education_level.id;
+                    delete education.education_level;
+                    await http.user.createEducation(education);
+                }
+            }
+        } catch (e: any) {
+            console.error('Error on sending educations:', e);
+            return e.code;
+        }
+        return StatusCodes.OK;
     }
 
     const updateAvatar = async (file: File) => {
@@ -53,25 +97,17 @@ export const useUserStore = defineStore("user", () => {
         }
     }
 
-    const updateUser = async (payload: IUser) => {
+    const updateUser = async (payload: UserDto) => {
         try {
             isLoading.value = true;
             const mainResponse = await http.user.updateMain(payload);
-            //TODO: remove after correct api3
-            const educationResponse = await http.user.updateEducation({
-                class: payload.education[0].class || 1,
-                course: payload.education[0].course,
-                education_id: payload.education[0].education_id,
-                education_level_id: payload.education[0].education_level.id,
-                education_program: payload.education[0].education_program,
-                study_place: payload.education[0].study_place
-            });
             const skillsResponse = await http.user.updateSkills(payload.skills.map((skill) => skill.id));
             const specializationResponse = await http.user.updateSpecializations(payload.specializations.map((skill) => skill.id));
-
+            const educationResponse = await sendEducations(payload.education);
+            
             if (
                 mainResponse.status === StatusCodes.OK 
-                && educationResponse.status === StatusCodes.OK 
+                && educationResponse === StatusCodes.OK
                 && skillsResponse.status === StatusCodes.OK 
                 && specializationResponse.status === StatusCodes.OK
             ) {
@@ -87,13 +123,12 @@ export const useUserStore = defineStore("user", () => {
         }
         finally {
             isLoading.value = false;
-            fetchUser();
         }    
     }
 
     const fetchUser = async () => {
-        isLoading.value = true;
         try {
+            isLoading.value = true;
             const { data, status } = await http.user.me();
 
             if (status === StatusCodes.OK) {
@@ -113,7 +148,7 @@ export const useUserStore = defineStore("user", () => {
         clearUser();
     }
 
-    const getUser = computed(() => user.value);
+    const getUser = computed<UserDto>(() => user.value);
     const getProvider = computed<Record<string, string> | undefined>(() => {
         const providerName = user.value.providers?.[0]?.name;
         if (providerName) {
@@ -122,8 +157,22 @@ export const useUserStore = defineStore("user", () => {
         }
         return undefined;
     });
+    const getEducation = computed<EducationDto[] | undefined >(() => user.value.education);
 
-    return { logout, isAuthorized, isLoading, fetchUser, getUser, updateAvatar, updateUser, getProvider }
+    return { 
+        logout, 
+        isAuthorized, 
+        isLoading, 
+        fetchUser, 
+        getUser, 
+        updateAvatar, 
+        updateUser, 
+        getProvider, 
+        getEducation,
+        deleteEducation,
+        user,
+        setUser
+    }
 })
 
 export const useEducationLevelsStore = defineStore("educationLevels", () => {

@@ -9,14 +9,14 @@
   
 
 <script setup lang="ts">
-import type { IUser } from '../../model';
+import type { UserDto } from '../../model';
 
 import { UserAvatar } from '@/entities/user/ui/avatar';
 
 import { useAppRoutes } from '@/router';
 
 interface IProps {
-  user?: IUser,
+  user?: UserDto,
   hideName?: boolean
 }
 const props = defineProps<IProps>()

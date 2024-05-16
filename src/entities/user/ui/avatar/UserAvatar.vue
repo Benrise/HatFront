@@ -59,7 +59,7 @@
 
 <script setup lang="ts">
 import { computed, ref } from 'vue';
-import type { IUser } from '../../model';
+import type { UserDto } from '../../model';
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/shared/ui/avatar';
 import { Button } from '@/shared/ui/button';
@@ -95,7 +95,7 @@ defineProps<IProps>();
 
 const userStore = UserModel.useUserStore();
 
-const user = computed(() =>userStore.getUser as IUser);
+const user = computed(() =>userStore.getUser as UserDto);
 const isLoading = computed<boolean>( () => userStore.isLoading);
 
 const avatarFallback = user.value.name?.charAt(0).toUpperCase() || '?';

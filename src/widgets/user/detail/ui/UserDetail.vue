@@ -63,53 +63,95 @@
         <div class="user-detail__title">
           Образование
         </div>
-        <div class="user-detail__fields">
-          <FormField name="education[0].study_place" v-slot="{ componentField }">
-            <FormItem class="user-detail__field">
-              <FormLabel class="user-detail__field-label">Университет</FormLabel>
-              <FormControl>
-                <Input type="text" placeholder="Введите университет" v-bind="componentField"/>
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          </FormField>
-          <FormField name="education[0].education_program" v-slot="{ componentField }">
-            <FormItem class="user-detail__field">
-              <FormLabel class="user-detail__field-label">Направление подготовки</FormLabel>
-              <FormControl>
-                <Input type="text" placeholder="Введите направление подготовки" v-bind="componentField"/>
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          </FormField>
-          <FormField type="select" name="education[0].education_level.id" v-slot="{ componentField }">
-            <FormItem class="user-detail__field">
-              <FormLabel class="user-detail__field-label">Уровень образования
-              </FormLabel>
-              <FormControl>
-                <Select v-bind="componentField">
-                  <SelectTrigger>
-                    <SelectValue placeholder="Выберите уровень образования" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem v-for="level in education_levels" :key="level.id" :value="level.id">
-                      {{ level.name }}
-                    </SelectItem>
-                  </SelectContent>
-                </Select>
-              </FormControl>
-            </FormItem>
-          </FormField>
-          <FormField name="education[0].course" v-slot="{ componentField }">
-            <FormItem class="user-detail__field">
-                <FormLabel class="user-detail__field-label">Курс</FormLabel>
-                <FormControl>
-                    <Input type="number" placeholder="Введите курс" v-bind="componentField"/>
-                </FormControl>
-                <FormMessage />
-            </FormItem>
-          </FormField>
+        <div class="user-detail__addable addable" v-if="values.education?.length">
+          <div v-for="(education, index) in values.education" :key="index" class="addable__item">
+            <Button v-if="!education?.education_id" @click="removeEducation(values, index)" type="button" class="addable__number">
+              <div class="addable__digit">
+                {{ index + 1 }}
+              </div>
+              <IconXmark class="addable__delete"/>
+            </Button>
+            <AlertDialog v-else>
+              <AlertDialogTrigger as-child>
+                <Button type="button" class="addable__number">
+                  <div class="addable__digit">
+                    {{ index + 1 }}
+                  </div>
+                  <IconXmark class="addable__delete"/>
+                </Button>
+              </AlertDialogTrigger>
+              <AlertDialogContent>
+                <AlertDialogHeader>
+                  <AlertDialogTitle>Удалить образование №{{index + 1}} ?</AlertDialogTitle>
+                  <AlertDialogDescription>
+                    Действие нельзя будет отменить, и оно будет выполнено немедленно.
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel>Отмена</AlertDialogCancel>
+                  <AlertDialogAction @click="removeEducation(values, index, education.education_id)">Удалить</AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
+            <div class="user-detail__fields">
+              <FormField :name="`education[${index}].study_place`" v-slot="{ componentField }">
+                <FormItem class="user-detail__field">
+                  <FormLabel class="user-detail__field-label">Университет</FormLabel>
+                  <FormControl>
+                    <Input type="text" placeholder="Введите университет" v-bind="componentField"/>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              </FormField>
+              <FormField :name="`education[${index}].education_program`" v-slot="{ componentField }">
+                <FormItem class="user-detail__field">
+                  <FormLabel class="user-detail__field-label">Направление подготовки</FormLabel>
+                  <FormControl>
+                    <Input type="text" placeholder="Введите направление подготовки" v-bind="componentField"/>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              </FormField>
+              <FormField type="select" :name="`education[${index}].education_level.id`" v-slot="{ componentField }">
+                <FormItem class="user-detail__field">
+                  <FormLabel class="user-detail__field-label">Уровень образования
+                  </FormLabel>
+                  <FormControl>
+                    <Select v-bind="componentField">
+                      <SelectTrigger>
+                        <SelectValue placeholder="Выберите уровень образования" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem v-for="level in education_levels" :key="level.id" :value="level.id">
+                          {{ level.name }}
+                        </SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </FormControl>
+                </FormItem>
+              </FormField>
+              <FormField :name="`education[${index}].course`" v-slot="{ componentField }">
+                <FormItem class="user-detail__field">
+                    <FormLabel class="user-detail__field-label">Курс</FormLabel>
+                    <FormControl>
+                        <Input type="number" placeholder="Введите курс" v-bind="componentField"/>
+                    </FormControl>
+                    <FormMessage />
+                </FormItem>
+              </FormField>
+              <!-- <FormField :name="`education[${index}].class`" v-slot="{ componentField }">
+                <FormItem class="user-detail__field">
+                    <FormLabel class="user-detail__field-label">Класс</FormLabel>
+                    <FormControl>
+                        <Input type="number" placeholder="Введите класс" v-bind="componentField"/>
+                    </FormControl>
+                    <FormMessage />
+                </FormItem>
+              </FormField> -->
+            </div>
+          </div> 
         </div>
+        <Button class="w-fit" type="button" variant="secondary" @click="addEducation(values)">Добавить образование</Button>
       </div>
       <div class="user-detail__field-group">
         <div class="user-detail__title">
@@ -206,7 +248,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, watch } from 'vue'
 
 import {
     FormControl,
@@ -237,11 +279,26 @@ import {
   SelectValue,
 } from '@/shared/ui/select'
 
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from '@/shared/ui/alert-dialog'
+
 import { TagsInputCombobox } from '@/shared/ui/tags-input-combobox';
+
+import IconXmark from '~icons/heroicons/x-mark-20-solid';
+
 import { UserAvatar } from '@/entities/user/ui/avatar';
 
 import { UserModel } from '@/entities/user'
-import type { IUser } from '@/entities/user/model'
+import type { EducationDto, UserDto } from '@/entities/user/model'
 import { type IBase } from "@/shared/api/types";
 
 import { formSchema } from '../model'
@@ -257,23 +314,50 @@ const fetch = async () => {
   await educationLevelsStore.fetchEducationLevels();
   await skillsStore.fetchSkills();
   await specializationsStore.fetchSpecializations();
+  await userStore.fetchUser();
 }
 fetch()
 
 const specializations = computed<IBase[]>(() => specializationsStore.getSpecializations)
 const skills = computed<IBase[]>(() => skillsStore.getSkills)
 const education_levels = computed<IBase[]>(() => educationLevelsStore.getEducationLevels)
-const user = computed<IUser>(() => userStore.getUser);
+const user = computed<UserDto>(() => userStore.getUser);
 const provider = computed<Record<string, string> | undefined>(() => userStore.getProvider);
 
-const { handleSubmit } = useForm({
+const { handleSubmit, values, setValues, errors } = useForm({
   validationSchema: computed(() => formSchema),
-  initialValues: computed(() => (user.value)),
 })
 
-const onSubmit = handleSubmit((values) => {
-  userStore.updateUser(values);
+const onSubmit = handleSubmit(async (values) => {
+  await userStore.updateUser(values);
+  await fetch();
 })
+
+watch(user, () => {
+  setValues(user.value)
+})
+
+const addEducation = (values: UserDto) => {
+  const newEducation = (values.education || []).concat([{}]);
+  setValues({
+    education: newEducation
+  })
+}
+
+const removeEducation = (values: UserDto, index: number, id?: number) => {
+  if (!id) {
+    const newEducation = (values.education || []).filter((_, i) => i !== index);
+    setValues({
+      education: newEducation
+    })
+    return
+  }
+  const newEducation = (values.education || []).filter(item => item.education_id !== id);
+  userStore.deleteEducation(id, () => setValues({
+    education: newEducation
+  }));
+}
+
 </script>
 <style scoped lang="scss">
 @import './styles';
