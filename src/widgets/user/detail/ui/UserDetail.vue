@@ -7,10 +7,10 @@
       <div class="user-detail__field-group">
           <div class="user-detail__title">
               Личные данные
-              <TooltipProvider>
+              <TooltipProvider v-if="provider">
                 <Tooltip>
                   <TooltipTrigger as-child>
-                    <div v-if="provider" class="user-detail__provider">
+                    <div class="user-detail__provider">
                       <img :src="provider.imgUrl" alt="logo" height="24" width="24"/>
                     </div>
                   </TooltipTrigger>
@@ -63,94 +63,98 @@
         <div class="user-detail__title">
           Образование
         </div>
-        <div class="user-detail__addable addable" v-if="values.education?.length">
-          <div v-for="(education, index) in values.education" :key="index" class="addable__item">
-            <Button v-if="!education?.education_id" @click="removeEducation(values, index)" type="button" class="addable__number">
-              <div class="addable__digit">
-                {{ index + 1 }}
-              </div>
-              <IconXmark class="addable__delete"/>
-            </Button>
-            <AlertDialog v-else>
-              <AlertDialogTrigger as-child>
-                <Button type="button" class="addable__number">
+        <transition name="fade" mode="out-in">
+          <div class="user-detail__addable addable" v-if="values.education?.length">
+            <transition-group name="addable" appear>
+              <div v-for="(education, index) in values.education" :key="index" class="addable__item">
+                <Button v-if="!education?.education_id" @click="removeEducation(values, index)" type="button" class="addable__number">
                   <div class="addable__digit">
                     {{ index + 1 }}
                   </div>
                   <IconXmark class="addable__delete"/>
                 </Button>
-              </AlertDialogTrigger>
-              <AlertDialogContent>
-                <AlertDialogHeader>
-                  <AlertDialogTitle>Удалить образование №{{index + 1}} ?</AlertDialogTitle>
-                  <AlertDialogDescription>
-                    Действие нельзя будет отменить, и оно будет выполнено немедленно.
-                  </AlertDialogDescription>
-                </AlertDialogHeader>
-                <AlertDialogFooter>
-                  <AlertDialogCancel>Отмена</AlertDialogCancel>
-                  <AlertDialogAction @click="removeEducation(values, index, education.education_id)">Удалить</AlertDialogAction>
-                </AlertDialogFooter>
-              </AlertDialogContent>
-            </AlertDialog>
-            <div class="user-detail__fields">
-              <FormField :name="`education[${index}].study_place`" v-slot="{ componentField }">
-                <FormItem class="user-detail__field">
-                  <FormLabel class="user-detail__field-label">Университет</FormLabel>
-                  <FormControl>
-                    <Input type="text" placeholder="Введите университет" v-bind="componentField"/>
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              </FormField>
-              <FormField :name="`education[${index}].education_program`" v-slot="{ componentField }">
-                <FormItem class="user-detail__field">
-                  <FormLabel class="user-detail__field-label">Направление подготовки</FormLabel>
-                  <FormControl>
-                    <Input type="text" placeholder="Введите направление подготовки" v-bind="componentField"/>
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              </FormField>
-              <FormField type="select" :name="`education[${index}].education_level.id`" v-slot="{ componentField }">
-                <FormItem class="user-detail__field">
-                  <FormLabel class="user-detail__field-label">Уровень образования
-                  </FormLabel>
-                  <FormControl>
-                    <Select v-bind="componentField">
-                      <SelectTrigger>
-                        <SelectValue placeholder="Выберите уровень образования" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem v-for="level in education_levels" :key="level.id" :value="level.id">
-                          {{ level.name }}
-                        </SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </FormControl>
-                </FormItem>
-              </FormField>
-              <FormField :name="`education[${index}].course`" v-slot="{ componentField }">
-                <FormItem class="user-detail__field">
-                    <FormLabel class="user-detail__field-label">Курс</FormLabel>
-                    <FormControl>
-                        <Input type="number" placeholder="Введите курс" v-bind="componentField"/>
-                    </FormControl>
-                    <FormMessage />
-                </FormItem>
-              </FormField>
-              <!-- <FormField :name="`education[${index}].class`" v-slot="{ componentField }">
-                <FormItem class="user-detail__field">
-                    <FormLabel class="user-detail__field-label">Класс</FormLabel>
-                    <FormControl>
-                        <Input type="number" placeholder="Введите класс" v-bind="componentField"/>
-                    </FormControl>
-                    <FormMessage />
-                </FormItem>
-              </FormField> -->
-            </div>
-          </div> 
-        </div>
+                <AlertDialog v-else>
+                  <AlertDialogTrigger as-child>
+                    <Button type="button" class="addable__number">
+                      <div class="addable__digit">
+                        {{ index + 1 }}
+                      </div>
+                      <IconXmark class="addable__delete"/>
+                    </Button>
+                  </AlertDialogTrigger>
+                  <AlertDialogContent>
+                    <AlertDialogHeader>
+                      <AlertDialogTitle>Удалить образование №{{index + 1}} ?</AlertDialogTitle>
+                      <AlertDialogDescription>
+                        Действие нельзя будет отменить, и оно будет выполнено немедленно.
+                      </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                      <AlertDialogCancel>Отмена</AlertDialogCancel>
+                      <AlertDialogAction @click="removeEducation(values, index, education.education_id)">Удалить</AlertDialogAction>
+                    </AlertDialogFooter>
+                  </AlertDialogContent>
+                </AlertDialog>
+                <div class="user-detail__fields">
+                  <FormField :name="`education[${index}].study_place`" v-slot="{ componentField }">
+                    <FormItem class="user-detail__field">
+                      <FormLabel class="user-detail__field-label">Университет</FormLabel>
+                      <FormControl>
+                        <Input type="text" placeholder="Введите университет" v-bind="componentField"/>
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  </FormField>
+                  <FormField :name="`education[${index}].education_program`" v-slot="{ componentField }">
+                    <FormItem class="user-detail__field">
+                      <FormLabel class="user-detail__field-label">Направление подготовки</FormLabel>
+                      <FormControl>
+                        <Input type="text" placeholder="Введите направление подготовки" v-bind="componentField"/>
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  </FormField>
+                  <FormField type="select" :name="`education[${index}].education_level.id`" v-slot="{ componentField }">
+                    <FormItem class="user-detail__field">
+                      <FormLabel class="user-detail__field-label">Уровень образования
+                      </FormLabel>
+                      <FormControl>
+                        <Select v-bind="componentField">
+                          <SelectTrigger>
+                            <SelectValue placeholder="Выберите уровень образования" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem v-for="level in education_levels" :key="level.id" :value="level.id">
+                              {{ level.name }}
+                            </SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </FormControl>
+                    </FormItem>
+                  </FormField>
+                  <FormField :name="`education[${index}].course`" v-slot="{ componentField }">
+                    <FormItem class="user-detail__field">
+                        <FormLabel class="user-detail__field-label">Курс</FormLabel>
+                        <FormControl>
+                            <Input type="number" placeholder="Введите курс" v-bind="componentField"/>
+                        </FormControl>
+                        <FormMessage />
+                    </FormItem>
+                  </FormField>
+                  <!-- <FormField :name="`education[${index}].class`" v-slot="{ componentField }">
+                    <FormItem class="user-detail__field">
+                        <FormLabel class="user-detail__field-label">Класс</FormLabel>
+                        <FormControl>
+                            <Input type="number" placeholder="Введите класс" v-bind="componentField"/>
+                        </FormControl>
+                        <FormMessage />
+                    </FormItem>
+                  </FormField> -->
+                </div>
+              </div>          
+            </transition-group> 
+          </div>
+        </transition>
         <Button class="w-fit" type="button" variant="secondary" @click="addEducation(values)">Добавить образование</Button>
       </div>
       <div class="user-detail__field-group">

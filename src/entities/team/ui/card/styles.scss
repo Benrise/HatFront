@@ -5,6 +5,7 @@
     @include adaptiveValue('padding', 24, 12);
     background-color: hsl(var(--card));
     border-radius: 12px;
+    border: 1px solid hsl(var(--border));
 
     &__info {
         display: flex;
@@ -33,6 +34,7 @@
         background: none;
         border-left: 1px solid hsl(var(--accent));
         border-radius: 0;
+        color: hsl(var(--foreground));
     }
 
     &__main {

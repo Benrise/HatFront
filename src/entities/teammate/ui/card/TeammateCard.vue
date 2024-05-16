@@ -26,7 +26,7 @@
 </template>
 
 <script setup lang="ts">
-import { UserBadge, UserModel} from '@/entities/user';
+import { UserBadge } from '@/entities/user';
 import { Button } from '@/shared/ui/button';
 import { Badge } from '@/shared/ui/badge';
 

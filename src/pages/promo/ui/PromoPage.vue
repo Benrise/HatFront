@@ -12,7 +12,7 @@
                     </router-link>
                 </div>
                 <div class="greeting__logo">
-                    <img src="/images/svg/logo/logo-abb.svg" />
+                    <img :src="logoUrl" />
                 </div>
             </div>
             <div id="features" class="promo__features features">
@@ -60,7 +60,12 @@ import IconCup from '~icons/solar/cup-bold?width=48px&height=48px';
 import IconPerson from '~icons/heroicons/user-circle-16-solid?width=48px&height=48px';
 import IconPersonPlus from '~icons/heroicons/user-plus-20-solid?width=48px&height=48px';
 import { useAppRoutes } from '@/router';
+import { useColorMode } from '@vueuse/core'
 
+import { computed } from 'vue';
+
+const mode = useColorMode()
+const logoUrl = computed(() => `/images/svg/logo/logo-abb-${mode.value}.svg`)
 
 interface IFeature {
     title: string;

@@ -2,7 +2,7 @@
     <div class="login-promo">
         <div class="login-promo__wrapper">
             <div class="login-promo__logo">
-                <img class="login-promo__img" src="/images/svg/logo/logo-abb.svg" alt="logo" />
+                <img class="login-promo__img" :src="logoUrl" alt="logo" />
             </div>
             <div class="login-promo__header">
                 <div class="login-promo__title">
@@ -27,6 +27,13 @@ import { LoginForm } from '@/features/login'
 import { Button } from '@/shared/ui/button'
 
 import { useAppRoutes } from '@/router';
+
+import { useColorMode } from '@vueuse/core'
+
+import { computed } from 'vue';
+
+const mode = useColorMode()
+const logoUrl = computed(() => `/images/svg/logo/logo-abb-${mode.value}.svg`)
 
 const appRoutes = useAppRoutes()
 </script>

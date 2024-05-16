@@ -5,6 +5,7 @@
     @include adaptiveValue('padding', 24, 12);
     border-radius: 12px;
     gap: 24px;
+    border: 1px solid hsl(var(--border));
 
     &__main {
         width: 100%;
@@ -48,6 +49,7 @@
 
     &__role {
         background: none;
+        color: hsl(var(--foreground));
         border-left: 1px solid hsl(var(--accent));
         border-radius: 0;
     }

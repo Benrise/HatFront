@@ -27,6 +27,10 @@
                     </div>
                 </div>
                 <div class="header__right">
+                    <Button @click="toggleColorMode" variant="ghost" class="h-6 w-6" size="icon">
+                        <IconSun v-if="mode === 'light'"/>
+                        <IconMoon v-else/>
+                    </Button>
                     <UserBadge v-if="isAuthorized" :user="undefined" hide-name/>
                     <router-link v-if="!isAuthorized" :to="appRoutes?.getLogin()" class="header__link">
                         <Button size="icon" class="rounded-full w-10 h-10 ">
@@ -149,6 +153,15 @@ import IconLogout from '~icons/heroicons/arrow-right-start-on-rectangle-20-solid
 import { UserBadge, UserModel } from '@/entities/user';
 import { AppPages, router, useAppRoutes } from '@/router';
 import { useRoute } from 'vue-router';
+import IconSun from '~icons/heroicons/sun?width=16px&height=16px';
+import IconMoon from '~icons/heroicons/moon?width=16px&height=16px';
+
+import { useColorMode } from '@vueuse/core'
+
+const mode = useColorMode()
+const toggleColorMode = () => {
+    mode.value = mode.value === 'light' ? 'dark' : 'light';
+};
 
 const appRoutes = useAppRoutes()
 const userStore = UserModel.useUserStore();

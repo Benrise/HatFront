@@ -8,5 +8,6 @@
     width: 100%;
     display: flex;
     justify-content: end;
+    color: hsl(var(--primary-foreground));
     z-index: 50;
 }

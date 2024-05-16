@@ -13,12 +13,22 @@
   transition: all 0.5s ease;
 }
 
-.list-enter-from,
-.list-leave-to {
+.list-leave-to,
+.list-enter-from {
   opacity: 0;
   transform: translateY(15px);
 }
 
 .list-leave-active {
   position: absolute;
+}
+
+.addable-enter-active,
+.addable-leave-active {
+  transition: all 0.3s ease;
+}
+.addable-enter-from,
+.addable-leave-to {
+  opacity: 0;
+  transform: translateX(30px);
 }
