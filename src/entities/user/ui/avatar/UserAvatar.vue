@@ -58,7 +58,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue';
+import { computed, ref, type PropType } from 'vue';
 import type { UserDto } from '../../model';
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/shared/ui/avatar';
@@ -87,23 +87,26 @@ import { useToast } from '@/shared/ui/toast';
 
 const { toast } = useToast();
 
-interface IProps {
-    editable?: boolean,
-    size?: 'sm' | 'base' | 'lg' | 'xl',
-}
-defineProps<IProps>();
+defineProps({
+  editable: {
+    type: Boolean,
+    default: false
+  },
+  size: {
+    type: String as PropType<'sm' | 'base' | 'lg' | 'xl'>,
+    default: 'sm'
+  }
+});
 
 const userStore = UserModel.useUserStore();
 
 const user = computed(() =>userStore.getUser as UserDto);
 const isLoading = computed<boolean>( () => userStore.isLoading);
 
-const avatarFallback = user.value.name?.charAt(0).toUpperCase() || '?';
+const avatarFallback = user.value.first_name?.charAt(0).toUpperCase() || '?';
 const avatarSrc = computed(() => {
   return user.value.photo_url ? STATIC_URL + user.value.photo_url : '#';
 })
-
-const providerImg = computed<string | undefined>(() => userStore.getProviderImg);
 
 const uploadedFile = ref<File>();
 

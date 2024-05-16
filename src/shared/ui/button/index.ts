@@ -14,7 +14,7 @@ export const buttonVariants = cva(
           'border-2 border-primary text-foreground shadow-sm hover:opacity-90',
         secondary:
           'bg-secondary text-blueGray-100 shadow-sm hover:bg-secondary/80',
-        ghost: 'text-primary hover:bg-accent hover:text-accent-foreground',
+        ghost: 'text-foreground hover:bg-accent hover:text-accent-foreground',
         link: 'text-violet-600 underline-offset-4 hover:underline',
       },
       size: {

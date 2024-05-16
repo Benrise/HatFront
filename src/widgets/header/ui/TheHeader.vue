@@ -27,23 +27,43 @@
                     </div>
                 </div>
                 <div class="header__right">
-                    <Button @click="toggleColorMode" variant="ghost" class="h-6 w-6" size="icon">
+                    <Button @click="toggleColorMode" variant="ghost" class="rounded-full h-10 w-10" size="icon">
                         <IconSun v-if="mode === 'light'"/>
                         <IconMoon v-else/>
                     </Button>
                     <UserBadge v-if="isAuthorized" :user="undefined" hide-name/>
                     <router-link v-if="!isAuthorized" :to="appRoutes?.getLogin()" class="header__link">
-                        <Button size="icon" class="rounded-full w-10 h-10 ">
+                        <Button size="icon" class="rounded-full">
                             <IconLogin/>
                         </Button>
                     </router-link>
-                    <Button v-if="isAuthorized" @click="logout" size="icon" variant="secondary" class="rounded-full w-10 h-10 ">
-                        <IconLogout/>
-                    </Button>
+                    <AlertDialog v-else>
+                        <AlertDialogTrigger as-child>
+                            <Button v-if="isAuthorized" size="icon" variant="ghost" class="rounded-full h-10 w-10">
+                                <IconLogout/>
+                            </Button>
+                        </AlertDialogTrigger>
+                        <AlertDialogContent>
+                          <AlertDialogHeader>
+                            <AlertDialogTitle>Выход</AlertDialogTitle>
+                            <AlertDialogDescription>
+                              Вы уверены, что хотите выйти?
+                            </AlertDialogDescription>
+                          </AlertDialogHeader>
+                          <AlertDialogFooter>
+                            <AlertDialogCancel>Отмена</AlertDialogCancel>
+                            <AlertDialogAction  @click="logout">Выйти</AlertDialogAction>
+                          </AlertDialogFooter>
+                        </AlertDialogContent>
+                      </AlertDialog>
                 </div>
             </div>
             <div class="header__content header__content_mobile">
                 <Sheet class="header__sheet sheet">
+                    <Button @click="toggleColorMode" variant="ghost" class="rounded-full" size="icon">
+                        <IconSun v-if="mode === 'light'"/>
+                        <IconMoon v-else/>
+                    </Button>
                     <SheetTrigger><IconBars class="sheet__trigger"/></SheetTrigger>
                     <SheetContent side="right">
                         <div class="sheet__content">
@@ -129,7 +149,7 @@
                             </div>
                         </div>
                     </SheetContent>
-                  </Sheet>
+                </Sheet>
             </div>
         </div>
     </header>
@@ -137,12 +157,23 @@
 
 <script setup lang="ts">
 import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from '@/shared/ui/alert-dialog'
+
+import {
   Sheet,
   SheetContent,
   SheetTrigger,
   SheetClose,
   SheetHeader,
-  SheetFooter
 } from '@/shared/ui/sheet';
 import { Button } from '@/shared/ui/button';
 
@@ -153,8 +184,8 @@ import IconLogout from '~icons/heroicons/arrow-right-start-on-rectangle-20-solid
 import { UserBadge, UserModel } from '@/entities/user';
 import { AppPages, router, useAppRoutes } from '@/router';
 import { useRoute } from 'vue-router';
-import IconSun from '~icons/heroicons/sun?width=16px&height=16px';
-import IconMoon from '~icons/heroicons/moon?width=16px&height=16px';
+import IconSun from '~icons/heroicons/sun';
+import IconMoon from '~icons/heroicons/moon';
 
 import { useColorMode } from '@vueuse/core'
 

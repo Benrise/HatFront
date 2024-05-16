@@ -18,7 +18,6 @@
                     alt="Постер хакатона"
                     class="rounded-md"
                 >
-                
         </div>
         <div class="hackathon-card__main">
             <div class="hackathon-card__info">

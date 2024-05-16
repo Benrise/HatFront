@@ -8,6 +8,13 @@
         @include adaptiveValue('gap', 24, 12);
     }
 
+    &__main {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        width: 100%;
+    }
+
     &__content {
         display: flex;
         align-items: center;
@@ -22,6 +29,8 @@
     }
 
     &__content_mobile {
+        display: flex;
+        gap: 8px;
         @media screen and (min-width: 480px) {
             display: none;
         }

@@ -1,7 +1,7 @@
 <template>
   <div class="user-badge">
     <router-link class="flex" :to="appRoutes?.getProfile()">
-      <UserAvatar class="user-badge__avatar" :user="user"/>
+      <UserAvatar :size="size"  class="user-badge__avatar" :user="user"/>
     </router-link>
     <span v-if="!props.hideName" class="user-badge__name">{{ user?.name || 'Пользователь' }}</span>
   </div>
@@ -17,7 +17,8 @@ import { useAppRoutes } from '@/router';
 
 interface IProps {
   user?: UserDto,
-  hideName?: boolean
+  hideName?: boolean,
+  size?: 'sm' | 'base' | 'lg' | 'xl',
 }
 const props = defineProps<IProps>()
 const appRoutes = useAppRoutes()
