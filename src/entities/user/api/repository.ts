@@ -18,9 +18,9 @@ export class  UserRepository{
         return this.axiosInstance.get<UserDto>(`${this.endpoint}/me`);
     }
 
-    async uploadPhoto(payload: File) {
+    async uploadPhoto(payload: File | null) {
         const fromData = new FormData();
-        fromData.append('photo', payload);
+        if (payload) fromData.append('photo', payload);
         return this.axiosInstance.put(`${this.endpoint}/photo`, fromData, fileRequestConfig.config);
     }
 
@@ -47,7 +47,6 @@ export class  UserRepository{
     async updateSpecializations(payload: number[]) {
         return this.axiosInstance.put(`${this.endpoint}/specializations`, payload);
     }
-
 }
 
 export class EducationLevelsRepository {

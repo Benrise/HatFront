@@ -34,8 +34,8 @@ const contactsSchema = yup.object().shape({
 });
 
 const educationSchema = yup.object().shape({
-  study_place: yup.string().min(2).max(100),
-  education_program: yup.string().min(2).max(100),
+  study_place: yup.string().min(2).max(100).required(),
+  education_program: yup.string().min(2).max(100).required(),
   course: yup.number().min(1).max(7).integer().default(1).nullable(),
   class: yup.number().min(1).max(11).integer().default(1).nullable()
 });

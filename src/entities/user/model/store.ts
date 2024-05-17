@@ -24,7 +24,7 @@ export const useUserStore = defineStore("user", () => {
                 toast({
                     variant: 'warning',
                     title: 'Внимание',
-                    description: `Образование удалено`,
+                    description: `Образование успешно удалено`,
                 });
             }
         }
@@ -91,6 +91,27 @@ export const useUserStore = defineStore("user", () => {
                 title: `Ошибка при загрузке файла`,
                 description: `Файл ${file.name} не загружен. Попробуйте позже.`,
             });
+        }
+        finally {
+            isLoading.value = false;
+            fetchUser();
+        }
+    }
+
+    const deleteAvatar = async () => {
+        try {
+            isLoading.value = true;
+            const response = await http.user.uploadPhoto(null);
+            if (response.status === StatusCodes.OK) {
+                toast({
+                    variant: 'warning',
+                    title: 'Внимание',
+                    description: `Аватар успешно удален`,
+                  });
+            }
+        }
+        catch (e) {
+            console.error('Error on deleting avatar:', e);
         }
         finally {
             isLoading.value = false;
@@ -172,7 +193,8 @@ export const useUserStore = defineStore("user", () => {
         getEducation,
         deleteEducation,
         user,
-        setUser
+        setUser,
+        deleteAvatar
     }
 })
 

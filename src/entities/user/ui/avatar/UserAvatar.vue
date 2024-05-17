@@ -9,12 +9,33 @@
         <Button size="icon" class="user-avatar__edit"><IconPencil/></Button>
       </DialogTrigger>
       <DialogContent class="sm:max-w-[425px]">
-        <DialogHeader>
+        <DialogHeader class="flex flex-col gap-2">
           <DialogTitle>Загрузка фотографии</DialogTitle>
           <DialogDescription>
             Поддерживаемые форматы: JPG, JPEG, PNG. Максимальный размер: 2 МБ
           </DialogDescription>
         </DialogHeader>
+        <transition name="fade" mode="out-in">
+          <div v-if="avatarSrc !== '#'" class="upload__delete">
+            <AlertDialog>
+              <AlertDialogTrigger as-child>
+                <Button variant="secondary">Удалить аватар </Button>
+              </AlertDialogTrigger>
+              <AlertDialogContent>
+                <AlertDialogHeader>
+                  <AlertDialogTitle>Удалить аватар?</AlertDialogTitle>
+                  <AlertDialogDescription>
+                    Действие нельзя будет отменить, и оно будет выполнено немедленно.
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel>Отмена</AlertDialogCancel>
+                  <AlertDialogAction  @click="removeAvatar">Удалить</AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
+          </div>
+        </transition>
         <label for="avatar" class="user-avatar__upload upload">
           <Input @change="onFileChange($event)" accept=".jpg,.jpeg,.png" id="avatar" type="file"/>
           <div class="upload__area">
@@ -79,6 +100,19 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/shared/ui/dialog'
+
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from '@/shared/ui/alert-dialog'
+
 
 import { STATIC_URL } from '@/app/config'
 
@@ -146,6 +180,10 @@ const calculateFileSize = (bytes: number) => {
   }
   const i = Math.floor(Math.log(bytes) / Math.log(1024));
   return `${parseFloat((bytes / Math.pow(1024, i)).toFixed(2))} ${sizes[i]}`;
+}
+
+const removeAvatar = () => {
+  userStore.deleteAvatar();
 }
 </script>
 

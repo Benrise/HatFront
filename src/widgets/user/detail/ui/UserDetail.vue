@@ -126,7 +126,7 @@
                             <SelectValue placeholder="Выберите уровень образования" />
                           </SelectTrigger>
                           <SelectContent>
-                            <SelectItem v-for="level in education_levels" :key="level.id" :value="String(level.id)">
+                            <SelectItem v-for="level in education_levels" :key="level.id" :value="level.id as any">
                               {{ level.name }}
                             </SelectItem>
                           </SelectContent>
@@ -249,7 +249,7 @@
           </FormField>
         </div>
       </div>
-      <Button class="w-fit" :loading="isLoading" type="submit">Сохранить</Button>
+      <Button class="w-fit" :loading="isLoading" :disabled="errors" type="submit">Сохранить</Button>
   </form>
 </template>
 
@@ -301,14 +301,13 @@ import { TagsInputCombobox } from '@/shared/ui/tags-input-combobox';
 
 import IconXmark from '~icons/heroicons/x-mark-20-solid';
 
-import { UserAvatar } from '@/entities/user/ui/avatar';
-
-import { UserModel } from '@/entities/user'
-import type { UserDto } from '@/entities/user/model'
 import { type IBase } from "@/shared/api/types";
 
-import { formSchema } from '../model'
+import { UserAvatar } from '@/entities/user/ui/avatar';
+import type { UserDto } from '@/entities/user/model'
 
+import { formSchema } from '../model'
+import { UserModel } from '@/entities/user'
 import { UserPreview } from '@/entities/user/ui/preview';
 
 const userStore = UserModel.useUserStore();
