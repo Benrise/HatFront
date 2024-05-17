@@ -12,7 +12,7 @@
                         Сервис по поиску и подбору команд для участия в хакатонах
                     </p>
                 </div>
-                <router-link :to="appRoutes?.getPromo()">
+                <router-link :to="appRoutes?.getPromo() || '#'">
                     <Button class="max-w-fit" >Узнать подробнее</Button>
                 </router-link>
             </div>

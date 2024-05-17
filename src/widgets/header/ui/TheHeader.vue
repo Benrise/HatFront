@@ -1,12 +1,12 @@
 <template>
     <header class="header">
         <div class="header__container">
-            <router-link :to="appRoutes?.getHome()"><img src="/images/svg/logo/logo.svg" alt="Logo"/></router-link>
+            <router-link :to="appRoutes?.getHome() || '/'"><img src="/images/svg/logo/logo.svg" alt="Logo"/></router-link>
             <div class="header__content header__content_desktop">
                 <div class="header__left">
                     <div class="header__menu menu">
                         <ul v-if="route.name === AppPages.promo" class="menu__list menu__list_desktop">
-                            <router-link class="header__link" :to="appRoutes?.getLogin()">
+                            <router-link class="header__link" :to="appRoutes?.getLogin() || '#'">
                                 К поиску
                             </router-link>
                             <li class="menu__item"><a class="header__link" href="#features">Функции</a></li>
@@ -14,12 +14,12 @@
                         </ul>
                         <ul v-else class="menu__list menu__list_desktop">
                             <li class="menu__item">
-                                <router-link class="header__link" :to="appRoutes?.getHome()">
+                                <router-link class="header__link" :to="appRoutes?.getHome() || '#'">
                                     Главная
                                 </router-link>
                             </li>
                             <li class="menu__item">
-                                <router-link class="header__link" :to="appRoutes?.getPromo()">
+                                <router-link class="header__link" :to="appRoutes?.getPromo() || '#'">
                                     О сервисе
                                 </router-link>
                             </li>
@@ -31,8 +31,8 @@
                         <IconSun v-if="mode === 'light'"/>
                         <IconMoon v-else/>
                     </Button>
-                    <UserBadge v-if="isAuthorized" :user="undefined" hide-name/>
-                    <router-link v-if="!isAuthorized" :to="appRoutes?.getLogin()" class="header__link">
+                    <UserBadge v-if="isAuthorized" :user="{}" hide-name/>
+                    <router-link v-if="!isAuthorized" :to="appRoutes?.getLogin() || '#'" class="header__link">
                         <Button size="icon" class="rounded-full">
                             <IconLogin/>
                         </Button>
@@ -72,7 +72,7 @@
                                 <ul v-if="route.name === AppPages.promo" class="menu__list menu__list_mobile">
                                     <SheetClose>
                                         <li class="menu__item menu__item_mobile">
-                                            <router-link :to="appRoutes?.getHome()" class="header__link">
+                                            <router-link :to="appRoutes?.getHome() || '#'" class="header__link">
                                                 К поиску
                                             </router-link>
                                         </li>
@@ -85,7 +85,7 @@
                                     </SheetClose>
                                     <SheetClose v-if="isAuthorized" >
                                         <li class="menu__item menu__item_mobile">
-                                            <router-link :to="appRoutes?.getProfile()" class="header__link">
+                                            <router-link :to="appRoutes?.getProfile() || '#'" class="header__link">
                                                 Профиль
                                             </router-link>
                                         </li>
@@ -100,7 +100,7 @@
                                     </SheetClose>
                                     <SheetClose v-if="!isAuthorized" >
                                         <li class="menu__item menu__item_mobile">
-                                            <router-link :to="appRoutes?.getLogin()" class="header__link">
+                                            <router-link :to="appRoutes?.getLogin() || '#'" class="header__link">
                                                 <IconLogin class="mr-2"/>
                                                 Вход
                                             </router-link>
@@ -110,21 +110,21 @@
                                 <ul v-else class="menu__list menu__list_mobile">
                                     <SheetClose>
                                         <li class="menu__item menu__item_mobile">
-                                            <router-link class="header__link" :to="appRoutes?.getHome()">
+                                            <router-link class="header__link" :to="appRoutes?.getHome() || '#'">
                                                 Главная
                                             </router-link>
                                         </li>
                                     </SheetClose>
                                     <SheetClose>
                                         <li class="menu__item menu__item_mobile">
-                                            <router-link class="header__link" :to="appRoutes?.getPromo()">
+                                            <router-link class="header__link" :to="appRoutes?.getPromo() || '#'">
                                                 О сервисе
                                             </router-link>
                                         </li>
                                     </SheetClose>
                                     <SheetClose v-if="isAuthorized">
                                         <li class="menu__item menu__item_mobile">
-                                            <router-link :to="appRoutes?.getProfile()" class="header__link">
+                                            <router-link :to="appRoutes?.getProfile() || '#'" class="header__link">
                                                 Профиль
                                             </router-link>
                                         </li>
@@ -139,7 +139,7 @@
                                     </SheetClose>
                                     <SheetClose v-if="!isAuthorized" >
                                         <li class="menu__item menu__item_mobile">
-                                            <router-link :to="appRoutes?.getLogin()" class="header__link">
+                                            <router-link :to="appRoutes?.getLogin() || '#'" class="header__link">
                                                 <IconLogin class="mr-2"/>
                                                 Вход
                                             </router-link>

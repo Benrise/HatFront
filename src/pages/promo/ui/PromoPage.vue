@@ -7,7 +7,7 @@
                             <h1>Найди команду для участия в хакатонах</h1>
                             <h2>Сервис по поиску и подбору команд для участия в хакатонах</h2>
                     </div>
-                    <router-link :to="appRoutes?.getLogin()">
+                    <router-link :to="appRoutes?.getLogin() || '#'">
                         <Button class="max-w-fit">Начать</Button> 
                     </router-link>
                 </div>
