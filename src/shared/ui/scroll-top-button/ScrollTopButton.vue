@@ -1,7 +1,7 @@
 <template>
   <transition name="fade" mode="out-in">
-    <div @click="scrollTop" v-show="visible" class="bottom-right">
-      <div class="w-fit p-4 rounded-full bg-violet-600">
+    <div v-show="visible" class="bottom-right">
+      <div @click="scrollTop" class="bottom-right__button">
         <IconArrowUp/>
       </div>
   </div>
