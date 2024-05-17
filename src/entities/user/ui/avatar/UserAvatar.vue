@@ -39,7 +39,7 @@
         <label for="avatar" class="user-avatar__upload upload">
           <Input @change="onFileChange($event)" accept=".jpg,.jpeg,.png" id="avatar" type="file"/>
           <div class="upload__area">
-            <IconCloud class="w-12 h-12 text-muted-foreground"/>
+            <IconCloud class="upload__icon"/>
             <div class="upload__body">
               <p class="upload__text">Перетащите файл для загрузки</p>
               <p class="upload__text">или</p>
@@ -220,9 +220,9 @@ const removeAvatar = () => {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 64px;
+    @include adaptiveValue('padding', 64, 16);
     border: 2px dashed hsl(var(--border));
-    gap: 24px;
+    @include adaptiveValue('gap', 24, 12);
     border-radius: 12px;
 
     transition: all 0.2s ease-in-out;
@@ -230,6 +230,11 @@ const removeAvatar = () => {
     &:hover {
       background-color: hsl(var(--muted));
     }
+  }
+
+  &__icon {
+    @include adaptiveValue('width', 64, 32);
+    @include adaptiveValue('height', 64, 32);
   }
 
   &__body {

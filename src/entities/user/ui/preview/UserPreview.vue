@@ -8,7 +8,7 @@
             <div class="dialog__content">
                 <div class="user-preview">
                     <div class="user-preview__header">
-                        <UserAvatar v-if="width > 300" :size="width < 500 ? 'base' : 'xl'" />
+                        <UserAvatar :size="width < 500 ? 'base' : 'xl'" />
                         <div class="user-preview__group">
                             <div class="user-preview__name">
                                 {{ fullName }}
@@ -65,8 +65,11 @@
                             </div>
                         </div>
                     </div>
-                    <div class="user-preview__about">
-                        <div class="user-preview__item">О себе: <span>{{user?.about || 'Не указано' }}</span></div>
+                    <div class="user-preview__item !flex-col">
+                        О себе:
+                        <div class="user-preview__about">
+                            {{user?.about || 'Не указано' }}
+                        </div>
                     </div>
                 </div>
                 <DialogFooter class="flex gap-2">
@@ -112,10 +115,15 @@ const fullName = computed(() => user.value.first_name + ' ' + user.value.second_
     flex-direction: column;
     @include adaptiveValue('gap', 48, 24);
 
+    @media screen and (max-width: 379px) {
+        overflow-y: auto;
+        max-height: 400px;
+    }
+
     &__header {
         display: flex;
         flex-direction: row;
-        @include adaptiveValue('gap', 48, 24);
+        @include adaptiveValue('gap', 36, 8);
 
         @media screen and (max-width: 500px) {
             flex-direction: column;
@@ -141,11 +149,17 @@ const fullName = computed(() => user.value.first_name + ' ' + user.value.second_
     &__subgroup {
         display: flex;
         flex-direction: column;
-        @include adaptiveValue('gap', 12, 8);
+        @include adaptiveValue('gap', 12, 4);
 
         @media screen and (max-width: 500px) {
             align-items: center;
         }
+    }
+
+    &__about {
+        text-wrap: wrap;
+        word-wrap: break-word;
+        word-break: break-all;
     }
 
     &__contact {
