@@ -17,8 +17,7 @@ import { ContentSection } from '@/shared/ui/content-section';
 import type { ITabsConfig } from '@/shared/ui/tabs';
 import { Button } from '@/shared/ui/button';
 
-import { UserPreview } from '@/features/user/preview';
-
+import { UserPreview } from '@/entities/user/ui/preview';
 import { UserAvatar } from '@/entities/user/ui/avatar';
 
 import { UserDetail } from '@/widgets/user/detail';

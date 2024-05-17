@@ -2,7 +2,9 @@
   <form class="user-detail" @submit="onSubmit">
       <div class="user-detail__image">
         <UserAvatar size="lg" editable/>
-        <Button class="w-fit" variant="outline">Публичный просмотр</Button>
+        <UserPreview>
+          <Button class="w-fit" variant="outline">Публичный просмотр</Button>
+        </UserPreview>
       </div>
       <div class="user-detail__field-group">
           <div class="user-detail__title">
@@ -233,7 +235,7 @@
         </div>
       </div>
       <div class="user-detail__field-group">
-        <div class="user-detail__title">
+        <div class="user-detail__item">
           О себе
         </div>
         <div class="user-detail__fields">
@@ -302,10 +304,12 @@ import IconXmark from '~icons/heroicons/x-mark-20-solid';
 import { UserAvatar } from '@/entities/user/ui/avatar';
 
 import { UserModel } from '@/entities/user'
-import type { EducationDto, UserDto } from '@/entities/user/model'
+import type { UserDto } from '@/entities/user/model'
 import { type IBase } from "@/shared/api/types";
 
 import { formSchema } from '../model'
+
+import { UserPreview } from '@/entities/user/ui/preview';
 
 const userStore = UserModel.useUserStore();
 const educationLevelsStore = UserModel.useEducationLevelsStore();
@@ -328,7 +332,7 @@ const education_levels = computed<IBase[]>(() => educationLevelsStore.getEducati
 const user = computed<UserDto>(() => userStore.getUser);
 const provider = computed<Record<string, string> | undefined>(() => userStore.getProvider);
 
-const { handleSubmit, values, setValues, errors } = useForm({
+const { handleSubmit, values, setValues } = useForm({
   validationSchema: computed(() => formSchema),
 })
 
