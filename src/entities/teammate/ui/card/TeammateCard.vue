@@ -2,7 +2,7 @@
     <div class="teammate-card">
         <div class="teammate-card__main">
             <div class="teammate-card__info">
-                <UserBadge :user="undefined"/>
+                <UserBadge :user="emptyUser"/>
                 <div class="teammate-card__description">
                     UI/UX-дизайнер с опытом около года. Специализируюсь на интерфейсах и презентациях. Также есть опыт в разработке логотипов и favicon. 
                 </div>
@@ -27,9 +27,12 @@
 
 <script setup lang="ts">
 import { UserBadge } from '@/entities/user';
+import type { UserDto } from '@/entities/user/model';
+
 import { Button } from '@/shared/ui/button';
 import { Badge } from '@/shared/ui/badge';
 
+const emptyUser = {} as UserDto
 </script>
 
 <style scoped lang="scss">

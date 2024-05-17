@@ -1,12 +1,20 @@
 import { type IBase } from "@/shared/api/types";
 
 export class UserDto {
+
+    constructor() {
+        this.education = [];
+        this.providers = [];
+        this.skills = [];
+        this.specializations = [];
+    }
+
     id?: number;
     photo_url?: string;
-    providers?: IBase[]
-    education?: EducationDto[]
-    skills?: IBase[];
-    specializations?: IBase[];
+    providers?: IBase[];
+    education: EducationDto[];
+    skills: IBase[];
+    specializations: IBase[];
     about?: string;
     age?: number | string;
     city?: string;
@@ -29,8 +37,8 @@ export class EducationDto {
     education_level?: IBase;
     education_program?: string;
     study_place?: string;
-    class: number = 1;
-    course: number = 1;
+    class?: number = 1;
+    course?: number = 1;
 }
 
 export enum EProvider {

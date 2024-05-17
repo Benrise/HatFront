@@ -69,7 +69,7 @@
           <div class="user-detail__addable addable" v-if="values.education?.length">
             <transition-group name="addable" appear>
               <div v-for="(education, index) in values.education" :key="index" class="addable__item">
-                <Button v-if="!education?.education_id" @click="removeEducation(values, index)" type="button" class="addable__number">
+                <Button v-if="!education?.education_id" @click="removeEducation((values as UserDto), index)" type="button" class="addable__number">
                   <div class="addable__digit">
                     {{ index + 1 }}
                   </div>
@@ -93,7 +93,7 @@
                     </AlertDialogHeader>
                     <AlertDialogFooter>
                       <AlertDialogCancel>Отмена</AlertDialogCancel>
-                      <AlertDialogAction @click="removeEducation(values, index, education.education_id)">Удалить</AlertDialogAction>
+                      <AlertDialogAction @click="removeEducation((values as UserDto), index, education.education_id)">Удалить</AlertDialogAction>
                     </AlertDialogFooter>
                   </AlertDialogContent>
                 </AlertDialog>
@@ -126,7 +126,7 @@
                             <SelectValue placeholder="Выберите уровень образования" />
                           </SelectTrigger>
                           <SelectContent>
-                            <SelectItem v-for="level in education_levels" :key="level.id" :value="level.id">
+                            <SelectItem v-for="level in education_levels" :key="level.id" :value="String(level.id)">
                               {{ level.name }}
                             </SelectItem>
                           </SelectContent>
@@ -157,7 +157,7 @@
             </transition-group> 
           </div>
         </transition>
-        <Button class="w-fit" type="button" variant="secondary" @click="addEducation(values)">Добавить образование</Button>
+        <Button class="w-fit" type="button" variant="secondary" @click="addEducation(values as UserDto)">Добавить образование</Button>
       </div>
       <div class="user-detail__field-group">
         <div class="user-detail__title">
@@ -336,9 +336,8 @@ const { handleSubmit, values, setValues } = useForm({
   validationSchema: computed(() => formSchema),
 })
 
-const onSubmit = handleSubmit(async (values) => {
-  await userStore.updateUser(values);
-  await fetch();
+const onSubmit = handleSubmit((updatedValues: any) => {
+  return userStore.updateUser(updatedValues);
 })
 
 watch(user, () => {

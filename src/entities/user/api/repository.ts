@@ -40,11 +40,11 @@ export class  UserRepository{
         return this.axiosInstance.delete(`${this.endpoint}/education/${id}`); 
     }
 
-    async updateSkills(payload: IBase[]) {
+    async updateSkills(payload: number[]) {
         return this.axiosInstance.put(`${this.endpoint}/skills`, payload);
     }
 
-    async updateSpecializations(payload: IBase[]) {
+    async updateSpecializations(payload: number[]) {
         return this.axiosInstance.put(`${this.endpoint}/specializations`, payload);
     }
 

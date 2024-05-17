@@ -10,7 +10,7 @@ const props = defineProps<{
 }>()
 
 const modelValue = defineModel({
-  type: Array as PropType<IBase[]>,
+  type: Array as PropType<any>,
   default: () => [],
   required: true
 })
@@ -29,7 +29,7 @@ const filterFunction = (objects: IBase[], search: string) => {
 }
 
 const removeItem = (item: IBase) => {
-  modelValue.value.splice(modelValue.value.findIndex(i => i.id === item.id), 1)
+  modelValue.value.splice(modelValue.value.findIndex((i: IBase) => i.id === item.id), 1)
 }
 </script>
 

@@ -18,7 +18,7 @@ import { type Component } from 'vue'
 
 import { DoubleInput } from '@/shared/ui/double-input';
 import { RangeDatepicker } from '@/shared/ui/range-datepicker';
-import { type ITagsInputComboboxOption, TagsInputCombobox } from '@/shared/ui/tags-input-combobox';
+import { TagsInputCombobox } from '@/shared/ui/tags-input-combobox';
 import { Button } from '@/shared/ui/button';
 
 enum FilterType {
@@ -32,11 +32,11 @@ interface FilterConfig {
     component: Component,
     type: FilterType,
     class?: string,
-    options?: ITagsInputComboboxOption[]
+    options?: Record<string, string | number>[],
     placeholders?: string[]
 }
 
-const options: ITagsInputComboboxOption[] = [
+const options = [
   { value: 'ml', label: 'ML' },
   { value: 'web3', label: 'Web3' },
   { value: 'nft', label: 'NFT' },

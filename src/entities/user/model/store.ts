@@ -11,7 +11,7 @@ import { StatusCodes } from 'http-status-codes';
 export const useUserStore = defineStore("user", () => {
     const { toast } = useToast();
 
-    const user = ref<UserDto>({})
+    const user = ref<UserDto>({} as UserDto)
     const isLoading = ref(false)
     const isAuthorized = ref(false)
 
@@ -42,7 +42,7 @@ export const useUserStore = defineStore("user", () => {
     }
 
     const clearUser = () => {
-        user.value = {};
+        user.value = {} as UserDto;
         isAuthorized.value = false;
     }
 
@@ -51,11 +51,12 @@ export const useUserStore = defineStore("user", () => {
 
         try {
             for (const education of educations) {
-                if (education.education_id) {
+                if (education.education_id && education.education_level) {
                     education.education_level_id = education.education_level.id;
                     delete education.education_level;
                     await http.user.updateEducation(education);
-                } else {
+                } 
+                else if (education.education_level) {
                     education.education_level_id = education.education_level.id;
                     delete education.education_level;
                     await http.user.createEducation(education);

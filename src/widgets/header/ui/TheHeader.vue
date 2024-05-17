@@ -31,7 +31,7 @@
                         <IconSun v-if="mode === 'light'"/>
                         <IconMoon v-else/>
                     </Button>
-                    <UserBadge v-if="isAuthorized" :user="{}" hide-name/>
+                    <UserBadge v-if="isAuthorized" :user="emptyUser" hide-name/>
                     <router-link v-if="!isAuthorized" :to="appRoutes?.getLogin() || '#'" class="header__link">
                         <Button size="icon" class="rounded-full">
                             <IconLogin/>
@@ -181,6 +181,8 @@ import IconBars from '~icons/heroicons/bars-3-bottom-right-16-solid?width=24px&h
 import IconLogin from '~icons/heroicons/arrow-right-end-on-rectangle-20-solid';
 import IconLogout from '~icons/heroicons/arrow-right-start-on-rectangle-20-solid';
 
+import type { UserDto } from '@/entities/user/model';
+
 import { UserBadge, UserModel } from '@/entities/user';
 import { AppPages, router, useAppRoutes } from '@/router';
 import { useRoute } from 'vue-router';
@@ -199,6 +201,8 @@ const userStore = UserModel.useUserStore();
 const isAuthorized = userStore.isAuthorized;
 
 const route = useRoute();
+
+const emptyUser = {} as UserDto
 
 const logout = () => {
     userStore.logout()
