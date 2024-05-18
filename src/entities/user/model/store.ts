@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import { computed, ref } from 'vue'
 import { EProvider, type EducationDto, type UserDto } from './types'
-import { type IBase } from "@/shared/api/types";
+import { type BaseDto } from "@/shared/api/types";
 import { http } from '../api/http'
 
 import { useToast } from '@/shared/ui/toast/use-toast';
@@ -18,8 +18,8 @@ export const useUserStore = defineStore("user", () => {
     const deleteEducation = async (education_id: number, callback: () => void) => {
         try {
             isLoading.value = true;
-            const response = await http.user.deleteEduction(education_id);
-            if (response.status === StatusCodes.OK) {
+            const { status } = await http.user.deleteEduction(education_id);
+            if (status === StatusCodes.OK) {
                 callback();
                 toast({
                     variant: 'warning',
@@ -72,9 +72,9 @@ export const useUserStore = defineStore("user", () => {
     const updateAvatar = async (file: File) => {
         try {
             isLoading.value = true;
-            const response = await http.user.uploadPhoto(file);
+            const { status } = await http.user.uploadPhoto(file);
 
-            if (response.status === StatusCodes.OK) {
+            if (status === StatusCodes.OK) {
                 toast({
                     variant: 'default',
                     title: 'Успех',
@@ -101,8 +101,8 @@ export const useUserStore = defineStore("user", () => {
     const deleteAvatar = async () => {
         try {
             isLoading.value = true;
-            const response = await http.user.uploadPhoto(null);
-            if (response.status === StatusCodes.OK) {
+            const { status } = await http.user.uploadPhoto(null);
+            if (status === StatusCodes.OK) {
                 toast({
                     variant: 'warning',
                     title: 'Внимание',
@@ -192,7 +192,6 @@ export const useUserStore = defineStore("user", () => {
         getProvider, 
         getEducation,
         deleteEducation,
-        user,
         setUser,
         deleteAvatar
     }
@@ -200,7 +199,7 @@ export const useUserStore = defineStore("user", () => {
 
 export const useEducationLevelsStore = defineStore("educationLevels", () => {
     const isLoading = ref(false)
-    const educationLevels = ref<IBase[]>([])
+    const educationLevels = ref<BaseDto[]>([])
 
     const fetchEducationLevels = async () => {
         try {
@@ -226,7 +225,7 @@ export const useEducationLevelsStore = defineStore("educationLevels", () => {
 
 export const useSkillsStore = defineStore("skills", () => {
     const isLoading = ref(false)
-    const skills = ref<IBase[]>([])
+    const skills = ref<BaseDto[]>([])
     const cursor = ref(0)
 
     const fetchSkills = async () => {
@@ -255,7 +254,7 @@ export const useSkillsStore = defineStore("skills", () => {
 
 export const useSpecializationsStore = defineStore("specializations", () => {
     const isLoading = ref(false)
-    const specializations = ref<IBase[]>([])
+    const specializations = ref<BaseDto[]>([])
     const cursor = ref(0)
 
     const fetchSpecializations = async () => {

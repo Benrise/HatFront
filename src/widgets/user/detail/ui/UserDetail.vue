@@ -100,9 +100,9 @@
                 <div class="user-detail__fields">
                   <FormField :name="`education[${index}].study_place`" v-slot="{ componentField }">
                     <FormItem class="user-detail__field">
-                      <FormLabel class="user-detail__field-label">Университет</FormLabel>
+                      <FormLabel class="user-detail__field-label">Учебное заведение</FormLabel>
                       <FormControl>
-                        <Input type="text" placeholder="Введите университет" v-bind="componentField"/>
+                        <Input type="text" placeholder="Введите учебное заведение" v-bind="componentField"/>
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -301,7 +301,7 @@ import { TagsInputCombobox } from '@/shared/ui/tags-input-combobox';
 
 import IconXmark from '~icons/heroicons/x-mark-20-solid';
 
-import { type IBase } from "@/shared/api/types";
+import { type BaseDto } from "@/shared/api/types";
 
 import { UserAvatar } from '@/entities/user/ui/avatar';
 import type { UserDto } from '@/entities/user/model'
@@ -325,9 +325,9 @@ const fetch = async () => {
 }
 fetch()
 
-const specializations = computed<IBase[]>(() => specializationsStore.getSpecializations)
-const skills = computed<IBase[]>(() => skillsStore.getSkills)
-const education_levels = computed<IBase[]>(() => educationLevelsStore.getEducationLevels)
+const specializations = computed<BaseDto[]>(() => specializationsStore.getSpecializations)
+const skills = computed<BaseDto[]>(() => skillsStore.getSkills)
+const education_levels = computed<BaseDto[]>(() => educationLevelsStore.getEducationLevels)
 const user = computed<UserDto>(() => userStore.getUser);
 const provider = computed<Record<string, string> | undefined>(() => userStore.getProvider);
 

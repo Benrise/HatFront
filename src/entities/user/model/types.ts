@@ -1,7 +1,6 @@
-import { type IBase } from "@/shared/api/types";
+import { type BaseDto } from "@/shared/api/types";
 
 export class UserDto {
-
     constructor() {
         this.education = [];
         this.providers = [];
@@ -11,10 +10,10 @@ export class UserDto {
 
     id?: number;
     photo_url?: string;
-    providers?: IBase[];
+    providers?: BaseDto[];
     education: EducationDto[];
-    skills: IBase[];
-    specializations: IBase[];
+    skills: BaseDto[];
+    specializations: BaseDto[];
     about?: string;
     age?: number | string;
     city?: string;
@@ -34,7 +33,7 @@ export class ContactsDto {
 export class EducationDto {
     education_id?: number;
     education_level_id?: number;
-    education_level?: IBase;
+    education_level?: BaseDto;
     education_program?: string;
     study_place?: string;
     class?: number = 1;

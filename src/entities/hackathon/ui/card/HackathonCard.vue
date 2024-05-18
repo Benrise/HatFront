@@ -2,18 +2,19 @@
     <div class="hackathon-card">
         <div class="hackathon-card__image image">
                 <img
-                    src="https://source.unsplash.com/random/1280x720" 
+                    v-if="hackathon.photo_url"
+                    :src="hackathon.photo_url" 
                     class="image__bg"  
                     alt="Задний фон постера хакатона"
                 >
                 <img
-                    src="https://source.unsplash.com/random/1280x720" 
+                    v-if="hackathon.photo_url"
+                    :src="hackathon.photo_url" 
                     class="image__main" 
                     alt="Постер хакатона"
-                    @load="onLoad"
                 >
                 <img 
-                    v-if="!isImageLoaded"
+                    v-if="!hackathon.photo_url"
                     src="/images/png/hackathon-bg-fallback.png"
                     alt="Постер хакатона"
                     class="rounded-md"
@@ -23,36 +24,36 @@
             <div class="hackathon-card__info">
                 <div class="hackathon-card__text">
                     <div class="hackathon-card__title">
-                        Phystech Radar Tech Challenge
+                        {{ hackathon.name }}
                     </div>
                     <div class="hackathon-card__description">
-                            Хочешь поступить в магистратуру и найти работу по специальности? С хакатоном Phystech Radar Tech Challenge – легко!
+                        {{ hackathon.description }}
                     </div>
                 </div>
-                <div class="hackathon-card__tags">
+                <!-- <div class="hackathon-card__tags">
                     <Badge>go</Badge>
                     <Badge>backend</Badge>
                     <Badge>ml</Badge>
                     <Badge>go</Badge>
                     <Badge>backend</Badge>
                     <Badge>ml</Badge>
-                </div>
+                </div> -->
                 <div class="hackathon-card__additionals">
-                    <Badge variant="outline">
+                    <Badge variant="outline" v-if="hackathon.time_start && hackathon.time_end">
                         <IconCalendar class="mr-2"/>
-                        27.04 - 30.04
+                        {{ format(hackathon.time_start, "short")}} - {{ format(hackathon.time_end, "short") }}
                     </Badge>
                     <Badge variant="outline">
                         <IconRuble class="mr-2"/>
-                        300 000 руб.
+                        {{ hackathon.prize_fund }} руб.
                     </Badge>
                     <Badge variant="outline">
                         <IconGroup class="mr-2"/>
-                        1-5 чел.
+                        {{ hackathon.people_from }} - {{ hackathon.people_to }}
                     </Badge>
-                    <Badge variant="outline">
+                    <Badge variant="outline" v-if="hackathon.time_end_registration">
                         <IconClipboardCheck class="mr-2"/>
-                        Регистрация открыта до 26.04.2024 15:59
+                        Регистрация открыта до {{ format(hackathon.time_end_registration, "DD.MM.YYYY HH:mm")}}
                     </Badge>
                 </div>
             </div>
@@ -65,6 +66,8 @@
 </template>
 
 <script setup lang="ts">
+import { type PropType } from 'vue';
+
 import { Badge } from '@/shared/ui/badge';
 import { Button } from '@/shared/ui/button';
 
@@ -72,13 +75,17 @@ import IconCalendar from '~icons/heroicons/calendar-days-20-solid';
 import IconRuble from '~icons/solar/ruble-linear';
 import IconGroup from '~icons/heroicons/user-group';
 import IconClipboardCheck from '~icons/heroicons/clipboard-document-check';
-import { ref } from 'vue';
 
-const isImageLoaded = ref(false)
+import type { HackathonDto } from '../../model';
 
-const onLoad = () => {
-    isImageLoaded.value = true
-}
+import { format } from "@formkit/tempo"
+
+defineProps({
+    hackathon: {
+        type: Object as PropType<HackathonDto>,
+        required: true
+    }
+})
 
 </script>
 

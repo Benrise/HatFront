@@ -1,6 +1,6 @@
 import type { AxiosInstance } from 'axios';
 import type { EducationDto, UserDto } from '../model';
-import type { IBaseCursorList, IBase } from '@/shared/api/types';
+import type { BaseDtoCursorList, BaseDto } from '@/shared/api/types';
 import type { ComputedRef } from 'vue';
 
 const fileRequestConfig: AxiosRequestConfig = {
@@ -54,7 +54,7 @@ export class EducationLevelsRepository {
     constructor(protected endpoint: string, private axiosInstance: AxiosInstance) {}
 
     async get() {
-        return this.axiosInstance.get<IBase[]>(`${this.endpoint}`);
+        return this.axiosInstance.get<BaseDto[]>(`${this.endpoint}`);
     }
 }
 
@@ -62,13 +62,13 @@ export class SkillsRepository {
     constructor(protected endpoint: string, private axiosInstance: AxiosInstance) {}
 
     async get() {
-        return this.axiosInstance.get<IBaseCursorList>(`${this.endpoint}`);
+        return this.axiosInstance.get<BaseDtoCursorList>(`${this.endpoint}`);
     }
 }
 export class SpecializationsRepository {
     constructor(protected endpoint: string, private axiosInstance: AxiosInstance) {}
 
     async get() {
-        return this.axiosInstance.get<IBaseCursorList>(`${this.endpoint}`);
+        return this.axiosInstance.get<BaseDtoCursorList>(`${this.endpoint}`);
     }
 }
