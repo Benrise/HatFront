@@ -13,7 +13,7 @@ export const useHackathonStore = defineStore("hackathon", () => {
     const isLoading = ref(false)
 
     const fetchHackathons = async () => {
-        const { data, status} = await http.hackathon.list();
+        const { data, status} = await http.hackathon.list({cursor: hackathons_cursor.value});
         if (status !== StatusCodes.OK) {
             toast({
                 variant: 'destructive',
@@ -22,12 +22,12 @@ export const useHackathonStore = defineStore("hackathon", () => {
             });
             return
         }
-        setHackathons(data.hackathons);
+        addHackathons(data.hackathons);
         setCursor(data.cursor);
     }
 
-    const setHackathons = (data: HackathonDto[]) => {
-        hackathons.value = data;
+    const addHackathons = (data: HackathonDto[]) => {
+        hackathons.value.push(...data);
     }
 
     const setCursor = (cursor: number) => {
