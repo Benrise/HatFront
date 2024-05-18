@@ -3,10 +3,10 @@ import { computed, ref, type PropType } from 'vue'
 import { ComboboxAnchor, ComboboxInput, ComboboxPortal, ComboboxRoot } from 'radix-vue'
 import { CommandEmpty, CommandGroup, CommandItem, CommandList } from '@/shared/ui/command'
 import { TagsInput, TagsInputInput, TagsInputItem, TagsInputItemDelete, TagsInputItemText } from '@/shared/ui/tags-input'
-import { type IBase } from "@/shared/api/types";
+import { type BaseDto } from "@/shared/api/types";
 
 const props = defineProps<{
-  objects: IBase[]
+  objects: BaseDto[]
 }>()
 
 const modelValue = defineModel({
@@ -22,14 +22,14 @@ const emits = defineEmits<{
   (e: 'update:modelValue', payload: string | number): void
 }>()
 
-const filteredItems = computed(() => props.objects.filter(i => !modelValue.value.includes(i)))
+const filteredItems = computed(() => props.objects.filter((i: BaseDto) => !modelValue.value.some((item) => item.id === i.id)))
 
-const filterFunction = (objects: IBase[], search: string) => {
+const filterFunction = (objects: BaseDto[], search: string) => {
   return objects.filter(i => i.name.toLowerCase().includes(search.toLowerCase()))
 }
 
-const removeItem = (item: IBase) => {
-  modelValue.value.splice(modelValue.value.findIndex((i: IBase) => i.id === item.id), 1)
+const removeItem = (item: BaseDto) => {
+  modelValue.value.splice(modelValue.value.findIndex((i: BaseDto) => i.id === item.id), 1)
 }
 </script>
 
@@ -60,7 +60,7 @@ const removeItem = (item: IBase) => {
               v-for="item in filteredItems" :key="item.id" :value="item"
               @select.prevent="(ev) => {
                 searchTerm = ''
-                modelValue.push(ev.detail.value as IBase)
+                modelValue.push(ev.detail.value as BaseDto)
                 if (filteredItems.length === 0) {
                   open = false
                 }
