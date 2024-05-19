@@ -72,6 +72,9 @@
 }
 
 .sheet {
+    display: flex;
+    flex-direction: row;
+
     &__header {
         @include title();
         align-items: flex-end;
