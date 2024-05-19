@@ -1,9 +1,7 @@
 <template>
         <div class="hackathons-list">
             <TransitionGroup name="list" appear>
-                <div>
-                    <HackathonCard v-for="hackathon in hackathons" :key="hackathon.hackathon_id" :hackathon="hackathon"/>
-                </div>
+                <HackathonCard v-for="hackathon in hackathons" :key="hackathon.hackathon_id" :hackathon="hackathon"/>
             </TransitionGroup>
         </div>
         <div ref="observer"></div>

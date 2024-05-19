@@ -59,97 +59,99 @@
                 </div>
             </div>
             <div class="header__content header__content_mobile">
-                <Sheet class="header__sheet sheet">
-                    <Button @click="toggleColorMode" variant="ghost" class="rounded-full" size="icon">
-                        <IconSun v-if="mode === 'light'"/>
-                        <IconMoon v-else/>
-                    </Button>
-                    <SheetTrigger><IconBars class="sheet__trigger"/></SheetTrigger>
-                    <SheetContent side="right">
-                        <div class="sheet__content">
-                            <SheetHeader class="sheet__header">Меню</SheetHeader>
-                            <div class="header__menu menu">
-                                <ul v-if="route.name === AppPages.promo" class="menu__list menu__list_mobile">
-                                    <SheetClose>
-                                        <li class="menu__item menu__item_mobile">
-                                            <router-link :to="appRoutes?.getHome() || '#'" class="header__link">
-                                                К поиску
-                                            </router-link>
-                                        </li>
-                                    </SheetClose>
-                                    <SheetClose>
-                                        <li class="menu__item menu__item_mobile"><a class="header__link" href="#features">Функции</a></li>
-                                    </SheetClose> 
-                                    <SheetClose>
-                                        <li class="menu__item menu__item_mobile"><a class="header__link" href="#steps">Шаги</a></li>
-                                    </SheetClose>
-                                    <SheetClose v-if="isAuthorized" >
-                                        <li class="menu__item menu__item_mobile">
-                                            <router-link :to="appRoutes?.getProfile() || '#'" class="header__link">
-                                                Профиль
-                                            </router-link>
-                                        </li>
-                                    </SheetClose>
-                                    <SheetClose v-if="isAuthorized" >
-                                        <li class="menu__item menu__item_mobile">
-                                            <router-link to="#" class="header__link" variant="secondary" @click="logout">
-                                                Выход
-                                                <IconLogout class="ml-2 w-4 h-4"/>
-                                            </router-link>
-                                        </li>
-                                    </SheetClose>
-                                    <SheetClose v-if="!isAuthorized" >
-                                        <li class="menu__item menu__item_mobile">
-                                            <router-link :to="appRoutes?.getLogin() || '#'" class="header__link">
-                                                <IconLogin class="mr-2"/>
-                                                Вход
-                                            </router-link>
-                                        </li>
-                                    </SheetClose>
-                                </ul>
-                                <ul v-else class="menu__list menu__list_mobile">
-                                    <SheetClose>
-                                        <li class="menu__item menu__item_mobile">
-                                            <router-link class="header__link" :to="appRoutes?.getHome() || '#'">
-                                                Главная
-                                            </router-link>
-                                        </li>
-                                    </SheetClose>
-                                    <SheetClose>
-                                        <li class="menu__item menu__item_mobile">
-                                            <router-link class="header__link" :to="appRoutes?.getPromo() || '#'">
-                                                О сервисе
-                                            </router-link>
-                                        </li>
-                                    </SheetClose>
-                                    <SheetClose v-if="isAuthorized">
-                                        <li class="menu__item menu__item_mobile">
-                                            <router-link :to="appRoutes?.getProfile() || '#'" class="header__link">
-                                                Профиль
-                                            </router-link>
-                                        </li>
-                                    </SheetClose>
-                                    <SheetClose v-if="isAuthorized">
-                                        <li class="menu__item menu__item_mobile">
-                                            <router-link  to="#" class="header__link" variant="secondary" @click="logout">
-                                                Выход
-                                                <IconLogout class="ml-2 w-4 h-4"/>
-                                            </router-link>
-                                        </li>
-                                    </SheetClose>
-                                    <SheetClose v-if="!isAuthorized" >
-                                        <li class="menu__item menu__item_mobile">
-                                            <router-link :to="appRoutes?.getLogin() || '#'" class="header__link">
-                                                <IconLogin class="mr-2"/>
-                                                Вход
-                                            </router-link>
-                                        </li>
-                                    </SheetClose>
-                                </ul>
+                <div class="header__sheet sheet">
+                    <Sheet>
+                        <Button @click="toggleColorMode" variant="ghost" class="rounded-full" size="icon">
+                            <IconSun v-if="mode === 'light'"/>
+                            <IconMoon v-else/>
+                        </Button>
+                        <SheetTrigger><IconBars class="sheet__trigger"/></SheetTrigger>
+                        <SheetContent side="right">
+                            <div class="sheet__content">
+                                <SheetHeader class="sheet__header">Меню</SheetHeader>
+                                <div class="header__menu menu">
+                                    <ul v-if="route.name === AppPages.promo" class="menu__list menu__list_mobile">
+                                        <SheetClose>
+                                            <li class="menu__item menu__item_mobile">
+                                                <router-link :to="appRoutes?.getHome() || '#'" class="header__link">
+                                                    К поиску
+                                                </router-link>
+                                            </li>
+                                        </SheetClose>
+                                        <SheetClose>
+                                            <li class="menu__item menu__item_mobile"><a class="header__link" href="#features">Функции</a></li>
+                                        </SheetClose> 
+                                        <SheetClose>
+                                            <li class="menu__item menu__item_mobile"><a class="header__link" href="#steps">Шаги</a></li>
+                                        </SheetClose>
+                                        <SheetClose v-if="isAuthorized" >
+                                            <li class="menu__item menu__item_mobile">
+                                                <router-link :to="appRoutes?.getProfile() || '#'" class="header__link">
+                                                    Профиль
+                                                </router-link>
+                                            </li>
+                                        </SheetClose>
+                                        <SheetClose v-if="isAuthorized" >
+                                            <li class="menu__item menu__item_mobile">
+                                                <router-link to="#" class="header__link" variant="secondary" @click="logout">
+                                                    Выход
+                                                    <IconLogout class="ml-2 w-4 h-4"/>
+                                                </router-link>
+                                            </li>
+                                        </SheetClose>
+                                        <SheetClose v-if="!isAuthorized" >
+                                            <li class="menu__item menu__item_mobile">
+                                                <router-link :to="appRoutes?.getLogin() || '#'" class="header__link">
+                                                    <IconLogin class="mr-2"/>
+                                                    Вход
+                                                </router-link>
+                                            </li>
+                                        </SheetClose>
+                                    </ul>
+                                    <ul v-else class="menu__list menu__list_mobile">
+                                        <SheetClose>
+                                            <li class="menu__item menu__item_mobile">
+                                                <router-link class="header__link" :to="appRoutes?.getHome() || '#'">
+                                                    Главная
+                                                </router-link>
+                                            </li>
+                                        </SheetClose>
+                                        <SheetClose>
+                                            <li class="menu__item menu__item_mobile">
+                                                <router-link class="header__link" :to="appRoutes?.getPromo() || '#'">
+                                                    О сервисе
+                                                </router-link>
+                                            </li>
+                                        </SheetClose>
+                                        <SheetClose v-if="isAuthorized">
+                                            <li class="menu__item menu__item_mobile">
+                                                <router-link :to="appRoutes?.getProfile() || '#'" class="header__link">
+                                                    Профиль
+                                                </router-link>
+                                            </li>
+                                        </SheetClose>
+                                        <SheetClose v-if="isAuthorized">
+                                            <li class="menu__item menu__item_mobile">
+                                                <router-link  to="#" class="header__link" variant="secondary" @click="logout">
+                                                    Выход
+                                                    <IconLogout class="ml-2 w-4 h-4"/>
+                                                </router-link>
+                                            </li>
+                                        </SheetClose>
+                                        <SheetClose v-if="!isAuthorized" >
+                                            <li class="menu__item menu__item_mobile">
+                                                <router-link :to="appRoutes?.getLogin() || '#'" class="header__link">
+                                                    <IconLogin class="mr-2"/>
+                                                    Вход
+                                                </router-link>
+                                            </li>
+                                        </SheetClose>
+                                    </ul>
+                                </div>
                             </div>
-                        </div>
-                    </SheetContent>
-                </Sheet>
+                        </SheetContent>
+                    </Sheet>
+                </div>
             </div>
         </div>
     </header>

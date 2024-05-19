@@ -1,7 +1,7 @@
 <template>
     <div class="home">
         <div class="home__container">
-            <Filters class="home__filters home__filters_desktop"/>
+            <!-- <Filters class="home__filters home__filters_desktop"/> -->
             <ContentSection :title="title" :tabs="tabs">
                 <div class="home__search">
                     <SearchBar/>
@@ -10,7 +10,8 @@
                     </div>
                 </div>
                 <div class="home__controls home__controls_mobile">
-                    <Sheet class="home__sheet sheet">
+                  <div class="home__sheet sheet">
+                    <Sheet>
                       <SheetTrigger as-child>
                         <Button variant="outline" class="sheet__button">
                           <IconAdjustments class="mr-2"></IconAdjustments>
@@ -24,6 +25,7 @@
                         </div>
                       </SheetContent>
                     </Sheet>
+                  </div>
                     <div class="home_sorting home__sorting_mobile">
                       <Sorting/>
                     </div>
@@ -74,7 +76,6 @@ const tabs: ITabsConfig[] = [
     content: TeammatesList,
   }
 ];
-
 </script>
 
 <style scoped lang="scss">
