@@ -1,0 +1,1 @@
+export { default as HackathonPoster} from './HackathonPoster.vue'
