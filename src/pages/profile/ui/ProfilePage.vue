@@ -3,7 +3,7 @@
       <div class="profile__container">
         <div class="profile__image">
           <UserAvatar size="xl" editable/>
-          <UserPreview>
+          <UserPreview :user="user">
             <Button variant="outline">Публичный просмотр</Button>
           </UserPreview>
         </div>
@@ -21,6 +21,12 @@ import { UserPreview } from '@/entities/user/ui/preview';
 import { UserAvatar } from '@/entities/user/ui/avatar';
 
 import { UserDetail } from '@/widgets/user/detail';
+import { UserModel } from '@/entities/user'
+import { computed } from 'vue';
+
+const userStore = UserModel.useUserStore();
+
+const user = computed(() => userStore.getUser);
 
 const title = "Профиль";
 

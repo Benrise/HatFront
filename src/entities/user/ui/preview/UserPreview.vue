@@ -83,7 +83,7 @@
             </div>
         </DialogContent>
     </Dialog>
-    </template>
+</template>
 
 <script setup lang="ts">
 import { Button } from '@/shared/ui/button'
@@ -96,17 +96,21 @@ import {
 } from '@/shared/ui/dialog'
 
 import { UserAvatar } from '@/entities/user/ui/avatar';
-import { computed } from 'vue';
+import { computed, type PropType } from 'vue';
 import type { UserDto } from '../../model';
-import { UserModel } from '../..';
 import { useWindowSize } from '@vueuse/core'
+
+
+const props = defineProps({
+    user: {
+        type: Object as PropType<UserDto>,
+        required: true
+    },
+})
 
 const { width } = useWindowSize()
 
-const userStore = UserModel.useUserStore();
-const user = computed<UserDto>(() => userStore.getUser);
-const fullName = computed(() => user.value.first_name + ' ' + user.value.second_name + ' ' + (user.value.patronymic ? user.value.patronymic : ''));
-
+const fullName = computed(() => props.user?.first_name + ' ' + props.user?.second_name + ' ' + (props.user?.patronymic ? props.user?.patronymic : ''));
 </script>
 <style scoped lang="scss">
 .user-preview {
@@ -159,7 +163,7 @@ const fullName = computed(() => user.value.first_name + ' ' + user.value.second_
     &__about {
         text-wrap: wrap;
         word-wrap: break-word;
-        word-break: break-all;
+        word-break: break-word;
     }
 
     &__contact {

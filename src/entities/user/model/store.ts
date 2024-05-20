@@ -144,7 +144,7 @@ export const useUserStore = defineStore("user", () => {
             console.error('Error on updating user:', e);
         }
         finally {
-            isLoading.value = false;
+            fetchUser();
         }    
     }
 
@@ -193,7 +193,8 @@ export const useUserStore = defineStore("user", () => {
         getEducation,
         deleteEducation,
         setUser,
-        deleteAvatar
+        deleteAvatar,
+        user
     }
 })
 

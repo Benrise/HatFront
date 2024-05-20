@@ -46,7 +46,7 @@
     }
 
     &__field-label {
-      @include body();
+      @include body(14);
     }
 
     &__provider{

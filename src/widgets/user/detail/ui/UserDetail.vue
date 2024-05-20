@@ -2,7 +2,7 @@
   <form class="user-detail" @submit="onSubmit">
       <div class="user-detail__image">
         <UserAvatar size="lg" editable/>
-        <UserPreview>
+        <UserPreview :user="user">
           <Button class="w-fit" variant="outline">Публичный просмотр</Button>
         </UserPreview>
       </div>
@@ -249,12 +249,12 @@
           </FormField>
         </div>
       </div>
-      <Button class="w-fit" :loading="isLoading" :disabled="errors" type="submit">Сохранить</Button>
+      <Button class="w-fit" :loading="isLoading" type="submit">Сохранить</Button>
   </form>
 </template>
 
 <script setup lang="ts">
-import { computed, watch } from 'vue'
+import { computed, onBeforeMount, watch } from 'vue'
 
 import {
     FormControl,
@@ -308,7 +308,7 @@ import type { UserDto } from '@/entities/user/model'
 
 import { formSchema } from '../model'
 import { UserModel } from '@/entities/user'
-import { UserPreview } from '@/entities/user/ui/preview';
+import { UserPreview } from '@/entities/user/ui';
 
 const userStore = UserModel.useUserStore();
 const educationLevelsStore = UserModel.useEducationLevelsStore();
@@ -321,7 +321,6 @@ const fetch = async () => {
   await educationLevelsStore.fetchEducationLevels();
   await skillsStore.fetchSkills();
   await specializationsStore.fetchSpecializations();
-  await userStore.fetchUser();
 }
 fetch()
 
@@ -337,6 +336,10 @@ const { handleSubmit, values, setValues } = useForm({
 
 const onSubmit = handleSubmit((updatedValues: any) => {
   return userStore.updateUser(updatedValues);
+})
+
+onBeforeMount(() => {
+  setValues(user.value)
 })
 
 watch(user, () => {
