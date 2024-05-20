@@ -1,7 +1,7 @@
 <template>
     <div class="teammates-list">
         <TransitionGroup name="list" appear>
-            <TeammateCard :user="undefinedUser" v-for="(_, index) in 10" :key="index"/>
+            <TeammateCard :user="undefinedUser" v-for="(_, index) in 1" :key="index"/>
         </TransitionGroup>
     </div>
 </template>

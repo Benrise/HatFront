@@ -7,8 +7,7 @@ export class UserDto {
         this.skills = [];
         this.specializations = [];
     }
-
-    id?: number;
+    id: number = 0;
     photo_url?: string;
     providers?: BaseDto[];
     education: EducationDto[];

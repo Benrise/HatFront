@@ -114,8 +114,16 @@ const props = defineProps({
 
 const { width } = useWindowSize();
 
-const fullName = computed(() => props.user?.first_name + ' ' + props.user?.second_name + ' ' + (props.user?.patronymic ? props.user?.patronymic : ''));
+const fullName = computed(
+    () =>
+        props.user?.first_name +
+        ' ' +
+        props.user?.second_name +
+        ' ' +
+        (props.user?.patronymic ? props.user?.patronymic : ''),
+);
 </script>
+
 <style scoped lang="scss">
 .user-preview {
 
