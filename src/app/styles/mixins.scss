@@ -9,6 +9,32 @@
 	@return $result;
 }
 
+@mixin gradientBorder {
+	&::after {
+		filter: blur(5px); 
+	}
+
+	&::after,
+	&::before {
+		content: '';
+		position: absolute;
+		left: -2px;
+		top: -2px;
+		background: linear-gradient(45deg,
+			hsl(var(--accent)),
+			hsl(var(--primary)),
+			hsl(var(--accent)),
+			hsl(var(--primary))
+			);
+		background-size: 400%;
+		width: calc(100% + 4px);
+		height: calc(100% + 4px);
+		z-index: -1;
+		animation: gradientBorderStem 20s linear infinite;
+		border-radius: 12px;
+	}
+}
+
 @mixin subtitle(
 	$font-weight: 400,
 	$font-size: 22,
@@ -28,10 +54,16 @@
 	@include adaptiveValue("line-height", 39, 29, 700, 280, 1);
 }
 
-@mixin body {
-    font-weight: 400;
+@mixin body(
+		$font-size: 16,
+		$font-size-mobile: 12,
+		$font-weight: 300,
+		$line-height: 24
+	) {
+    font-weight: $font-weight;
 	color: var(--foreground);
-    @include adaptiveValue("font-size", 14, 12);
+    @include adaptiveValue("font-size", $font-size, $font-size-mobile);
+	@include adaptiveValue("line-height", $line-height, 18);
 }
 
 @mixin adaptiveValue($property, $startSize, $minSize, $widthFrom: $containerWidth, $widthTo: $minWidth, $keepSize: 0) {
