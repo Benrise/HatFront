@@ -8,7 +8,7 @@
             <div class="dialog__content">
                 <div class="user-preview">
                     <div class="user-preview__header">
-                        <UserAvatar :size="width < 500 ? 'base' : 'xl'" />
+                        <UserAvatar :user="user" :size="width < 500 ? 'base' : 'xl'" />
                         <div class="user-preview__group">
                             <div class="user-preview__name">
                                 {{ fullName }}
@@ -73,7 +73,7 @@
                     </div>
                 </div>
                 <DialogFooter class="flex gap-2">
-                    <Button type="button" class="w-full" disabled>
+                    <Button type="button" class="w-full" :disabled="me">
                         Пригласить в команду
                     </Button>
                     <Button type="button" variant="outline" class="w-full">
@@ -106,6 +106,10 @@ const props = defineProps({
         type: Object as PropType<UserDto>,
         required: true
     },
+    me: {
+        type: Boolean,
+        default: false
+    }
 })
 
 const { width } = useWindowSize();

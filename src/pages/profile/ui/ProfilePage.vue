@@ -2,8 +2,8 @@
     <div class="profile">
       <div class="profile__container">
         <div class="profile__image">
-          <UserAvatar size="xl" editable/>
-          <UserPreview :user="user">
+          <UserAvatar :user="user" size="xl" editable/>
+          <UserPreview :user="user" me>
             <Button variant="outline">Публичный просмотр</Button>
           </UserPreview>
         </div>

@@ -121,7 +121,7 @@ import { useToast } from '@/shared/ui/toast';
 
 const { toast } = useToast();
 
-defineProps({
+const props = defineProps({
   editable: {
     type: Boolean,
     default: false
@@ -129,17 +129,19 @@ defineProps({
   size: {
     type: String as PropType<'sm' | 'base' | 'lg' | 'xl'>,
     default: 'sm'
+  },
+  user: {
+    type: Object as PropType<UserDto>,
+    required: true
   }
 });
 
 const userStore = UserModel.useUserStore();
-
-const user = computed(() =>userStore.getUser as UserDto);
 const isLoading = computed<boolean>( () => userStore.isLoading);
 
-const avatarFallback = user.value.first_name?.charAt(0).toUpperCase() || '?';
+const avatarFallback = props.user.first_name?.charAt(0).toUpperCase() || '?';
 const avatarSrc = computed(() => {
-  return user.value.photo_url ? STATIC_URL + user.value.photo_url : '#';
+  return props.user.photo_url ? STATIC_URL + props.user.photo_url : '#';
 })
 
 const uploadedFile = ref<File>();

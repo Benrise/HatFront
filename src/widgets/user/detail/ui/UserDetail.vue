@@ -1,8 +1,8 @@
 <template>
   <form class="user-detail" @submit="onSubmit">
       <div class="user-detail__image">
-        <UserAvatar size="lg" editable/>
-        <UserPreview :user="user">
+        <UserAvatar :user="user" size="lg" editable/>
+        <UserPreview :user="user" me>
           <Button class="w-fit" variant="outline">Публичный просмотр</Button>
         </UserPreview>
       </div>

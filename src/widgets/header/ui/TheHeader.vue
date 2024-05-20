@@ -31,7 +31,9 @@
                         <IconSun v-if="mode === 'light'"/>
                         <IconMoon v-else/>
                     </Button>
-                    <UserBadge v-if="isAuthorized" :user="emptyUser" hide-name/>
+                    <router-link class="flex" :to="appRoutes?.getProfile() || '#'">
+                        <UserBadge v-if="isAuthorized" :user="user" me/>
+                    </router-link>
                     <router-link v-if="!isAuthorized" :to="appRoutes?.getLogin() || '#'" class="header__link">
                         <Button size="icon" class="rounded-full">
                             <IconLogin/>
@@ -192,6 +194,7 @@ import IconSun from '~icons/heroicons/sun';
 import IconMoon from '~icons/heroicons/moon';
 
 import { useColorMode } from '@vueuse/core'
+import { computed } from 'vue';
 
 const mode = useColorMode()
 const toggleColorMode = () => {
@@ -204,7 +207,7 @@ const isAuthorized = userStore.isAuthorized;
 
 const route = useRoute();
 
-const emptyUser = {} as UserDto
+const user = computed(() => userStore.getUser);
 
 const logout = () => {
     userStore.logout()

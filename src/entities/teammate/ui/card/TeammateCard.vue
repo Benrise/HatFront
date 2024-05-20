@@ -2,7 +2,9 @@
     <div class="teammate-card">
         <div class="teammate-card__main">
             <div class="teammate-card__info">
-                <UserBadge :user="emptyUser"/>
+                <UserPreview :user="user">
+                    <UserBadge :user="user"/>
+                </UserPreview>
                 <div class="teammate-card__description">
                     UI/UX-дизайнер с опытом около года. Специализируюсь на интерфейсах и презентациях. Также есть опыт в разработке логотипов и favicon. 
                 </div>
@@ -20,7 +22,9 @@
         </div>
         <div class="teammate-card__actions">
             <Button class="w-full">Пригласить в команду</Button>
-            <Button variant="outline" class="w-full">Подробнее</Button>
+            <UserPreview :user="user">
+                <Button variant="outline" class="w-full">Подробнее</Button>
+            </UserPreview>
         </div>
     </div>
 </template>
@@ -32,7 +36,11 @@ import type { UserDto } from '@/entities/user/model';
 import { Button } from '@/shared/ui/button';
 import { Badge } from '@/shared/ui/badge';
 
-const emptyUser = {} as UserDto
+import { UserPreview } from '@/entities/user/ui/preview';
+
+const props = defineProps<{
+    user: UserDto
+}>();
 </script>
 
 <style scoped lang="scss">
