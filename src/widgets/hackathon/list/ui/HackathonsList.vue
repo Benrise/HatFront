@@ -9,7 +9,7 @@
 
 <script setup lang="ts">
 import { HackathonModel } from '@/entities/hackathon';
-import { HackathonCard } from '@/entities/hackathon/ui/card';
+import { HackathonCard } from '@/entities/hackathon/ui';
 import { computed, ref } from 'vue';
 import { useIntersectionObserver } from '@vueuse/core'
 

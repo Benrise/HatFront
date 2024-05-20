@@ -11,6 +11,13 @@ export class TimingsDto {
     second?: number;
     third?: number;
   }
+
+  export class CaseDto extends BaseDto {
+    case_id: number = 0;
+    task?: string;
+    result?: string;
+    input_data?: string;
+  }
   
   export class HackathonDto extends BaseDto {
     description?: string;
@@ -27,4 +34,5 @@ export class TimingsDto {
     url_web?: string;
     is_confirm?: boolean;
     photo_url?: string;
+    cases: CaseDto[] = [];
   }

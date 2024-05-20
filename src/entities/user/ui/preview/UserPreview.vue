@@ -108,7 +108,7 @@ const props = defineProps({
     },
 })
 
-const { width } = useWindowSize()
+const { width } = useWindowSize();
 
 const fullName = computed(() => props.user?.first_name + ' ' + props.user?.second_name + ' ' + (props.user?.patronymic ? props.user?.patronymic : ''));
 </script>

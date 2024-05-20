@@ -1,5 +1,7 @@
 import { type ClassValue, clsx } from 'clsx'
 import { twMerge } from 'tailwind-merge'
+import { STATIC_URL } from '@/app/config'
+import { computed } from 'vue';
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))

@@ -321,6 +321,7 @@ const fetch = async () => {
   await educationLevelsStore.fetchEducationLevels();
   await skillsStore.fetchSkills();
   await specializationsStore.fetchSpecializations();
+  await userStore.fetchUser();
 }
 fetch()
 

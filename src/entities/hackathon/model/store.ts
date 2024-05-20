@@ -8,6 +8,7 @@ import { HackathonDto } from './types';
 export const useHackathonStore = defineStore("hackathon", () => {
     const { toast } = useToast();
 
+    const hackathon = ref<HackathonDto>({} as HackathonDto)
     const hackathons = ref<HackathonDto[]>([])
     const hackathons_cursor = ref()
     const isLoading = ref(false)
@@ -26,6 +27,23 @@ export const useHackathonStore = defineStore("hackathon", () => {
         setCursor(data.cursor);
     }
 
+    const fetchHackathon = async (hackathon_id: number) => {
+        const { data, status} = await http.hackathon.get(hackathon_id);
+        if (status !== StatusCodes.OK) {
+            toast({
+                variant: 'destructive',
+                title: 'Ошибка',
+                description: `Не удалось загрузить хакатон`,
+            });
+            return
+        }
+        setHackathon(data);
+    }
+    
+    const setHackathon = (data: HackathonDto) => {
+        hackathon.value = data;
+    }
+
     const addHackathons = (data: HackathonDto[]) => {
         hackathons.value.push(...data);
     }
@@ -34,8 +52,15 @@ export const useHackathonStore = defineStore("hackathon", () => {
         hackathons_cursor.value = cursor;
     }
 
-    const getHackathons = computed(() => hackathons.value);
+    const getHackathons = computed<HackathonDto[]>(() => hackathons.value);
+    const getHackathon = computed<HackathonDto>(() => hackathon.value);
     const getHackathonsCursor = computed(() => hackathons_cursor.value);
 
-    return { isLoading, fetchHackathons, getHackathons, getHackathonsCursor }
+    return { 
+        isLoading, 
+        fetchHackathons, 
+        getHackathons, 
+        getHackathonsCursor, 
+        fetchHackathon, 
+        getHackathon }
 })

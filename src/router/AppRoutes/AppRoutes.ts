@@ -20,6 +20,9 @@ export class AppRoutes {
   static getProfile() {
     return getRoute(AppPages.profile, {})
   }
+  static getHackathon(id: number) {
+    return getRoute(AppPages.hackathon, { id })
+  }
 }
 
 function getRoute<T extends object = {}>(name: string, params: T): IRoute<T> {

@@ -44,7 +44,7 @@
 	font-weight: $font-weight;
 	@include adaptiveValue("font-size", $font-size, $font-size-mobile);
 	@include adaptiveValue("line-height", $line-height, 19);
-	color: var(--foreground);
+	color: hsl(var(--foreground));
 }
 
 @mixin title {
@@ -57,13 +57,13 @@
 @mixin body(
 		$font-size: 16,
 		$font-size-mobile: 12,
-		$font-weight: 300,
+		$font-weight: 400,
 		$line-height: 24
 	) {
     font-weight: $font-weight;
 	color: var(--foreground);
     @include adaptiveValue("font-size", $font-size, $font-size-mobile);
-	@include adaptiveValue("line-height", $line-height, 18);
+	@include adaptiveValue("line-height", $line-height, 20);
 }
 
 @mixin adaptiveValue($property, $startSize, $minSize, $widthFrom: $containerWidth, $widthTo: $minWidth, $keepSize: 0) {

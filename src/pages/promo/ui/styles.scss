@@ -84,8 +84,9 @@
     }
 
     &__item-description {
-        @include body();
+        @include body(14);
         text-align: center;
+        color: hsl(var(--muted-foreground));
     }
 
     &__item-text {
@@ -142,8 +143,8 @@
         }
 
         &-description {
-            @include body();
-            max-width: 312px;
+            @include body(14);
+            max-width: 256px;
             font-weight: 400;
             color: hsl(var(--muted-foreground));
         }

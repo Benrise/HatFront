@@ -14,7 +14,8 @@ export enum AppPages {
   login = "LoginPage",
   home = "HomePage",
   promo = "PromoPage",
-  profile = "ProfilePage"
+  profile = "ProfilePage",
+  hackathon = "HackathonPage",
 }
 
 export const EAppProviders = {

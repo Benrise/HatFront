@@ -6,4 +6,7 @@ import type { HackathonDto } from '../model';
     constructor(protected endpoint: string, protected axiosInstance: AxiosInstance) {
         super(endpoint, axiosInstance);
     }
+    get(id: string | number) {
+      return this.axiosInstance.get(`${this.endpoint}?hackathon_id=${id}`);
+  }
 }

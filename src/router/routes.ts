@@ -40,6 +40,11 @@ const routes: Array<RouteRecordRaw> = [
             layout: AppLayoutsEnum.default,
             authRequired: true,
         },
+    },
+    {
+        name: AppPages.hackathon,
+        path: '/hackathon/:id',
+        component: () => import('@/pages/hackathon'),
     }
 ]
 

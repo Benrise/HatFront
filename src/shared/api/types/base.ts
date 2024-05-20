@@ -1,5 +1,5 @@
 export class BaseDto  {
-    id?: number;
+    id: number = 0;
     name?: string;
 }
 

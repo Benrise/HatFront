@@ -8,8 +8,8 @@
 ::-webkit-scrollbar-thumb {
     background: hsl(var(--muted-foreground));
     border-radius: 999px;
-
+    
     &:hover {
-        scale: 1.1;
+        background: hsl(var(--primary));
     }
 }

@@ -1,31 +1,19 @@
 <template>
-    <div class="hackathon-card">
-        <div class="hackathon-card__image image">
-                <img
-                    v-if="hackathon.photo_url"
-                    :src="hackathon.photo_url" 
-                    class="image__bg"  
-                    alt="Задний фон постера хакатона"
-                >
-                <img
-                    v-if="hackathon.photo_url"
-                    :src="hackathon.photo_url" 
-                    class="image__main" 
-                    alt="Постер хакатона"
-                >
-                <img 
-                    v-if="!hackathon.photo_url"
-                    src="/images/png/hackathon-bg-fallback.png"
-                    alt="Постер хакатона"
-                    class="rounded-md"
-                >
-        </div>
+<div class="hackathon-card">
+        <router-link 
+            :to="appRoutes?.getHackathon(hackathon.hackathon_id) || '#'"
+            class="w-full"
+        >
+            <HackathonPoster :photo_url="hackathon.photo_url"/>
+        </router-link>
         <div class="hackathon-card__main">
             <div class="hackathon-card__info">
                 <div class="hackathon-card__text">
-                    <div class="hackathon-card__title">
+                    <router-link 
+                        :to="appRoutes?.getHackathon(hackathon.hackathon_id) || '#'"
+                        class="hackathon-card__title">
                         {{ hackathon.name }}
-                    </div>
+                    </router-link>
                     <div class="hackathon-card__description">
                         {{ hackathon.description }}
                     </div>
@@ -76,9 +64,13 @@ import IconRuble from '~icons/solar/ruble-linear';
 import IconGroup from '~icons/heroicons/user-group';
 import IconClipboardCheck from '~icons/heroicons/clipboard-document-check';
 
+import { HackathonPoster } from '@/entities/hackathon'
+
 import type { HackathonDto } from '../../model';
 
 import { format } from "@formkit/tempo"
+
+import { useAppRoutes } from '@/router/AppRoutes';
 
 defineProps({
     hackathon: {
@@ -87,6 +79,7 @@ defineProps({
     }
 })
 
+const appRoutes = useAppRoutes()
 </script>
 
 <style scoped lang="scss">
