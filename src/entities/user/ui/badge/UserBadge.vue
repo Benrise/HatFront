@@ -1,7 +1,10 @@
 <template>
   <div class="user-badge" :class="team ? 'user-badge_team' : ''">
     <Avatar :store="userStore" :size="computedSize" class="user-badge__avatar" :entity="user"/>
-    <span v-if="!props.me" class="user-badge__name">{{ fullName || 'Пользователь' }}</span>
+    <div class="user-badge__text" :class="team ? 'user-badge_team' : ''">
+      <span v-if="!props.me" class="user-badge__name">{{ fullName || 'Пользователь' }}</span>
+      <slot name="subtext" />
+    </div>
   </div>
 </template>
   

@@ -20,6 +20,7 @@ export class UserDto extends BaseDto {
     first_name?: string;
     second_name?: string;
     patronymic?: string;
+    is_capitan?: boolean = false;
 }
 
 export class ContactsDto {

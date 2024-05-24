@@ -31,6 +31,7 @@ export class TimingsDto {
     timings?: TimingsDto;
     url_group?: string;
     url_web?: string;
+    team_id?: number;
     is_confirm?: boolean;
     photo_url?: string;
     cases: CaseDto[] = [];

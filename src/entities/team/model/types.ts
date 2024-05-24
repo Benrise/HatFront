@@ -8,10 +8,6 @@ export class TeamSpecializationDto extends BaseDto {
   required?: string;
 }
 
-export class TeamUserDto extends UserDto {
-  is_capitan: boolean = false;
-}
-
 export class TeamDto extends BaseDto {
     constructor () {
         super();
@@ -26,5 +22,5 @@ export class TeamDto extends BaseDto {
     specializations?: TeamSpecializationDto[];
     url_group?: string;
     user_count?: number = 0;
-    users?: TeamUserDto[] = [];
+    users?: UserDto[] = [];
   }

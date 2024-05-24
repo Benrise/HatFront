@@ -46,7 +46,13 @@
                 </div>
             </div>
             <div v-if="!team" class="hackathon-card__actions">
-                <Button class="w-full">Найти команду</Button>
+                <Button v-if="!hackathon.team_id" class="w-full">Найти команду</Button>
+                    <router-link 
+                    :to="appRoutes?.getTeam(hackathon?.team_id || 0) || '#'"
+                    class="w-full"
+                    >
+                <Button v-if="hackathon.team_id" class="w-full" variant="default">К команде</Button>
+                </router-link>
                 <Button class="w-full" variant="outline">Создать команду</Button>
             </div>
         </div>
@@ -54,7 +60,7 @@
 </template>
 
 <script setup lang="ts">
-import { type Prop, type PropType } from 'vue';
+import { type PropType } from 'vue';
 
 import { Badge } from '@/shared/ui/badge';
 import { Button } from '@/shared/ui/button';

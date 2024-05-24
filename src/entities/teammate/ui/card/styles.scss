@@ -6,6 +6,7 @@
     border-radius: 12px;
     @include adaptiveValue('gap', 48, 16);
     border: 1px solid hsl(var(--border));
+    justify-content: space-between;
 
     &__main {
         width: 100%;

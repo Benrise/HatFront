@@ -12,6 +12,8 @@ export const useUserStore = defineStore("user", () => {
     const { toast } = useToast();
 
     const user = ref<UserDto>({} as UserDto)
+    const users = ref<UserDto[]>([] as UserDto[])
+    const users_cursor = ref()
     const isLoading = ref(false)
     const isAuthorized = ref(false)
 
@@ -166,11 +168,37 @@ export const useUserStore = defineStore("user", () => {
         }
     }
 
+    const fetchUsers = async () => {
+        const { data, status} = await http.user.list({cursor: users_cursor.value});
+        if (status !== StatusCodes.OK) {
+            toast({
+                variant: 'destructive',
+                title: 'Ошибка',
+                description: `Не удалось загрузить список пользователей.`,
+            });
+            return
+        }
+        addUsers(data.objects);
+        setCursor(data.cursor);
+    }
+
+    const addUsers = (data: UserDto[]) => {
+        if (!data || data.length === 0) return
+        const existingIds = users.value.map((user) => user.id);
+        const newUsers = data.filter((user) => !existingIds.includes(user.id));
+        users.value.push(...newUsers);
+    }
+
+    const setCursor = (cursor: number) => {
+        users_cursor.value = cursor;
+    }
+
     const logout = () => {
         clearUser();
     }
 
     const getUser = computed<UserDto>(() => user.value);
+    const getUsers = computed<UserDto[]>(() => users.value);
     const getProvider = computed<Record<string, string> | undefined>(() => {
         const providerName = user.value.providers?.[0]?.name;
         if (providerName) {
@@ -194,7 +222,9 @@ export const useUserStore = defineStore("user", () => {
         deleteEducation,
         setUser,
         deleteAvatar,
-        user
+        user,
+        fetchUsers,
+        getUsers
     }
 })
 

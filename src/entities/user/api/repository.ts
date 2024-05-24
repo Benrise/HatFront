@@ -1,6 +1,7 @@
 import type { AxiosInstance } from 'axios';
 import type { EducationDto, UserDto } from '../model';
 import type { CursorListDto, BaseDto } from '@/shared/api/types';
+import { CrudRepository } from '@/shared/api/crud';
 
 const fileRequestConfig: AxiosRequestConfig = {
     config: {
@@ -10,8 +11,10 @@ const fileRequestConfig: AxiosRequestConfig = {
     },
   };
 
-export class  UserRepository{
-    constructor(protected endpoint: string, private axiosInstance: AxiosInstance) {}
+export class UserRepository extends CrudRepository<UserDto>{
+    constructor(protected endpoint: string, protected axiosInstance: AxiosInstance) {
+        super(endpoint, axiosInstance);
+    }
 
     async me(){
         return this.axiosInstance.get<UserDto>(`${this.endpoint}/me`);
