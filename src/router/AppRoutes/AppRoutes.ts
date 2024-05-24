@@ -23,6 +23,9 @@ export class AppRoutes {
   static getHackathon(id: number) {
     return getRoute(AppPages.hackathon, { id })
   }
+  static getTeam(id: number) {
+    return getRoute(AppPages.team, { id })
+  }
 }
 
 function getRoute<T extends object = {}>(name: string, params: T): IRoute<T> {

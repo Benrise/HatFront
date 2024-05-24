@@ -16,6 +16,7 @@ export enum AppPages {
   promo = "PromoPage",
   profile = "ProfilePage",
   hackathon = "HackathonPage",
+  team = "TeamPage",
 }
 
 export const EAppProviders = {

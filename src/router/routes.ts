@@ -45,6 +45,14 @@ const routes: Array<RouteRecordRaw> = [
         name: AppPages.hackathon,
         path: '/hackathon/:id',
         component: () => import('@/pages/hackathon'),
+    },
+    {
+        name: AppPages.team,
+        path: '/team/:id',
+        component: () => import('@/pages/team'),
+        meta: {
+            layout: AppLayoutsEnum.default
+        }
     }
 ]
 

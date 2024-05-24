@@ -1,10 +1,10 @@
 <template>
-        <div class="hackathons-list">
-            <TransitionGroup name="list" appear>
-                <HackathonCard v-for="hackathon in hackathons" :key="hackathon.id" :hackathon="hackathon"/>
-            </TransitionGroup>
-        </div>
-        <div ref="observer"></div>
+    <div class="hackathons-list">
+        <TransitionGroup name="list" appear>
+            <HackathonCard v-for="hackathon in hackathons" :key="hackathon.id" :hackathon="hackathon"/>
+        </TransitionGroup>
+    </div>
+    <div ref="observer"></div>
 </template>
 
 <script setup lang="ts">
