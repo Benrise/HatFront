@@ -1,2 +1,3 @@
 export * from './ui';
-export * from './model';
+export { http as ModelApi } from './api';
+export * as TeamModel from './model';

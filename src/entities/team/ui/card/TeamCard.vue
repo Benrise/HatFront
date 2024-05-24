@@ -1,22 +1,20 @@
 <template>
     <div class="team-card">
         <div class="team-card__main">
-            <TeamBadge :team="mockTeam"></TeamBadge>
-            <Badge variant="secondary" class="w-fit">{{ mockTeam.active_hackathon }}</Badge>
+            <TeamBadge :team="team"></TeamBadge>
+            <Badge v-if="team.hackathon" variant="secondary" class="w-fit">{{ team.hackathon?.name }}</Badge>
             <div class="team-card__info">
                 <div class="team-card__description">
                     Сборная студентов двух любимых вузов, которые любят ночевать в вузе во время хакатонов, отсылать решение за 6 секунд... 
                 </div>
             </div>
             <div class="team-card__tags">
-                <Badge class="team-card__tag">Vue</Badge>
-                <Badge class="team-card__tag">Go</Badge>
-                <Badge class="team-card__tag">PostgreSQL</Badge>
+                <Badge v-for="skill in team.skills" :key="skill.id" class="team-card__tag">{{ skill.name }}</Badge>
             </div>
             <div class="team-card__roles">
-                <Badge class="team-card__role">Бэк (1/1)</Badge>
-                <Badge class="team-card__role">Дизайн (1/1)</Badge>
-                <Badge class="team-card__role">Фронт (0/1)</Badge>
+                <Badge v-for="specialization in team.specialization" :key="specialization.id" class="team-card__role">
+                    {{ specialization.name }} {{ `(${specialization.current} / ${specialization.required})` }}
+                </Badge>
             </div>
         </div>
         <div class="team-card__actions">
@@ -31,16 +29,14 @@ import { Badge } from '@/shared/ui/badge';
 import { Button } from '@/shared/ui/button';
 
 import { TeamBadge } from '@/entities/team/ui/badge';
-import type { ITeam } from '@/entities/team/model';
+import { TeamDto } from '@/entities/team/model';
 
-const mockTeam: ITeam = {
-    id: 1,
-    name: 'MISIS x MIREA Koptevo!',
-    avatar: 'https://source.unsplash.com/random',
-    active_hackathon: 'Phystech Radar Tech Challenge',
-    members_count: 2
-}
-
+defineProps ({
+    team: {
+        type: TeamDto,
+        required: true
+    }
+})
 </script>
 
 <style scoped lang="scss">

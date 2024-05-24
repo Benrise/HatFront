@@ -45,7 +45,10 @@ export const useHackathonStore = defineStore("hackathon", () => {
     }
 
     const addHackathons = (data: HackathonDto[]) => {
-        hackathons.value.push(...data);
+        if (!data || data.length === 0) return
+        const existingIds = hackathons.value.map((hackathon) => hackathon.id);
+        const newHackathons = data.filter((hackathon) => !existingIds.includes(hackathon.id));
+        hackathons.value.push(...newHackathons);
     }
 
     const setCursor = (cursor: number) => {
