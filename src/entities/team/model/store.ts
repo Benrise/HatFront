@@ -51,7 +51,7 @@ export const useTeamStore = defineStore("team", () => {
         if (data.users?.length) {
             data.users.forEach((user) => {
                 const userId = userStore.getUser?.id;
-                setCaptain((userId.toString() === user.ID.toString()) && user.IsCapitan);
+                setCaptain((userId === user.id) && user.is_capitan);
             })
         }
         team.value = data;
@@ -75,7 +75,7 @@ export const useTeamStore = defineStore("team", () => {
     const updateAvatar = async (file: File) => {
         try {
             isLoading.value = true;
-            const { status } = await http.team.uploadPhoto(file);
+            const { status } = await http.team.uploadPhoto(team.value.id, file);
 
             if (status === StatusCodes.OK) {
                 toast({
@@ -104,7 +104,7 @@ export const useTeamStore = defineStore("team", () => {
     const deleteAvatar = async () => {
         try {
             isLoading.value = true;
-            const { status } = await http.team.uploadPhoto(null);
+            const { status } = await http.team.uploadPhoto(team.value.id, null);
             if (status === StatusCodes.OK) {
                 toast({
                     variant: 'warning',

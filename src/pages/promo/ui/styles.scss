@@ -3,7 +3,6 @@
         display: flex;
         flex-direction: column;
         @include adaptiveValue('gap', 192, 48);
-        @include adaptiveValue('padding-top', 64, 24);
     }
 }
 

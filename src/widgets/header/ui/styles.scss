@@ -6,6 +6,7 @@
         align-items: center;
         justify-content: space-between;
         @include adaptiveValue('gap', 24, 12);
+        @include adaptiveValue('padding', 24, 16);
     }
 
     &__main {

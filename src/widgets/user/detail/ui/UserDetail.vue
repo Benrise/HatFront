@@ -1,7 +1,7 @@
 <template>
   <form class="user-detail" @submit="onSubmit">
       <div class="user-detail__image">
-        <Avatar :store="userStore" :entity="user" size="lg" editable />
+        <Avatar :store="userStore" :entity="user" size="lg" editable/>
         <UserPreview :user="user" me>
           <Button class="w-fit" variant="outline">Публичный просмотр</Button>
         </UserPreview>

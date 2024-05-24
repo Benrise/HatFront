@@ -1,3 +1,4 @@
+import type { HackathonDto } from "@/entities/hackathon/model";
 import { UserDto } from "@/entities/user/model";
 import { BaseDto } from "@/shared/api/types"
 
@@ -8,7 +9,7 @@ export class TeamSpecializationDto extends BaseDto {
 }
 
 export class TeamUserDto extends UserDto {
-  isCapitan?: boolean;
+  is_capitan: boolean = false;
 }
 
 export class TeamDto extends BaseDto {
@@ -18,12 +19,12 @@ export class TeamDto extends BaseDto {
     }
     case_name?: string;
     description?: string;
-    hackathon?: BaseDto;
+    hackathon?: HackathonDto;
     is_visible?: boolean;
     photo_url?: string;
     skills?: BaseDto[];
-    specialization?: TeamSpecializationDto[];
+    specializations?: TeamSpecializationDto[];
     url_group?: string;
     user_count?: number = 0;
-    users?: UserDto[] = [];
+    users?: TeamUserDto[] = [];
   }

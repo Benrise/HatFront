@@ -1,7 +1,7 @@
 <template>
     <div class="team-card">
         <div class="team-card__main">
-            <router-link :to="appRoutes?.getTeam(team.id) || '/'">
+            <router-link :to="appRoutes?.getTeam(team.id) || '/'" class="w-fit">
                 <TeamBadge :team="team"></TeamBadge>
             </router-link>
             <Badge v-if="team.hackathon" variant="secondary" class="w-fit">{{ team.hackathon?.name }}</Badge>
@@ -14,7 +14,7 @@
                 <Badge v-for="skill in team.skills" :key="skill.id" class="team-card__tag">{{ skill.name }}</Badge>
             </div>
             <div class="team-card__roles">
-                <Badge v-for="specialization in team.specialization" :key="specialization.id" class="team-card__role">
+                <Badge v-for="specialization in team.specializations" :key="specialization.id" class="team-card__role">
                     {{ specialization.name }} {{ `(${specialization.current} / ${specialization.required})` }}
                 </Badge>
             </div>

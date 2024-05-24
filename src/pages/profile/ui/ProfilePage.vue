@@ -59,7 +59,6 @@ const tabs: ITabsConfig[] = [
     display: flex;
     flex-direction: row;
     gap: 48px;
-    @include adaptiveValue('padding-top', 64, 24);
   }
 
   &__image {

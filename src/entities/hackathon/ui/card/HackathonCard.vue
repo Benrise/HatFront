@@ -1,10 +1,10 @@
 <template>
-<div class="hackathon-card">
+<div class="hackathon-card" v-if="hackathon?.id" :class="team ? 'max-w-[724px] !p-3' : '' ">
         <router-link 
             :to="appRoutes?.getHackathon(hackathon.id) || '#'"
             class="w-full"
         >
-            <HackathonPoster :photo_url="hackathon.photo_url"/>
+            <HackathonPoster :photo_url="hackathon.photo_url" :class="team ? '!cursor-pointer' : ''"/>
         </router-link>
         <div class="hackathon-card__main">
             <div class="hackathon-card__info">
@@ -45,7 +45,7 @@
                     </Badge>
                 </div>
             </div>
-            <div class="hackathon-card__actions">
+            <div v-if="!team" class="hackathon-card__actions">
                 <Button class="w-full">Найти команду</Button>
                 <Button class="w-full" variant="outline">Создать команду</Button>
             </div>
@@ -54,7 +54,7 @@
 </template>
 
 <script setup lang="ts">
-import { type PropType } from 'vue';
+import { type Prop, type PropType } from 'vue';
 
 import { Badge } from '@/shared/ui/badge';
 import { Button } from '@/shared/ui/button';
@@ -76,6 +76,10 @@ defineProps({
     hackathon: {
         type: Object as PropType<HackathonDto>,
         required: true
+    },
+    team:{
+        type: Boolean,
+        default: false
     }
 })
 

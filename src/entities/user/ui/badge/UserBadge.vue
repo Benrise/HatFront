@@ -1,6 +1,6 @@
 <template>
-  <div class="user-badge">
-    <Avatar :store="userStore" :size="size" class="user-badge__avatar" :entity="user"/>
+  <div class="user-badge" :class="team ? 'user-badge_team' : ''">
+    <Avatar :store="userStore" :size="computedSize" class="user-badge__avatar" :entity="user"/>
     <span v-if="!props.me" class="user-badge__name">{{ fullName || 'Пользователь' }}</span>
   </div>
 </template>
@@ -18,9 +18,12 @@ import { computed } from 'vue';
 interface IProps {
   user: UserDto,
   size?: 'sm' | 'base' | 'lg' | 'xl',
-  me?: boolean
+  me?: boolean,
+  team?: boolean
 }
 const props = defineProps<IProps>()
+
+const computedSize = computed(() => props.team ? 'lg' : props.size);
 
 const fullName = computed(() => props.user.first_name + ' ' + props.user.second_name + ' ' + (props.user.patronymic ? props.user.patronymic : ''));
 

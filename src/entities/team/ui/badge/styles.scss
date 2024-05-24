@@ -3,8 +3,13 @@
     flex-direction: row;
     gap: 12px;
     align-items: center;
+    width: fit-content;
 
     &__name {
         @include body();
+
+        &:hover {
+            text-decoration: underline;
+        }
     }
 }

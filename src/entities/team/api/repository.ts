@@ -16,9 +16,9 @@ const fileRequestConfig: AxiosRequestConfig = {
         super(endpoint, axiosInstance);
     }
 
-    async uploadPhoto(payload: File | null) {
+    async uploadPhoto(id: number, payload: File | null) {
       const fromData = new FormData();
       if (payload) fromData.append('photo', payload);
-      return this.axiosInstance.put(`${this.endpoint}/photo`, fromData, fileRequestConfig.config);
+      return this.axiosInstance.put(`${this.endpoint}/${id}/photo`, fromData, fileRequestConfig.config);
   }
 }

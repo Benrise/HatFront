@@ -73,7 +73,7 @@
                     </div>
                 </div>
                 <DialogFooter class="flex gap-2">
-                    <Button type="button" class="w-full" :disabled="me">
+                    <Button type="button" class="w-full" :disabled="me || team">
                         Пригласить в команду
                     </Button>
                     <Button type="button" variant="outline" class="w-full">
@@ -110,6 +110,10 @@ const props = defineProps({
         required: true
     },
     me: {
+        type: Boolean,
+        default: false
+    },
+    team: {
         type: Boolean,
         default: false
     }

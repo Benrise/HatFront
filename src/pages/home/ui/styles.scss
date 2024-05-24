@@ -10,8 +10,8 @@
         display: flex;
         flex-direction: row;
         gap: 48px;
-        @include adaptiveValue('padding-top', 64, 24);
     }
+    
     &__controls {
         display: flex;
         flex-direction: row;

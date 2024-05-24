@@ -4,7 +4,7 @@
     background-color: hsl(var(--card));
     @include adaptiveValue('padding', 24, 12);
     border-radius: 12px;
-    gap: 24px;
+    @include adaptiveValue('gap', 48, 16);
     border: 1px solid hsl(var(--border));
 
     &__main {
@@ -25,7 +25,7 @@
     &__info {
         display: flex;
         flex-direction: column;
-        gap: 6px;
+        @include adaptiveValue('gap', 16, 12);
     }
 
     &__description {
@@ -40,7 +40,7 @@
     }
 
     &__roles,
-    &__technologies {
+    &__skills {
         display: flex;
         flex-direction: row;
         flex-wrap: wrap;
