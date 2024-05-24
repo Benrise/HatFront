@@ -1,6 +1,6 @@
 
 import type { AxiosInstance } from 'axios';
-import { BaseDtoCursorList } from '../types';
+import { CursorListDto } from '../types';
 
 export interface IListParameters {
     cursor?: number
@@ -10,7 +10,7 @@ export class  CrudRepository<T> {
     constructor(protected endpoint: string, protected axiosInstance: AxiosInstance) {}
 
     list(params?: IListParameters) {
-        return this.axiosInstance.get(`${this.endpoint}/covers`, { params: params });
+        return this.axiosInstance.get<CursorListDto<T>>(`${this.endpoint}`, { params: params });
     }
     get(id: string | number) {
         return this.axiosInstance.get(`${this.endpoint}/${id}`);

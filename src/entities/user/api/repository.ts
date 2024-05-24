@@ -1,6 +1,6 @@
 import type { AxiosInstance } from 'axios';
 import type { EducationDto, UserDto } from '../model';
-import type { BaseDtoCursorList, BaseDto } from '@/shared/api/types';
+import type { CursorListDto, BaseDto } from '@/shared/api/types';
 import type { ComputedRef } from 'vue';
 
 const fileRequestConfig: AxiosRequestConfig = {
@@ -62,13 +62,13 @@ export class SkillsRepository {
     constructor(protected endpoint: string, private axiosInstance: AxiosInstance) {}
 
     async get() {
-        return this.axiosInstance.get<BaseDtoCursorList>(`${this.endpoint}`);
+        return this.axiosInstance.get<CursorListDto<BaseDto>>(`${this.endpoint}`);
     }
 }
 export class SpecializationsRepository {
     constructor(protected endpoint: string, private axiosInstance: AxiosInstance) {}
 
     async get() {
-        return this.axiosInstance.get<BaseDtoCursorList>(`${this.endpoint}`);
+        return this.axiosInstance.get<CursorListDto<BaseDto>>(`${this.endpoint}`);
     }
 }

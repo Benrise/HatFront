@@ -1,13 +1,13 @@
-import { type BaseDto } from "@/shared/api/types";
+import { BaseDto } from "@/shared/api/types";
 
-export class UserDto {
+export class UserDto extends BaseDto {
     constructor() {
+        super();
         this.education = [];
         this.providers = [];
         this.skills = [];
         this.specializations = [];
     }
-    id: number = 0;
     photo_url?: string;
     providers?: BaseDto[];
     education: EducationDto[];
@@ -29,8 +29,7 @@ export class ContactsDto {
     email?: string | "";
 }
 
-export class EducationDto {
-    education_id?: number;
+export class EducationDto extends BaseDto {
     education_level_id?: number;
     education_level?: BaseDto;
     education_program?: string;

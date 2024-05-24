@@ -15,10 +15,10 @@ export const useUserStore = defineStore("user", () => {
     const isLoading = ref(false)
     const isAuthorized = ref(false)
 
-    const deleteEducation = async (education_id: number, callback: () => void) => {
+    const deleteEducation = async (id: number, callback: () => void) => {
         try {
             isLoading.value = true;
-            const { status } = await http.user.deleteEduction(education_id);
+            const { status } = await http.user.deleteEduction(id);
             if (status === StatusCodes.OK) {
                 callback();
                 toast({
@@ -51,7 +51,7 @@ export const useUserStore = defineStore("user", () => {
 
         try {
             for (const education of educations) {
-                if (education.education_id && education.education_level) {
+                if (education.id && education.education_level) {
                     education.education_level_id = education.education_level.id;
                     delete education.education_level;
                     await http.user.updateEducation(education);

@@ -23,12 +23,12 @@ export const useHackathonStore = defineStore("hackathon", () => {
             });
             return
         }
-        addHackathons(data.hackathons);
+        addHackathons(data.objects);
         setCursor(data.cursor);
     }
 
-    const fetchHackathon = async (hackathon_id: number) => {
-        const { data, status} = await http.hackathon.get(hackathon_id);
+    const fetchHackathon = async (id: number) => {
+        const { data, status} = await http.hackathon.get(id);
         if (status !== StatusCodes.OK) {
             toast({
                 variant: 'destructive',

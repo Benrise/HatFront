@@ -69,7 +69,7 @@
           <div class="user-detail__addable addable" v-if="values.education?.length">
             <transition-group name="addable" appear>
               <div v-for="(education, index) in values.education" :key="index" class="addable__item">
-                <Button v-if="!education?.education_id" @click="removeEducation((values as UserDto), index)" type="button" class="addable__number">
+                <Button v-if="!education?.id" @click="removeEducation((values as UserDto), index)" type="button" class="addable__number">
                   <div class="addable__digit">
                     {{ index + 1 }}
                   </div>
@@ -93,7 +93,7 @@
                     </AlertDialogHeader>
                     <AlertDialogFooter>
                       <AlertDialogCancel>Отмена</AlertDialogCancel>
-                      <AlertDialogAction @click="removeEducation((values as UserDto), index, education.education_id)">Удалить</AlertDialogAction>
+                      <AlertDialogAction @click="removeEducation((values as UserDto), index, education.id)">Удалить</AlertDialogAction>
                     </AlertDialogFooter>
                   </AlertDialogContent>
                 </AlertDialog>
@@ -362,7 +362,7 @@ const removeEducation = (values: UserDto, index: number, id?: number) => {
     })
     return
   }
-  const newEducation = (values.education || []).filter(item => item.education_id !== id);
+  const newEducation = (values.education || []).filter(item => item.id !== id);
   userStore.deleteEducation(id, () => setValues({
     education: newEducation
   }));

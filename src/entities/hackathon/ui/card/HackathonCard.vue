@@ -1,7 +1,7 @@
 <template>
 <div class="hackathon-card">
         <router-link 
-            :to="appRoutes?.getHackathon(hackathon.hackathon_id) || '#'"
+            :to="appRoutes?.getHackathon(hackathon.id) || '#'"
             class="w-full"
         >
             <HackathonPoster :photo_url="hackathon.photo_url"/>
@@ -10,7 +10,7 @@
             <div class="hackathon-card__info">
                 <div class="hackathon-card__text">
                     <router-link 
-                        :to="appRoutes?.getHackathon(hackathon.hackathon_id) || '#'"
+                        :to="appRoutes?.getHackathon(hackathon.id) || '#'"
                         class="hackathon-card__title">
                         {{ hackathon.name }}
                     </router-link>

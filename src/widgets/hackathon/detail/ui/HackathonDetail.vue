@@ -48,16 +48,16 @@
             </div>
         </div>
         <template v-if="hackathon.cases">
-            <Tabs orientation="vertical" :default-value="hackathon.cases[0].case_id" class="hackathon-detail__cases tabs">
+            <Tabs orientation="vertical" :default-value="hackathon.cases[0].id" class="hackathon-detail__cases tabs">
                 <TabsList class="tabs__list">
                     <div class="tabs__title">
                         Кейсы
                     </div>
-                    <TabsTrigger class="tabs__trigger" v-for="item in hackathon.cases" :key="item.case_id" :value="item.case_id">
+                    <TabsTrigger class="tabs__trigger" v-for="item in hackathon.cases" :key="item.id" :value="item.id">
                             {{ item.name }}
                     </TabsTrigger>
                 </TabsList>
-                <TabsContent class="tabs__content content" v-for="item in hackathon.cases" :key="item.case_id" :value="item.case_id">
+                <TabsContent class="tabs__content content" v-for="item in hackathon.cases" :key="item.id" :value="item.id">
                     <div class="content__group">
                         <div class="content__title">
                             Описание кейса
@@ -206,7 +206,6 @@ const hackathon = computed(() => hackathonStore.getHackathon);
 .tabs {
     display: flex;
     width: 100%;
-    justify-content: space-between;
     @include adaptiveValue('gap', 64, 32);
     
     &__list {

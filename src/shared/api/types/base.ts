@@ -3,7 +3,7 @@ export class BaseDto  {
     name?: string;
 }
 
-export abstract class BaseDtoCursorList<T> {
+export abstract class CursorListDto<T> {
     cursor: number = 0;
     objects: T[] = [];
 }

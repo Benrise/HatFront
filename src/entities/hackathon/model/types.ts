@@ -13,7 +13,6 @@ export class TimingsDto {
   }
 
   export class CaseDto extends BaseDto {
-    case_id: number = 0;
     task?: string;
     result?: string;
     input_data?: string;

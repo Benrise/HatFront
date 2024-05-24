@@ -185,8 +185,6 @@ import IconBars from '~icons/heroicons/bars-3-bottom-right-16-solid?width=24px&h
 import IconLogin from '~icons/heroicons/arrow-right-end-on-rectangle-20-solid';
 import IconLogout from '~icons/heroicons/arrow-right-start-on-rectangle-20-solid';
 
-import type { UserDto } from '@/entities/user/model';
-
 import { UserBadge, UserModel } from '@/entities/user';
 import { AppPages, router, useAppRoutes } from '@/router';
 import { useRoute } from 'vue-router';
