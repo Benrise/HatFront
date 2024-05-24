@@ -2,7 +2,7 @@
     <div class="profile">
       <div class="profile__container">
         <div class="profile__image">
-          <UserAvatar :user="user" size="xl" editable/>
+          <Avatar :store="userStore" :entity="user" size="xl" editable />
           <UserPreview :user="user" me>
             <Button variant="outline">Публичный просмотр</Button>
           </UserPreview>
@@ -18,10 +18,12 @@ import type { ITabsConfig } from '@/shared/ui/tabs';
 import { Button } from '@/shared/ui/button';
 
 import { UserPreview } from '@/entities/user/ui/preview';
-import { UserAvatar } from '@/entities/user/ui/avatar';
 
 import { UserDetail } from '@/widgets/user/detail';
 import { UserModel } from '@/entities/user'
+
+import { Avatar } from '@/features/avatar'
+
 import { computed } from 'vue';
 
 const userStore = UserModel.useUserStore();

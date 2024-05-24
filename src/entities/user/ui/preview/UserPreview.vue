@@ -8,7 +8,7 @@
             <div class="dialog__content">
                 <div class="user-preview">
                     <div class="user-preview__header">
-                        <UserAvatar :user="user" :size="width < 500 ? 'base' : 'xl'" />
+                        <Avatar :store="userStore" :entity="user" :size="width < 500 ? 'base' : 'xl'" />
                         <div class="user-preview__group">
                             <div class="user-preview__name">
                                 {{ fullName }}
@@ -95,10 +95,13 @@ import {
   DialogTrigger,
 } from '@/shared/ui/dialog'
 
-import { UserAvatar } from '@/entities/user/ui/avatar';
 import { computed, type PropType } from 'vue';
 import type { UserDto } from '../../model';
 import { useWindowSize } from '@vueuse/core'
+
+import { UserModel } from '@/entities/user'
+
+import { Avatar } from '@/features/avatar'
 
 
 const props = defineProps({
@@ -122,6 +125,8 @@ const fullName = computed(
         ' ' +
         (props.user?.patronymic ? props.user?.patronymic : ''),
 );
+
+const userStore = UserModel.useUserStore();
 </script>
 
 <style scoped lang="scss">

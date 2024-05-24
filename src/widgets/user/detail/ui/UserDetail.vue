@@ -1,7 +1,7 @@
 <template>
   <form class="user-detail" @submit="onSubmit">
       <div class="user-detail__image">
-        <UserAvatar :user="user" size="lg" editable/>
+        <Avatar :store="userStore" :entity="user" size="lg" editable />
         <UserPreview :user="user" me>
           <Button class="w-fit" variant="outline">Публичный просмотр</Button>
         </UserPreview>
@@ -302,13 +302,13 @@ import { TagsInputCombobox } from '@/shared/ui/tags-input-combobox';
 import IconXmark from '~icons/heroicons/x-mark-20-solid';
 
 import { type BaseDto } from "@/shared/api/types";
-
-import { UserAvatar } from '@/entities/user/ui/avatar';
 import type { UserDto } from '@/entities/user/model'
 
 import { formSchema } from '../model'
 import { UserModel } from '@/entities/user'
 import { UserPreview } from '@/entities/user/ui';
+
+import { Avatar } from '@/features/avatar'
 
 const userStore = UserModel.useUserStore();
 const educationLevelsStore = UserModel.useEducationLevelsStore();

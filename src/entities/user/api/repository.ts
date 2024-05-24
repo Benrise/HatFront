@@ -1,7 +1,6 @@
 import type { AxiosInstance } from 'axios';
 import type { EducationDto, UserDto } from '../model';
 import type { CursorListDto, BaseDto } from '@/shared/api/types';
-import type { ComputedRef } from 'vue';
 
 const fileRequestConfig: AxiosRequestConfig = {
     config: {
