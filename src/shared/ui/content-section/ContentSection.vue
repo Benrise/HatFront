@@ -56,7 +56,7 @@ import { Button } from '@/shared/ui/button';
 
 import IconChevronDown from '~icons/heroicons/chevron-down-20-solid';
 
-import { defineProps, ref } from "vue";
+import { ref } from "vue";
 import type { StringOrNumber } from "node_modules/radix-vue/dist/shared/types";
 
 

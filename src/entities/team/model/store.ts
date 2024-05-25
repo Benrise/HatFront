@@ -14,6 +14,7 @@ export const useTeamStore = defineStore("team", () => {
 
     const team = ref<TeamDto>({} as TeamDto)
     const teams = ref<TeamDto[]>([])
+    const myTeams = ref<TeamDto[]>([])
     const teams_cursor = ref()
     const isLoading = ref(false)
     const isCaptain = ref(false)
@@ -43,6 +44,19 @@ export const useTeamStore = defineStore("team", () => {
             return
         }
         setTeam(data);
+    }
+
+    const fetchTeamsMe = async () => {
+        const { data, status} = await http.team.listMe();
+        if (status !== StatusCodes.OK) {
+            toast({
+                variant: 'destructive',
+                title: 'Ошибка',
+                description: `Не удалось загрузить список моих хакатонов`,
+            });
+            return
+        }
+        myTeams.value = data.objects;
     }
     
     const setTeam = (data: TeamDto) => {
@@ -122,9 +136,37 @@ export const useTeamStore = defineStore("team", () => {
         }
     }
 
+    const invite = async (user_id: number, payload: any, callback: () => void) => {
+        try {
+            isLoading.value = true;
+            const { status } = await http.team.createRequest(user_id, payload);
+            if (status === StatusCodes.OK) {
+                toast({
+                    variant: 'default',
+                    title: 'Успех',
+                    description: `Приглашение отправлено`,
+                  });
+                  callback();  
+            }
+        }
+        catch (e) {
+            console.error('Error on deleting avatar:', e);
+            toast({
+                variant: 'destructive',
+                title: `Ошибка`,
+                description: `Ошибка при отправке приглашения. Попробуйте позже.`,
+            });
+        }
+        finally {
+            isLoading.value = false;
+        }
+    }
+
     const getTeams = computed<TeamDto[]>(() => teams.value);
     const getTeam = computed<TeamDto>(() => team.value);
     const getTeamsCursor = computed(() => teams_cursor.value);
+    const getMyTeams = computed<TeamDto[]>(() => myTeams.value);
+    const getMyTeamsCursor = computed(() => teams_cursor.value);
     const getCaptain = computed(() => isCaptain.value);
 
     return { 
@@ -137,6 +179,10 @@ export const useTeamStore = defineStore("team", () => {
         updateAvatar,
         deleteAvatar,
         isCaptain,
-        getCaptain
+        getCaptain,
+        fetchTeamsMe,
+        getMyTeams,
+        getMyTeamsCursor,
+        invite
     }
 })

@@ -24,3 +24,9 @@ export class TeamDto extends BaseDto {
     user_count?: number = 0;
     users?: UserDto[] = [];
   }
+
+  export class CreateRequestDto {
+    team_id?: number;
+    specialization_i_ds?: number[] = [];
+    message?: string;
+  }

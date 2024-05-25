@@ -27,7 +27,9 @@
             </div>
         </div>
         <div class="teammate-card__actions">
-            <Button v-if="!team" class="w-full">Пригласить в команду</Button>
+            <Invitation v-if="!team" :user="user">
+                <Button class="w-full">Пригласить в команду</Button>
+            </Invitation>
             <UserPreview v-model:open="open" :user="user" team/>
             <Button variant="outline" class="w-full" @click="toggleOpen">Подробнее</Button>
         </div>
@@ -35,6 +37,7 @@
 </template>
 
 <script setup lang="ts">
+import { Invitation } from '@/features/invitation';
 import { UserBadge } from '@/entities/user';
 import { UserDto } from '@/entities/user/model';
 

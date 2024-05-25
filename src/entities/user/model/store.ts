@@ -184,8 +184,9 @@ export const useUserStore = defineStore("user", () => {
 
     const addUsers = (data: UserDto[]) => {
         if (!data || data.length === 0) return
+        const currentUser = user.value;
         const existingIds = users.value.map((user) => user.id);
-        const newUsers = data.filter((user) => !existingIds.includes(user.id));
+        const newUsers = data.filter((user) => !existingIds.includes(user.id) && user.id !== currentUser.id);
         users.value.push(...newUsers);
     }
 

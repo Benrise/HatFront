@@ -2,6 +2,7 @@ import type { AxiosInstance } from 'axios';
 import type { EducationDto, UserDto } from '../model';
 import type { CursorListDto, BaseDto } from '@/shared/api/types';
 import { CrudRepository } from '@/shared/api/crud';
+import type { TeamDto } from '@/entities/team/model';
 
 const fileRequestConfig: AxiosRequestConfig = {
     config: {

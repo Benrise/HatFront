@@ -6,6 +6,7 @@
     background-color: hsl(var(--card));
     border-radius: 12px;
     border: 1px solid hsl(var(--border));
+    justify-content: space-between;
 
     &__info {
         display: flex;

@@ -1,6 +1,7 @@
 import { CrudRepository } from '@/shared/api/crud';
 import type { AxiosInstance } from 'axios';
 import type { TeamDto } from '../model';
+import type { CursorListDto } from '@/shared/api/types';
 
 const fileRequestConfig: AxiosRequestConfig = {
   config: {
@@ -20,5 +21,13 @@ const fileRequestConfig: AxiosRequestConfig = {
       const fromData = new FormData();
       if (payload) fromData.append('photo', payload);
       return this.axiosInstance.put(`${this.endpoint}/${id}/photo`, fromData, fileRequestConfig.config);
-  }
+    }
+
+    async listMe() {
+      return this.axiosInstance.get<CursorListDto<TeamDto>>(`${this.endpoint}/me`);
+    }
+
+    async createRequest(user_id: number, payload: TeamDto) {
+      return this.axiosInstance.post(`${this.endpoint}/${user_id}/request`, payload);
+    }
 }
