@@ -27,6 +27,10 @@ export class TeamDto extends BaseDto {
 
   export class CreateRequestDto {
     team_id?: number;
-    specialization_i_ds?: number[] = [];
+    specialization_ids?: number[] = [];
     message?: string;
+  }
+
+  export class CreateTeamDto extends TeamDto {
+    case_id?: number;
   }

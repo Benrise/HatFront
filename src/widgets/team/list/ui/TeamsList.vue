@@ -16,11 +16,11 @@ import { useIntersectionObserver } from '@vueuse/core'
 const teamStore = TeamModel.useTeamStore();
 
 const fetch = async () => {
-    await teamStore.fetchTeams();
+    await teamStore.fetchList();
 }
 
 const observer = ref<HTMLElement | null>(null)
-const teams = computed(() => teamStore.getTeams);
+const teams = computed(() => teamStore.getList);
 
 useIntersectionObserver(
     observer,

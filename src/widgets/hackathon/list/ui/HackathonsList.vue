@@ -16,11 +16,11 @@ import { useIntersectionObserver } from '@vueuse/core'
 const hackathonStore = HackathonModel.useHackathonStore();
 
 const fetch = async () => {
-    await hackathonStore.fetchHackathons();
+    await hackathonStore.fetchList();
 }
 
 const observer = ref<HTMLElement | null>(null)
-const hackathons = computed(() => hackathonStore.getHackathons);
+const hackathons = computed(() => hackathonStore.getList);
 
 useIntersectionObserver(
     observer,

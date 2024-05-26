@@ -37,7 +37,7 @@
 </template>
 
 <script setup lang="ts">
-import { Invitation } from '@/features/invitation';
+import { Invitation } from '@/features/team/invitation';
 import { UserBadge } from '@/entities/user';
 import { UserDto } from '@/entities/user/model';
 

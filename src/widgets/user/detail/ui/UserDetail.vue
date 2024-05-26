@@ -318,9 +318,9 @@ const specializationsStore = UserModel.useSpecializationsStore();
 const isLoading = computed<boolean>( () => userStore.isLoading);
 
 const fetch = async () => {
-  await educationLevelsStore.fetchEducationLevels();
-  await skillsStore.fetchSkills();
-  await specializationsStore.fetchSpecializations();
+  await educationLevelsStore.fetchList();
+  await skillsStore.fetchList();
+  await specializationsStore.fetchList();
   await userStore.fetchUser();
 }
 fetch()

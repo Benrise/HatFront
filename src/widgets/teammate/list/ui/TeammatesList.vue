@@ -16,7 +16,7 @@ import { useIntersectionObserver } from '@vueuse/core'
 const userStore = UserModel.useUserStore();
 
 const fetch = async () => {
-    await userStore.fetchUsers();
+    await userStore.fetchList();
 }
 
 const observer = ref<HTMLElement | null>(null)

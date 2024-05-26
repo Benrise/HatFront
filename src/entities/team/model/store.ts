@@ -3,7 +3,7 @@ import { useToast } from '@/shared/ui/toast/use-toast';
 import { http } from '../api';
 import { StatusCodes } from 'http-status-codes';
 import { computed, ref } from 'vue';
-import { TeamDto } from './types';
+import { CreateTeamDto, TeamDto } from './types';
 
 import { UserModel } from '@/entities/user';
 
@@ -15,12 +15,14 @@ export const useTeamStore = defineStore("team", () => {
     const team = ref<TeamDto>({} as TeamDto)
     const teams = ref<TeamDto[]>([])
     const myTeams = ref<TeamDto[]>([])
-    const teams_cursor = ref()
+    const myTeamsCursor = ref()
+    const teamsCursor = ref()
     const isLoading = ref(false)
     const isCaptain = ref(false)
+    const hasOwnTeams = ref(false)
 
-    const fetchTeams = async () => {
-        const { data, status} = await http.team.list({cursor: teams_cursor.value});
+    const fetchList = async () => {
+        const { data, status} = await http.team.list({cursor: teamsCursor.value});
         if (status !== StatusCodes.OK) {
             toast({
                 variant: 'destructive',
@@ -46,17 +48,32 @@ export const useTeamStore = defineStore("team", () => {
         setTeam(data);
     }
 
-    const fetchTeamsMe = async () => {
-        const { data, status} = await http.team.listMe();
-        if (status !== StatusCodes.OK) {
-            toast({
-                variant: 'destructive',
-                title: 'Ошибка',
-                description: `Не удалось загрузить список моих хакатонов`,
-            });
-            return
+    const fetchListMe = async () => {
+        try {
+            isLoading.value = true;
+            const { data, status} = await http.team.listMe();
+            if (status !== StatusCodes.OK) {
+                toast({
+                    variant: 'destructive',
+                    title: 'Ошибка',
+                    description: `Не удалось загрузить список команд`,
+                });
+                return
+            }
+            setHasTeams(data.objects.length > 0);
+            addTeamsMe(data.objects);
+            setCursorMe(data.cursor);
         }
-        myTeams.value = data.objects;
+        catch (e) {
+            console.error('Error on fetching teams:', e);
+        }
+        finally {
+            isLoading.value = false;
+        }
+    }
+
+    const setHasTeams = (data: boolean) => {
+        hasOwnTeams.value = data;
     }
     
     const setTeam = (data: TeamDto) => {
@@ -82,8 +99,19 @@ export const useTeamStore = defineStore("team", () => {
         teams.value.push(...newTeams);
     }
 
+    const addTeamsMe = (data: TeamDto[]) => {
+        if (!data || data.length === 0) return
+        const existingIds = myTeams.value.map((team) => team.id);
+        const newTeams = data.filter((team) => !existingIds.includes(team.id));
+        myTeams.value.push(...newTeams);
+    }
+
     const setCursor = (cursor: number) => {
-        teams_cursor.value = cursor;
+        teamsCursor.value = cursor;
+    }
+
+    const setCursorMe = (cursor: number) => {
+        myTeamsCursor.value = cursor;
     }
 
     const updateAvatar = async (file: File) => {
@@ -136,17 +164,28 @@ export const useTeamStore = defineStore("team", () => {
         }
     }
 
-    const invite = async (user_id: number, payload: any, callback: () => void) => {
+    const resetList = () => {
+        teams.value = [];
+        teamsCursor.value = undefined;
+    }
+
+    const resetListMe = () => {
+        myTeams.value = [];
+        myTeamsCursor.value = undefined;
+    }
+
+    const createTeam = async (payload: CreateTeamDto, callback?: () => void) => {
         try {
             isLoading.value = true;
-            const { status } = await http.team.createRequest(user_id, payload);
-            if (status === StatusCodes.OK) {
+            const { status } = await http.team.post(payload);
+            if (status === StatusCodes.CREATED) {
                 toast({
-                    variant: 'default',
+                    variant: 'success',
                     title: 'Успех',
-                    description: `Приглашение отправлено`,
-                  });
-                  callback();  
+                    description: `Команда успешно создана`,
+                });
+                if (callback) callback();
+                await fetchListMe();
             }
         }
         catch (e) {
@@ -154,7 +193,7 @@ export const useTeamStore = defineStore("team", () => {
             toast({
                 variant: 'destructive',
                 title: `Ошибка`,
-                description: `Ошибка при отправке приглашения. Попробуйте позже.`,
+                description: `Не удалось создать команду. Попробуйте позже.`,
             });
         }
         finally {
@@ -162,27 +201,30 @@ export const useTeamStore = defineStore("team", () => {
         }
     }
 
-    const getTeams = computed<TeamDto[]>(() => teams.value);
+    const getList = computed<TeamDto[]>(() => teams.value);
     const getTeam = computed<TeamDto>(() => team.value);
-    const getTeamsCursor = computed(() => teams_cursor.value);
-    const getMyTeams = computed<TeamDto[]>(() => myTeams.value);
-    const getMyTeamsCursor = computed(() => teams_cursor.value);
+    const getListCursor = computed(() => teamsCursor.value);
+    const getListMe = computed<TeamDto[]>(() => myTeams.value);
+    const getListMeCursor = computed(() => teamsCursor.value);
     const getCaptain = computed(() => isCaptain.value);
 
     return { 
         isLoading, 
-        fetchTeams, 
-        getTeams, 
-        getTeamsCursor, 
+        fetchList, 
+        getList, 
+        getListCursor, 
         fetchTeam, 
         getTeam,
         updateAvatar,
         deleteAvatar,
         isCaptain,
         getCaptain,
-        fetchTeamsMe,
-        getMyTeams,
-        getMyTeamsCursor,
-        invite
+        fetchListMe,
+        resetListMe,
+        getListMe,
+        getListMeCursor,
+        createTeam,
+        resetList,
+        hasOwnTeams
     }
 })

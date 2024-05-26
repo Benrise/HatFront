@@ -168,7 +168,7 @@ export const useUserStore = defineStore("user", () => {
         }
     }
 
-    const fetchUsers = async () => {
+    const fetchList = async () => {
         const { data, status} = await http.user.list({cursor: users_cursor.value});
         if (status !== StatusCodes.OK) {
             toast({
@@ -188,6 +188,32 @@ export const useUserStore = defineStore("user", () => {
         const existingIds = users.value.map((user) => user.id);
         const newUsers = data.filter((user) => !existingIds.includes(user.id) && user.id !== currentUser.id);
         users.value.push(...newUsers);
+    }
+
+    const invite = async (user_id: number, payload: any, callback?: () => void) => {
+        try {
+            isLoading.value = true;
+            const { status } = await http.user.createRequest(user_id, payload);
+            if (status === StatusCodes.CREATED) {
+                toast({
+                    variant: 'success',
+                    title: 'Успех',
+                    description: `Приглашение отправлено`,
+                  });
+                  if (callback) callback();
+            }
+        }
+        catch (e) {
+            console.error('Error on creating request:', e);
+            toast({
+                variant: 'destructive',
+                title: `Ошибка`,
+                description: `Ошибка при отправке приглашения. Попробуйте позже.`,
+            });
+        }
+        finally {
+            isLoading.value = false;
+        }
     }
 
     const setCursor = (cursor: number) => {
@@ -224,8 +250,9 @@ export const useUserStore = defineStore("user", () => {
         setUser,
         deleteAvatar,
         user,
-        fetchUsers,
-        getUsers
+        fetchList,
+        getUsers,
+        invite
     }
 })
 
@@ -233,7 +260,7 @@ export const useEducationLevelsStore = defineStore("educationLevels", () => {
     const isLoading = ref(false)
     const educationLevels = ref<BaseDto[]>([])
 
-    const fetchEducationLevels = async () => {
+    const fetchList = async () => {
         try {
             isLoading.value = true;
             const { data, status } = await http.educationLevels.get();
@@ -252,7 +279,7 @@ export const useEducationLevelsStore = defineStore("educationLevels", () => {
 
     const getEducationLevels = computed(() => educationLevels.value);
 
-    return { fetchEducationLevels, getEducationLevels, isLoading }
+    return { fetchList, getEducationLevels, isLoading }
 })
 
 export const useSkillsStore = defineStore("skills", () => {
@@ -260,7 +287,7 @@ export const useSkillsStore = defineStore("skills", () => {
     const skills = ref<BaseDto[]>([])
     const cursor = ref(0)
 
-    const fetchSkills = async () => {
+    const fetchList = async () => {
         try {
             isLoading.value = true;
             const { data, status } = await http.skills.get();
@@ -281,7 +308,7 @@ export const useSkillsStore = defineStore("skills", () => {
 
     const getSkills = computed(() => skills.value);
 
-    return { fetchSkills, getSkills, isLoading, cursor }
+    return { fetchList, getSkills, isLoading, cursor }
 })
 
 export const useSpecializationsStore = defineStore("specializations", () => {
@@ -289,7 +316,7 @@ export const useSpecializationsStore = defineStore("specializations", () => {
     const specializations = ref<BaseDto[]>([])
     const cursor = ref(0)
 
-    const fetchSpecializations = async () => {
+    const fetchList = async () => {
         try {
             isLoading.value = true;
             const { data, status } = await http.specializations.get();
@@ -310,5 +337,5 @@ export const useSpecializationsStore = defineStore("specializations", () => {
 
     const getSpecializations = computed(() => specializations.value);
 
-    return { fetchSpecializations, getSpecializations, isLoading, cursor }
+    return { fetchList, getSpecializations, isLoading, cursor }
 })

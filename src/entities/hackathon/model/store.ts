@@ -13,18 +13,32 @@ export const useHackathonStore = defineStore("hackathon", () => {
     const hackathons_cursor = ref()
     const isLoading = ref(false)
 
-    const fetchHackathons = async () => {
-        const { data, status} = await http.hackathon.list({cursor: hackathons_cursor.value});
-        if (status !== StatusCodes.OK) {
-            toast({
-                variant: 'destructive',
-                title: 'Ошибка',
-                description: `Не удалось загрузить список хакатонов`,
-            });
-            return
+    const fetchList = async () => {
+        try {
+            isLoading.value = true;
+            const { data, status} = await http.hackathon.list({cursor: hackathons_cursor.value});
+            if (status !== StatusCodes.OK) {
+                toast({
+                    variant: 'destructive',
+                    title: 'Ошибка',
+                    description: `Не удалось загрузить список хакатонов`,
+                });
+                return
+            }
+            addHackathons(data.objects);
+            setCursor(data.cursor);
         }
-        addHackathons(data.objects);
-        setCursor(data.cursor);
+        catch (e) {
+            console.error('Error on fetching hackathons:', e);
+        }
+        finally {
+            isLoading.value = false;
+        }
+    }
+
+    const resetList = () => {
+        hackathons.value = [];
+        hackathons_cursor.value = undefined;
     }
 
     const fetchHackathon = async (id: number) => {
@@ -55,15 +69,17 @@ export const useHackathonStore = defineStore("hackathon", () => {
         hackathons_cursor.value = cursor;
     }
 
-    const getHackathons = computed<HackathonDto[]>(() => hackathons.value);
+    const getList = computed<HackathonDto[]>(() => hackathons.value);
     const getHackathon = computed<HackathonDto>(() => hackathon.value);
-    const getHackathonsCursor = computed(() => hackathons_cursor.value);
+    const getListCursor = computed(() => hackathons_cursor.value);
 
     return { 
         isLoading, 
-        fetchHackathons, 
-        getHackathons, 
-        getHackathonsCursor, 
+        fetchList, 
+        getList, 
+        getListCursor, 
         fetchHackathon, 
-        getHackathon }
+        getHackathon,
+        resetList
+    }
 })

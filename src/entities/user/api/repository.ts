@@ -50,6 +50,10 @@ export class UserRepository extends CrudRepository<UserDto>{
     async updateSpecializations(payload: number[]) {
         return this.axiosInstance.put(`${this.endpoint}/specializations`, payload);
     }
+
+    async createRequest(user_id: number, payload: TeamDto) {
+        return this.axiosInstance.post(`${this.endpoint}/${user_id}/request`, payload);
+    }
 }
 
 export class EducationLevelsRepository {

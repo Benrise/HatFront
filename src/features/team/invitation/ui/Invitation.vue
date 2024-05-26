@@ -1,5 +1,5 @@
 <template>
-    <Dialog class="dialog" @update:open="fetch($event)">
+    <Dialog class="dialog" v-model:open="openInvitation" @update:open="fetch($event)">
       <DialogTrigger as-child>
         <slot />
       </DialogTrigger>
@@ -10,65 +10,59 @@
               <UserBadge :user="user" @click="toggleOpen" />
             </div>
             <div class="invitation__field-group">
-              <div class="user-detail__item">
-                Команда
-              </div>
-              <div class="user-detail__fields">
-                <FormField name="team">
-                  <FormItem>
+                <FormField name="team_id">
+                  <FormItem class="invitation__field">
+                    <FormLabel class="invitation__field-label">Команда</FormLabel>
                     <FormControl>
-                      <Combobox
-                        @update:modelValue="setFieldValue('team', $event), updateSpecializationsFields(values.team)"
-                        placeholder="Выберите команду"
-                        :items="myTeams"
-                      />
+                        <Combobox
+                          v-if="hasOwnTeams" 
+                          @update:modelValue="setFieldValue('team_id', $event), updateSpecializationsFields(values.team_id)"
+                          placeholder="Выберите команду"
+                          :store="teamStore"
+                          me
+                        />
+                        <Creating v-else :user="user">
+                          <Button variant="outline" class="w-fit">Создать команду</Button>
+                        </Creating>
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 </FormField>
-              </div>
             </div>
-            <transition name="fade" mode="out-in">
-              <div v-if="selectedTeamSpecializations.length" class="invitation__field-group">
-                <div class="user-detail__item">
-                  Роль в команде
-                </div>
-                <div class="user-detail__fields">
-                  <FormField name="specializations">
-                    <FormItem class="flex flex-col gap-2">
-                      <FormField
-                        v-for="item in selectedTeamSpecializations"
-                        v-slot="{ value, handleChange }"
-                        :key="item.id"
-                        type="checkbox"
-                        :value="item.id"
-                        :unchecked-value="false"
-                        :name="`specialization_i_ds`"
-                      >
-                        <FormItem class="flex flex-row items-start space-x-3 space-y-0">
-                          <FormControl>
-                            <Checkbox
-                              :checked="!!value && value.includes(item.id)"
-                              @update:checked="handleChange"
-                            />
-                          </FormControl>
-                          <FormLabel class="font-normal">
-                            {{ item.name }}
-                          </FormLabel>
-                        </FormItem>
-                      </FormField>
+            <div class="invitation__field-group" v-if="selectedTeamSpecializations.length">
+              <FormField name="specializations">
+                <FormItem class="invitation__field">
+                  <FormLabel class="invitation__field-label">Роль в команде</FormLabel>
+                  <div class="flex flex-col gap-2">
+                    <FormField
+                      v-for="item in selectedTeamSpecializations"
+                      v-slot="{ value, handleChange }"
+                      :key="item.id"
+                      type="checkbox"
+                      :value="item.id"
+                      :unchecked-value="false"
+                      :name="`specialization_ids`"
+                    >
+                    <FormItem class="flex flex-row items-start space-x-3 space-y-0">
+                      <FormControl>
+                        <Checkbox
+                          :checked="!!value && value.includes(item.id)"
+                          @update:checked="handleChange"
+                        />
+                      </FormControl>
+                      <FormLabel class="font-normal">
+                        {{ item.name }}
+                      </FormLabel>
                     </FormItem>
                   </FormField>
-                </div>
-              </div>
-            </transition>
+                  </div>
+                </FormItem>
+              </FormField>
+            </div>
             <div class="invitation__field-group">
-              <div class="user-detail__item">
-                Сообщение
-              </div>
-              <div class="user-detail__fields">
                 <FormField v-slot="{ componentField }" name="message">
-                  <FormItem>
+                  <FormItem class="invitation__field">
+                    <FormLabel class="invitation__field-label">Сообщение</FormLabel>
                     <FormControl>
                       <Textarea class="resize-none" placeholder="Напишите сопроводительное письмо" v-bind="componentField" />
                     </FormControl>
@@ -76,15 +70,14 @@
                   </FormItem>
                 </FormField>
               </div>
-            </div>
           </div>
           <DialogFooter class="flex gap-2">
             <Button type="submit" class="w-full">
-              Пригласить в команду
+              Отправить приглашение
             </Button>
           </DialogFooter>
         </DialogContent>
-      <UserPreview v-model:open="open" :user="user" team />
+      <UserPreview :user="user" team />
   </Dialog>
 
 </template>
@@ -120,33 +113,37 @@ import { Checkbox } from '@/shared/ui/checkbox';
 import { TeamDto } from '@/entities/team/model';
 import { TeamModel } from '@/entities/team';
 
-import { formSchema } from '../model';
+import { formSchema } from '@/features/team/invitation';
 
 import { useForm } from 'vee-validate';
+
 import type { BaseDto } from '@/shared/api/types';
+
+import { Creating } from '@/features/team/create';
+
+import { UserModel } from '@/entities/user';
 
 const props = defineProps({
   user: {
     type: Object as PropType<UserDto>,
     required: true,
   },
-  me: {
-    type: Boolean,
-    default: false,
-  },
 });
 
-const open = ref(false);
+const openInvitation = ref(false);
 
 const toggleOpen = () => {
-  open.value = !open.value;
+  openInvitation.value = !openInvitation.value;
 }
 
 const teamStore = TeamModel.useTeamStore();
+const userStore = UserModel.useUserStore();
+
+const hasOwnTeams = computed(() => teamStore.hasOwnTeams);
 
 const fetch = async (state: boolean) => {
   if (state) {
-    await teamStore.fetchTeamsMe();
+    await teamStore.fetchListMe();
   }
   else {
     resetForm();
@@ -154,7 +151,7 @@ const fetch = async (state: boolean) => {
   }
 }
 
-const myTeams = computed<TeamDto[]>(() => teamStore.getMyTeams);
+const myTeams = computed<TeamDto[]>(() => teamStore.getListMe);
 
 const selectedTeamSpecializations = ref<BaseDto[]>([]);
 
@@ -166,17 +163,22 @@ const updateSpecializationsFields = (team_id: number | string | null) => {
   }
 }
 
-const { handleSubmit, values, setFieldValue, resetForm, errors } = useForm({
+const { handleSubmit, values, setFieldValue, resetForm } = useForm({
   validationSchema: computed(() => formSchema),
   initialValues: {
-    team: null,
+    team_id: null,
     message: '',
-    specialization_i_ds: []
-  }
+    specialization_ids: []
+  },
 });
 
+const closeDialog = () => {
+  openInvitation.value = false;
+  resetForm();
+}
+
 const onSubmit = handleSubmit((values: any) => {
-    return teamStore.invite(props.user.id, values, () => toggleOpen);
+    return userStore.invite(props.user.id, values, closeDialog);
 });
 </script>
 
@@ -201,8 +203,19 @@ const onSubmit = handleSubmit((values: any) => {
   &__field-group {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 8px;
   }
+
+  &__field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  &__field-label {
+    @include body(14);
+  }
+
 
   &__item {
     @include body();
