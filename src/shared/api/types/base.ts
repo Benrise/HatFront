@@ -1,6 +1,6 @@
 export class BaseDto  {
     id: number = 0;
-    name?: string;
+    name: string = '';
 }
 
 export class BaseDtoAvatar extends BaseDto {

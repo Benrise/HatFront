@@ -3,9 +3,10 @@ import { useToast } from '@/shared/ui/toast/use-toast';
 import { http } from '../api';
 import { StatusCodes } from 'http-status-codes';
 import { computed, ref } from 'vue';
-import { CreateTeamDto, TeamDto } from './types';
+import { CreateTeamDto, TeamDto, TeamSpecializationDto } from './types';
 
 import { UserModel } from '@/entities/user';
+import type { BaseDto } from '@/shared/api/types';
 
 export const useTeamStore = defineStore("team", () => {
     const { toast } = useToast();
@@ -311,10 +312,12 @@ export const useTeamStore = defineStore("team", () => {
             isLoading.value = true;
             const mainResponse = await http.team.updateMain(id, payload);
             const skillsResponse = await http.team.updateSkills(id, payload.skills.map((skill) => skill.id));
+            const specializationResponse = await http.team.updateSpecializations(id, payload.specializations || []);
             
             if (
                 mainResponse.status === StatusCodes.OK &&
-                skillsResponse.status === StatusCodes.OK
+                skillsResponse.status === StatusCodes.OK &&
+                specializationResponse.status === StatusCodes.OK
             ) {
                 toast({
                     variant: 'success',
@@ -327,10 +330,37 @@ export const useTeamStore = defineStore("team", () => {
             console.error('Error on updating user:', e);
         }
         finally {
-            
             await fetchTeam(team.value.id);
             isLoading.value = false;
         }    
+    }
+
+    const updateTeammateSpecializations = async (payload: any, callback?: () => void) => {
+        try {
+            isLoading.value = true;
+            payload.specialization_ids = payload.specialization_ids.map((specialization: any) => specialization.id);
+            const { status } = await http.team.updateTeammateSpecializations(team.value.id, [payload]);
+            if (status === StatusCodes.OK) {
+                toast({
+                    variant: 'success',
+                    title: 'Успех',
+                    description: `Специализации обновлены`,
+                });
+                if (callback) callback();
+            }
+        }
+        catch (e) {
+            console.error('Error on updating user:', e);
+            toast({
+                variant: 'destructive',
+                title: `Ошибка`,
+                description: `Не удалось обновить специализации у пользователя. Попробуйте позже.`,
+            });
+        }
+        finally {
+            await fetchTeam(team.value.id);
+            isLoading.value = false;
+        }
     }
 
     const getList = computed<TeamDto[]>(() => teams.value);
@@ -362,5 +392,6 @@ export const useTeamStore = defineStore("team", () => {
         leaveTeam,
         resetItem,
         updateTeam,
+        updateTeammateSpecializations
     }
 })

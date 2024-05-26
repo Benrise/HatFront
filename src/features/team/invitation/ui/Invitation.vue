@@ -50,7 +50,7 @@
                           @update:checked="handleChange"
                         />
                       </FormControl>
-                      <FormLabel class="font-normal">
+                      <FormLabel class="font-normal max-w-[256px] !overflow-hidden text-ellipsis">
                         {{ item.name }}
                       </FormLabel>
                     </FormItem>

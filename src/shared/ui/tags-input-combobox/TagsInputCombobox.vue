@@ -66,7 +66,9 @@ const removeItem = (item: BaseDto) => {
                 }
               }"
             >
+            <span class="!overflow-hidden text-ellipsis">
               {{ item.name }}
+            </span>
             </CommandItem>
           </CommandGroup>
         </CommandList>

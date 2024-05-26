@@ -103,4 +103,31 @@
   &__field-label {
     @include body(14);
   }
+
+  &__field_addable {
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
+    justify-content: space-between;
+  }
+
+  &__fields_addable {
+    display: grid;
+    grid-template-columns: 1fr 1fr; 
+    gap: 12px;
+    width: fit-content;
+  }
+
+  &__field-label_addable {
+    @include adaptiveValue('width', 92, 48);
+    overflow: hidden; 
+    text-overflow: ellipsis; 
+  }
+
+  &__users {
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+    overflow-x: auto;
+  }
 }

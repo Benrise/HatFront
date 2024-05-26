@@ -15,7 +15,8 @@
             </div>
             <div class="team-card__roles">
                 <Badge v-for="specialization in team.specializations" :key="specialization.id" class="team-card__role">
-                    {{ specialization.name }} {{ `(${specialization.current} / ${specialization.required})` }}
+                    <div class="!max-w-[192px] !overflow-hidden text-ellipsis"> {{ specialization.name }}</div>
+                    {{ `(${specialization.current} / ${specialization.required})` }}
                 </Badge>
             </div>
         </div>

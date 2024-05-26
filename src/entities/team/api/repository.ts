@@ -1,6 +1,6 @@
 import { CrudRepository } from '@/shared/api/crud';
 import type { AxiosInstance } from 'axios';
-import type { TeamDto } from '../model';
+import type { TeamDto, TeamSpecializationDto } from '../model';
 import type { CursorListDto } from '@/shared/api/types';
 
 const fileRequestConfig: AxiosRequestConfig = {
@@ -38,11 +38,15 @@ const fileRequestConfig: AxiosRequestConfig = {
       return this.axiosInstance.put(`${this.endpoint}/${team_id}/main`, payload);
   }
 
-  async updateSpecializations(team_id: number, payload: number[]) {
+  async updateSpecializations(team_id: number, payload: TeamSpecializationDto[]) {
     return this.axiosInstance.put(`${this.endpoint}/${team_id}/specializations`, payload);
   }
 
-    async updateSkills(team_id: number, payload: number[]) {
+  async updateSkills(team_id: number, payload: number[]) {
       return this.axiosInstance.put(`${this.endpoint}/${team_id}/skills`, payload);
+  }
+
+  async updateTeammateSpecializations(team_id: number, payload: any) {
+      return this.axiosInstance.put(`${this.endpoint}/${team_id}/specializations/users`, payload);
   }
 }

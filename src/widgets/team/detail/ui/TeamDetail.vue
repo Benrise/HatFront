@@ -74,6 +74,103 @@
               </FormField>
             </div>
             <div class="team-detail__field-group">
+              <FormField v-slot="{ componentField }" name="user_count">
+                <FormItem class="team-detail__field">
+                  <FormLabel class="team-detail__field-label">Количество участников</FormLabel>
+                  <FormControl>
+                    <Input
+                      disabled
+                      class="w-[36px]"
+                      placeholder="1-5"
+                      v-bind="componentField"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              </FormField>
+            </div>
+            <div class="team-detail__field-group">
+              <div class="team-detail__fields">
+                <FormField name="specializations" v-slot="{ componentField }">
+                  <FormItem class="team-detail__field">
+                    <FormLabel class="team-detail__field-label">Специализации</FormLabel>
+                    <FormControl>
+                      <TagsInputCombobox v-model="componentField.modelValue" @update:modelValue="componentField['onUpdate:modelValue']" :objects="specializations"/>
+                    </FormControl>
+                  </FormItem>
+                </FormField>
+              </div>
+              <div class="team-detail__fields team-detail__fields_addable">
+                <FormField
+                  v-for="(specialization, index) in values.specializations"
+                  :key="specialization.id"
+                  :name="`specializations[${index}].current`"
+                  v-slot="{ componentField, errorMessage }"
+                >
+                  <FormItem class="team-detail__field team-detail__field_addable">
+                    <FormLabel class="team-detail__field-label team-detail__field-label_addable">
+                      {{ specialization.name }}
+                    </FormLabel>
+                    <FormControl>
+                      <Input
+                        v-bind="componentField"
+                        :value="specialization.current || 0"
+                        type="number"
+                        disabled
+                        class="w-[64px]"
+                        placeholder="0"
+                        :class="{ 'border-red-500': errorMessage }"
+                      />
+                    </FormControl>
+                  </FormItem>
+                  <FormField
+                    :name="`specializations[${index}].required`"
+                    v-slot="{ componentField, errorMessage }"
+                  >
+                    <FormItem class="team-detail__field team-detail__field_addable">
+                      <FormControl>
+                        <TooltipProvider>
+                          <Tooltip>
+                            <TooltipTrigger as-child>
+                              <Input
+                                v-bind="componentField"
+                                v-model="values.specializations[index].required"
+                                type="number"
+                                class="w-[64px]"
+                                :class="{ 'border-red-500': errorMessage }"
+                                placeholder="Необходимое количество"
+                              />
+                            </TooltipTrigger>
+                            <TooltipContent v-if="!errorMessage" side="bottom">
+                              <p>Необходимое количество человек</p>
+                            </TooltipContent>
+                            <TooltipContent class="text-red-500 bg-red-100" v-else side="bottom">
+                              <p>{{ errorMessage }}</p>
+                            </TooltipContent>
+                          </Tooltip>
+                        </TooltipProvider>
+                      </FormControl>
+                    </FormItem>
+                  </FormField>
+                </FormField>
+              </div>
+            </div>
+            <div class="team-detail__field-group">
+              <div class="team-detail__title">
+                Компетенции
+              </div>
+              <div class="team-detail__fields">
+                <FormField name="skills" v-slot="{ componentField }">
+                  <FormItem class="team-detail__field">
+                    <FormLabel class="team-detail__field-label">Технологии</FormLabel>
+                    <FormControl>
+                      <TagsInputCombobox v-model="componentField.modelValue" @update:modelValue="componentField['onUpdate:modelValue']" :objects="skills"/>
+                    </FormControl>
+                  </FormItem>
+                </FormField>
+              </div>
+            </div>
+            <div class="team-detail__field-group">
               <FormField v-slot="{ componentField }" name="is_visible">
                 <FormItem class="team-detail__field">
                   <FormLabel class="team-detail__field-label">Статус</FormLabel>
@@ -104,32 +201,6 @@
                 </FormItem>
               </FormField>
             </div>
-            <div class="team-detail__field-group">
-              <div class="team-detail__title">
-                Компетенции
-              </div>
-              <div class="team-detail__fields">
-                <FormField name="skills" v-slot="{ componentField }">
-                  <FormItem class="team-detail__field">
-                    <FormLabel class="team-detail__field-label">Технологии</FormLabel>
-                    <FormControl>
-                      <TagsInputCombobox v-model="componentField.modelValue" @update:modelValue="componentField['onUpdate:modelValue']" :objects="skills"/>
-                    </FormControl>
-                  </FormItem>
-                </FormField>
-              </div>
-            </div>
-            <div class="team-detail__field-group">
-              <FormField v-slot="{ componentField }" name="user_count">
-                <FormItem class="team-detail__field">
-                  <FormLabel class="team-detail__field-label">Количество участников</FormLabel>
-                  <FormControl>
-                    <Input disabled class="w-fit" placeholder="1-5" v-bind="componentField" />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              </FormField>
-            </div>
             <Button class="w-fit" :loading="isLoading" type="submit">Сохранить</Button>
           </form>
         </div>
@@ -143,7 +214,9 @@
           <div class="team-detail__section-title">
             Состав команды
           </div>
-          <TeammateCard class="w-fit" v-for="user in team.users" :key="user.id" :user="user" team/>
+          <div class="team-detail__users">
+            <TeammateCard class="w-fit" v-for="user in team.users" :key="user.id" :user="user" :specializations="team.specializations" team/>
+          </div>
         </div>
     </div>
 </template>
@@ -183,6 +256,13 @@ import {
 import { useForm } from 'vee-validate';
 import { formSchema } from '../model'
 import { UserModel } from '@/entities/user';
+
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/shared/ui/tooltip'
 
 
 const route = useRoute()
