@@ -56,9 +56,9 @@
                             К команде
                         </Button>
                     </router-link>
-                <Button class="w-full" variant="outline">
-                    Создать команду
-                </Button>
+                    <Creating v-else :hackathonId="hackathon.id" :callback="openCreatedTeam">
+                        <Button variant="outline" class="w-full">Создать команду</Button>
+                    </Creating>
             </div>
         </div>
     </div>
@@ -81,7 +81,9 @@ import type { HackathonDto } from '../../model';
 
 import { format } from "@formkit/tempo"
 
-import { useAppRoutes } from '@/router/AppRoutes';
+import { router, useAppRoutes } from '@/router';
+
+import { Creating } from '@/features/team/create';
 
 defineProps({
     hackathon: {
@@ -95,6 +97,10 @@ defineProps({
 })
 
 const appRoutes = useAppRoutes()
+
+const openCreatedTeam = (team_id: number) => {
+    router.push(appRoutes?.getTeam(team_id) || '#')
+}
 </script>
 
 <style scoped lang="scss">

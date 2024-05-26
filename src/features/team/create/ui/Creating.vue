@@ -1,18 +1,20 @@
 <template>
-    <Dialog class="dialog" v-model:open="openCreating" @update:open="fetch($event)">
+    <Dialog v-model:open="openCreating" @update:open="fetch($event)">
       <DialogTrigger as-child>
         <slot />
       </DialogTrigger>
-        <DialogContent class="w-full" as="form" @submit="onSubmit">
+        <DialogContent class="dialog w-full" as="form" @submit="onSubmit">
           <DialogTitle>Создание команды</DialogTitle>
           <div class="dialog__content creating">
             <div class="invitation__field-group">
               <div class="creating__field">
+                <div class="creating__field-label">Хакатон</div>
                 <Combobox
                   @update:modelValue="(e) => updateCaseFields(e)"
                   v-model="selectedHackathon"
                   placeholder="Выберите хакатон"
                   :store="hackathonStore"
+                  :disabled="!!hackathonId"
                 />
                 <div v-if="errors.case_id" class="text-[0.8rem] font-medium text-destructive">
                   <span v-if="!cases.length">
@@ -115,12 +117,11 @@
             </div>
           </div>
           <DialogFooter class="flex gap-2">
-            <Button type="submit" class="w-full">
-              Создать
+            <Button :loading="isLoading" type="submit" class="w-full">
+              Создать команду
             </Button>
           </DialogFooter>
         </DialogContent>
-      <UserPreview :user="user" team />
   </Dialog>
 
 </template>
@@ -137,10 +138,7 @@ import {
 
 import { Textarea } from '@/shared/ui/textarea';
 
-import { computed, ref, type PropType } from 'vue';
-import type { UserDto } from '@/entities/user/model';
-import { UserPreview } from '@/entities/user';
-
+import { computed, ref } from 'vue';
 import {
   FormControl,
   FormField,
@@ -160,23 +158,31 @@ import { formSchema } from '../model';
 import { useForm } from 'vee-validate';
 import { CaseDto } from '@/entities/hackathon/model';
 
-defineProps({
-  user: {
-    type: Object as PropType<UserDto>,
-    required: true,
-  },
-});
-
 const openCreating = ref(false);
 
 const teamStore = TeamModel.useTeamStore();
 const hackathonStore = HackathonModel.useHackathonStore();
 
+const props = defineProps({
+  hackathonId: {
+    type: Number || String,
+    default: 0
+  },
+  callback: {
+    type: Function,
+    default: undefined
+  }
+})
+
 const fetch = async (state: boolean) => {
   if (!state) {
     resetForm();
     cases.value = [];
-    selectedHackathon.value = undefined;
+    selectedHackathon.value = props.hackathonId || undefined;
+  }
+  else {
+    selectedHackathon.value = props.hackathonId;
+    updateCaseFields(props.hackathonId);
   }
 }
 
@@ -185,7 +191,7 @@ const selectedHackathon = ref<number | string >();
 const cases = ref<CaseDto[]>([]);
 
 const { handleSubmit, resetForm, errors } = useForm({
-  validationSchema: computed(() => formSchema)
+  validationSchema: computed(() => formSchema),
 });
 
 const closeDialog = () => {
@@ -194,12 +200,15 @@ const closeDialog = () => {
 }
 
 const onSubmit = handleSubmit((values: any) => {
-    return teamStore.createTeam(values, closeDialog);
+  const callback = props.callback ? (id: number) => props.callback!(id) : closeDialog;
+  return teamStore.createTeam(values, callback);
 });
 
-const updateCaseFields = async (hackathon_id: number | string | null) => {
-  if (!hackathon_id) return;
-  await hackathonStore.fetchHackathon(+hackathon_id);
+const isLoading = computed(() => teamStore.isLoading);
+
+const updateCaseFields = async (id: number | string | null) => {
+  if (!id) return;
+  await hackathonStore.fetchHackathon(+id);
   if (hackathon.value) {
     cases.value = hackathon.value.cases;
   }

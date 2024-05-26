@@ -174,17 +174,17 @@ export const useTeamStore = defineStore("team", () => {
         myTeamsCursor.value = undefined;
     }
 
-    const createTeam = async (payload: CreateTeamDto, callback?: () => void) => {
+    const createTeam = async (payload: CreateTeamDto, callback?: (payload: any) => void) => {
         try {
             isLoading.value = true;
-            const { status } = await http.team.post(payload);
+            const { data, status } = await http.team.post(payload);
             if (status === StatusCodes.CREATED) {
                 toast({
                     variant: 'success',
                     title: 'Успех',
                     description: `Команда успешно создана`,
                 });
-                if (callback) callback();
+                if (callback) callback(data.id);
                 await fetchListMe();
             }
         }

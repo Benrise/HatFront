@@ -6,6 +6,7 @@
           role="combobox"
           :aria-expanded="open"
           class="justify-between border-border"
+          :disabled="disabled"
         >
           {{ value
             ? items.find((item: BaseDto) => item.id === value)?.name
@@ -97,6 +98,10 @@ const props = defineProps({
   },
   me: {
     type: Boolean,
+  },
+  disabled: {
+    type: Boolean,
+    default: false
   }
 })
 
