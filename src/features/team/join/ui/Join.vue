@@ -53,7 +53,7 @@
           </div>
           <DialogFooter class="flex gap-2">
             <Button type="submit" class="w-full">
-              Отправить приглашение
+              Отправить заявку на вступление
             </Button>
           </DialogFooter>
         </DialogContent>
@@ -130,9 +130,11 @@ const fetch = async (state: boolean) => {
   }
 }
 
-const closeDialog = () => {
+const closeDialog = async () => {
     openJoin.value = false;
     resetForm();
+    await teamStore.resetList();
+    await teamStore.fetchList();
 }
 
 const onSubmit = handleSubmit((values: any) => {

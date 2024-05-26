@@ -81,7 +81,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onBeforeMount } from 'vue';
+import { computed } from 'vue';
 import { useRoute } from 'vue-router'
 
 import IconCalendar from '~icons/heroicons/calendar-days-20-solid';
@@ -111,7 +111,6 @@ if (hackathonId.value) {
 
 const hackathon = computed(() => hackathonStore.getHackathon);
 const cases = computed(() => hackathonStore.getCases);
-
 </script>
 
 <style lang="scss" scoped>

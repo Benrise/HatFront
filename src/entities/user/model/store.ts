@@ -14,10 +14,17 @@ export const useUserStore = defineStore("user", () => {
     const user = ref<UserDto>({} as UserDto)
     const users = ref<UserDto[]>([] as UserDto[])
     const usersCursor = ref()
-    const requests = ref<RequestDto[]>([] as RequestDto[])
-    const requestsCursor = ref()
+    const incomingRequests = ref<RequestDto[]>([] as RequestDto[])
+    const outcomingRequests = ref<RequestDto[]>([] as RequestDto[])
+    const incomingRequestsCursor = ref()
+    const outcomingRequestsCursor = ref()
     const isLoading = ref(false)
     const isAuthorized = ref(false)
+
+    const resetList = async () => {
+        users.value = [];
+        usersCursor.value = 0;
+    }
 
     const deleteEducation = async (id: number, callback: () => void) => {
         try {
@@ -218,29 +225,147 @@ export const useUserStore = defineStore("user", () => {
         }
     }
 
-    const fetchRequests = async () => {
-        const { data, status} = await http.user.listRequests({cursor: usersCursor.value});
-        if (status !== StatusCodes.OK) {
+    const fetchIncomingRequests = async () => {
+        try {
+            isLoading.value = true;
+            const { data, status} = await http.user.listRequests({cursor: usersCursor.value, is_to_team: true});
+            if (status !== StatusCodes.OK) {
+                toast({
+                    variant: 'destructive',
+                    title: 'Ошибка',
+                    description: `Не удалось загрузить список заявок.`,
+                });
+                return
+            }
+            addIncomingRequests(data.objects);
+            setIncomingRequestsCursor(data.cursor);
+        }
+        catch (e) {
+            console.error('Error on fetching requests:', e);
+        }
+        finally {
+            isLoading.value = false;
+        }
+    }
+
+    const fetchOutcomingRequests = async () => {
+        try {
+            const { data, status} = await http.user.listRequests({cursor: usersCursor.value, is_to_team: false});
+            if (status !== StatusCodes.OK) {
+                toast({
+                    variant: 'destructive',
+                    title: 'Ошибка',
+                    description: `Не удалось загрузить список заявок.`,
+                });
+                return
+            }
+            console.log(data.objects);
+            addOutcomingRequests(data.objects);
+            setOutcomingRequestsCursor(data.cursor);
+        }
+        catch (e) {
+            console.error('Error on fetching requests:', e);
+        }
+        finally {
+            isLoading.value = false;
+        }
+    }
+
+    const setIncomingRequestsCursor = (cursor: number) => {
+        incomingRequestsCursor.value = cursor;
+    }
+
+    const addIncomingRequests = (data: RequestDto[]) => {
+        if (!data || data.length === 0) return
+        console.log(data)
+        const existingIds = incomingRequests.value.map((request) => request.id);
+        const newRequests = data.filter((request) => !existingIds.includes(request.id));
+        incomingRequests.value.push(...newRequests);
+    }
+
+    const setOutcomingRequestsCursor = (cursor: number) => {
+        outcomingRequestsCursor.value = cursor;
+    }
+
+    const addOutcomingRequests = (data: RequestDto[]) => {
+        if (!data || data.length === 0) return
+        const existingIds = outcomingRequests.value.map((request) => request.id);
+        const newRequests = data.filter((request) => !existingIds.includes(request.id));
+        outcomingRequests.value.push(...newRequests);
+    }
+
+    const acceptRequest = async (request_id: number, type: 'outcoming' | 'incoming') => {
+        try {
+            isLoading.value = true;
+            const { status } = await http.request.put(request_id);
+            if (status === StatusCodes.OK) {
+                toast({
+                    variant: 'success',
+                    title: 'Успех',
+                    description: `Заявка принята`,
+                  });
+                  if (type === 'outcoming') {
+                    resetOutcomingRequests();
+                    await fetchOutcomingRequests();
+                  }
+                  if (type === 'incoming') {
+                    resetIncomingRequests();
+                    await fetchIncomingRequests();
+                  }
+            }
+        }
+        catch (e) {
+            console.error('Error on deleting avatar:', e);
             toast({
                 variant: 'destructive',
-                title: 'Ошибка',
-                description: `Не удалось загрузить список заявок.`,
+                title: `Ошибка`,
+                description: `Не удалось принять заявку. Попробуйте позже.`,
             });
-            return
         }
-        addRequests(data.objects);
-        setRequestCursor(data.cursor);
+        finally {
+            isLoading.value = false;
+        }
     }
 
-    const setRequestCursor = (cursor: number) => {
-        requestsCursor.value = cursor;
+    const rejectRequest = async (request_id: number, type: 'outcoming' | 'incoming') => {
+        try {
+            isLoading.value = true;
+            const { status } = await http.request.delete(request_id);
+            if (status === StatusCodes.OK) {
+                toast({
+                    variant: 'warning',
+                    title: 'Внимание',
+                    description: type === 'outcoming' ? `Заявка отменена` : `Заявка отклонена`,
+                  });
+                  if (type === 'outcoming') {
+                    resetOutcomingRequests();
+                    await fetchOutcomingRequests();
+                  }
+                  if (type === 'incoming') {
+                    resetIncomingRequests();
+                    await fetchIncomingRequests();
+                  }
+            }
+        }
+        catch (e) {
+            console.error('Error on deleting avatar:', e);
+            toast({
+                variant: 'destructive',
+                title: `Ошибка`,
+                description: `Не удалось отклонить заявку. Попробуйте позже.`,
+            });
+        }
+        finally {
+            isLoading.value = false;
+        }
     }
 
-    const addRequests = (data: RequestDto[]) => {
-        if (!data || data.length === 0) return
-        const existingIds = requests.value.map((request) => request.id);
-        const newRequests = data.filter((request) => !existingIds.includes(request.id));
-        requests.value.push(...newRequests);
+    const resetIncomingRequests = () => {
+        incomingRequests.value = [];
+    }
+
+    const resetOutcomingRequests = () => {
+        outcomingRequests.value = [];
     }
 
     const setCursor = (cursor: number) => {
@@ -262,7 +387,8 @@ export const useUserStore = defineStore("user", () => {
         return undefined;
     });
     const getEducation = computed<EducationDto[] | undefined >(() => user.value.education);
-    const getRequests = computed<RequestDto[]>(() => requests.value);
+    const getIncomingRequests = computed<RequestDto[]>(() => incomingRequests.value);
+    const getOutcomingRequests = computed<RequestDto[]>(() => outcomingRequests.value);
 
     return { 
         logout, 
@@ -281,8 +407,15 @@ export const useUserStore = defineStore("user", () => {
         fetchList,
         getUsers,
         invite,
-        getRequests,
-        fetchRequests
+        getIncomingRequests,
+        getOutcomingRequests,
+        fetchIncomingRequests,
+        fetchOutcomingRequests,
+        acceptRequest,
+        rejectRequest,
+        resetIncomingRequests,
+        resetOutcomingRequests,
+        resetList
     }
 })
 

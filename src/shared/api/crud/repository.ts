@@ -18,7 +18,7 @@ export class  CrudRepository<T> {
     post(payload: T) {
         return this.axiosInstance.post(this.endpoint, payload);
     }
-    put(id: string | number, payload: T) {
+    put(id: string | number, payload?: T) {
         return this.axiosInstance.put(`${this.endpoint}/${id}`, payload);
     }
     delete(id: string | number) {

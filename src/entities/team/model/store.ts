@@ -286,6 +286,6 @@ export const useTeamStore = defineStore("team", () => {
         resetList,
         hasOwnTeams,
         join,
-        deleteTeam
+        deleteTeam,
     }
 })

@@ -11,6 +11,9 @@ const fileRequestConfig: AxiosRequestConfig = {
       },
     },
   };
+  export interface IRequestListParameters extends IListParameters {
+    is_to_team?: boolean
+}
 
 export class UserRepository extends CrudRepository<UserDto>{
     constructor(protected endpoint: string, protected axiosInstance: AxiosInstance) {
@@ -55,7 +58,7 @@ export class UserRepository extends CrudRepository<UserDto>{
         return this.axiosInstance.post(`${this.endpoint}/${user_id}/request`, payload);
     }
 
-    async listRequests(params?: IListParameters) {
+    async listRequests(params?: IRequestListParameters) {
         return this.axiosInstance.get<CursorListDto<RequestDto>>(`${this.endpoint}/request`, { params: params });
     }
 }
@@ -81,5 +84,11 @@ export class SpecializationsRepository {
 
     async get() {
         return this.axiosInstance.get<CursorListDto<BaseDto>>(`${this.endpoint}`);
+    }
+}
+
+export class RequestsRepository extends CrudRepository<RequestDto> {
+    constructor(protected endpoint: string, protected axiosInstance: AxiosInstance) {
+        super(endpoint, axiosInstance);
     }
 }

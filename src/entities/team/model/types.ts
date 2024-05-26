@@ -23,6 +23,7 @@ export class TeamDto extends BaseDto {
     url_group?: string;
     user_count?: number = 0;
     users: UserDto[] = [];
+    has_request?: boolean;
   }
 
   export class CreateRequestDto {

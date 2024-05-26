@@ -98,7 +98,7 @@ defineProps({
 
 const appRoutes = useAppRoutes()
 
-const openCreatedTeam = (team_id: number) => {
+const openCreatedTeam = async (team_id: number) => {
     router.push(appRoutes?.getTeam(team_id) || '#')
 }
 </script>

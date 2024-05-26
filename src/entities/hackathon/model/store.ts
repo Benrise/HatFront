@@ -37,7 +37,7 @@ export const useHackathonStore = defineStore("hackathon", () => {
         }
     }
 
-    const resetList = () => {
+    const resetList = async () => {
         hackathons.value = [];
         hackathons_cursor.value = undefined;
     }

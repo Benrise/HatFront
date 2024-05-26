@@ -19,13 +19,20 @@
                 </Badge>
             </div>
         </div>
-        <div class="team-card__actions">
+        <div v-if="!request" class="team-card__actions">
             <Join :team="team">
-                <Button class="w-full">Подать заявку</Button>
+                <Button :disabled="team.has_request" class="w-full">
+                    {{ team.has_request ? 'Заявка отправлена' : 'Отправить заявку' }}
+                </Button>
             </Join>
-            <router-link class="w-full" :to="appRoutes?.getTeam(team.id) || '/'">
+            <router-link :team="team" class="w-full" :to="appRoutes?.getTeam(team.id) || '/'">
                 <Button variant="outline" class="w-full">Подробнее</Button>
             </router-link>
+        </div>
+        <div v-else class="team-card__actions">
+            <slot name="request-actions">
+
+            </slot>
         </div>
     </div>
 </template>
@@ -52,7 +59,7 @@ defineProps ({
     }
 })
 
-const appRoutes = useAppRoutes()
+const appRoutes = useAppRoutes();
 </script>
 
 <style scoped lang="scss">

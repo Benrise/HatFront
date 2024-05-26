@@ -10,18 +10,15 @@
 <script setup lang="ts">
 import { HackathonModel } from '@/entities/hackathon';
 import { HackathonCard } from '@/entities/hackathon/ui';
-import { computed, onUnmounted, ref } from 'vue';
+import { computed, onBeforeMount, ref } from 'vue';
 import { useIntersectionObserver } from '@vueuse/core'
 
 const hackathonStore = HackathonModel.useHackathonStore();
 
 const fetch = async () => {
+    if (hackathons.value.length > 0) return
     await hackathonStore.fetchList();
 }
-
-onUnmounted(() => {
-    hackathonStore.resetList();
-})
 
 const observer = ref<HTMLElement | null>(null)
 const hackathons = computed(() => hackathonStore.getList);

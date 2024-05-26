@@ -1,3 +1,4 @@
+import { TeamDto } from "@/entities/team/model";
 import { BaseDto } from "@/shared/api/types";
 
 export class UserDto extends BaseDto {
@@ -49,10 +50,10 @@ export enum EProvider {
 export class RequestDto extends BaseDto {
     desired_specializations?: BaseDto[] = [];
     message?: string = "";
-    user?: UserDto & {
+    team: TeamDto & {
         description?: string
         hackathon?: BaseDto
         is_visible?: boolean
         user_count?: number
-    }
+    } = {} as TeamDto
 }

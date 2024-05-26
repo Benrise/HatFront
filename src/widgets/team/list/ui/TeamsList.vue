@@ -16,6 +16,7 @@ import { useIntersectionObserver } from '@vueuse/core'
 const teamStore = TeamModel.useTeamStore();
 
 const fetch = async () => {
+    if (teams.value.length > 0) return
     await teamStore.fetchList();
 }
 
