@@ -21,6 +21,8 @@ export class UserDto extends BaseDto {
     second_name?: string;
     patronymic?: string;
     is_capitan: boolean = false;
+    is_visible: boolean = false;
+    hackathon?: BaseDto;
 }
 
 export class ContactsDto {
@@ -42,4 +44,15 @@ export class EducationDto extends BaseDto {
 export enum EProvider {
     VK = "/images/svg/vk-color.svg",
     MIREA = "/images/png/mirea.png"
+}
+
+export class RequestDto extends BaseDto {
+    desired_specializations?: BaseDto[] = [];
+    message?: string = "";
+    user?: UserDto & {
+        description?: string
+        hackathon?: BaseDto
+        is_visible?: boolean
+        user_count?: number
+    }
 }

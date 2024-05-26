@@ -47,7 +47,7 @@
                 Партнерами соревнования стали 3 крупные компании: Кластер «Геотех», MyGeoMap, Институт перспективных исследований нефти и газа МГУ.  Принять участие в хакатоне смогут студенты ИТ-направлений; junior, middle и senior разработчики, готовые разработать лучшее решение актуального кейса!  Командам предстоит поработать над решением кейса «Алгоритм для автооцифровки данных геофизических исследований скважин (ГИС)». 24-25 мая команды пройдут чек-поинты в онлайн-формате, а уже 26 мая участники приглашаются на площадку в Москве пройдет питч-сессия. Если ваша команда из региона, вам доступно участие в онлайн-формате, если из Москвы, то приглашаем вас на площадку для презентации своей работы перед экспертами.
             </div>
         </div>
-        <template v-if="hackathon.cases">
+        <template v-if="!!cases && cases.length">
             <Tabs orientation="vertical" :default-value="hackathon.cases[0].id" class="hackathon-detail__cases tabs">
                 <TabsList class="tabs__list">
                     <div class="tabs__title">
@@ -104,11 +104,14 @@ const route = useRoute()
 const hackathonStore = HackathonModel.useHackathonStore();
 const hackathonId = computed(() => +route.params.id);
 
-onBeforeMount(() => {
+
+if (hackathonId.value) {
     hackathonStore.fetchHackathon(hackathonId.value);
-})
+}   
 
 const hackathon = computed(() => hackathonStore.getHackathon);
+const cases = computed(() => hackathonStore.getCases);
+
 </script>
 
 <style lang="scss" scoped>

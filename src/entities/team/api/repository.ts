@@ -26,4 +26,8 @@ const fileRequestConfig: AxiosRequestConfig = {
     async listMe() {
       return this.axiosInstance.get<CursorListDto<TeamDto>>(`${this.endpoint}/me`);
     }
+
+    async createRequest(team_id: number, payload: TeamDto) {
+      return this.axiosInstance.post(`${this.endpoint}/${team_id}/request`, payload);
+  }
 }

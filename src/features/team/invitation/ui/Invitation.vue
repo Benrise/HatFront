@@ -30,7 +30,7 @@
                 </FormField>
             </div>
             <div class="invitation__field-group" v-if="selectedTeamSpecializations.length">
-              <FormField name="specializations">
+              <FormField name="specialization_ids">
                 <FormItem class="invitation__field">
                   <FormLabel class="invitation__field-label">Роль в команде</FormLabel>
                   <div class="flex flex-col gap-2">
@@ -43,7 +43,7 @@
                       :unchecked-value="false"
                       :name="`specialization_ids`"
                     >
-                    <FormItem class="flex flex-row items-start space-x-3 space-y-0">
+                    <FormItem class="flex flex-row items-center space-x-3 space-y-0">
                       <FormControl>
                         <Checkbox
                           :checked="!!value && value.includes(item.id)"

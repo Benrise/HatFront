@@ -20,7 +20,9 @@
             </div>
         </div>
         <div class="team-card__actions">
-            <Button class="w-full">Подать заявку</Button>
+            <Join :team="team">
+                <Button class="w-full">Подать заявку</Button>
+            </Join>
             <router-link class="w-full" :to="appRoutes?.getTeam(team.id) || '/'">
                 <Button variant="outline" class="w-full">Подробнее</Button>
             </router-link>
@@ -35,12 +37,18 @@ import { Button } from '@/shared/ui/button';
 import { TeamBadge } from '@/entities/team/ui/badge';
 import { TeamDto } from '@/entities/team/model';
 
+import { Join } from '@/features/team/join';
+
 import { useAppRoutes } from '@/router/AppRoutes';
 
 defineProps ({
     team: {
         type: TeamDto,
         required: true
+    },
+    request: {
+        type: Boolean,
+        default: false
     }
 })
 

@@ -1,7 +1,7 @@
 <template>
 <div class="hackathon-card" v-if="hackathon?.id" :class="team ? 'max-w-[724px] !p-3' : '' ">
         <router-link 
-            :to="appRoutes?.getHackathon(hackathon.id) || '#'"
+            :to="appRoutes?.getHackathon(hackathon.id) || '0'"
             class="w-full"
         >
             <HackathonPoster :photo_url="hackathon.photo_url" :class="team ? '!cursor-pointer' : ''"/>
@@ -48,7 +48,7 @@
             <div v-if="!team" class="hackathon-card__actions">
                 <Button v-if="!hackathon.team_id" class="w-full">Найти команду</Button>
                     <router-link 
-                        :to="appRoutes?.getTeam(hackathon?.team_id || 0) || '#'"
+                        :to="appRoutes?.getTeam(hackathon?.team_id || 0) || '0'"
                         class="w-full"
                         v-if="hackathon.team_id"
                     >

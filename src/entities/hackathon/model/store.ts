@@ -3,7 +3,7 @@ import { useToast } from '@/shared/ui/toast/use-toast';
 import { http } from '../api';
 import { StatusCodes } from 'http-status-codes';
 import { computed, ref } from 'vue';
-import { HackathonDto } from './types';
+import { CaseDto, HackathonDto } from './types';
 
 export const useHackathonStore = defineStore("hackathon", () => {
     const { toast } = useToast();
@@ -11,6 +11,7 @@ export const useHackathonStore = defineStore("hackathon", () => {
     const hackathon = ref<HackathonDto>({} as HackathonDto)
     const hackathons = ref<HackathonDto[]>([])
     const hackathons_cursor = ref()
+    const cases = ref<CaseDto[]>([])
     const isLoading = ref(false)
 
     const fetchList = async () => {
@@ -47,6 +48,7 @@ export const useHackathonStore = defineStore("hackathon", () => {
             const { data, status} = await http.hackathon.get(id);
             if (status === StatusCodes.OK) {
                 setHackathon(data);
+                setCases(data.cases);
             }
             else {
                 toast({
@@ -79,9 +81,14 @@ export const useHackathonStore = defineStore("hackathon", () => {
         hackathons_cursor.value = cursor;
     }
 
+    const setCases = (data: CaseDto[]) => {
+        cases.value = data;
+    }
+
     const getList = computed<HackathonDto[]>(() => hackathons.value);
     const getHackathon = computed<HackathonDto>(() => hackathon.value);
     const getListCursor = computed(() => hackathons_cursor.value);
+    const getCases = computed(() => hackathon.value.cases);
 
     return { 
         isLoading, 
@@ -90,6 +97,7 @@ export const useHackathonStore = defineStore("hackathon", () => {
         getListCursor, 
         fetchHackathon, 
         getHackathon,
-        resetList
+        resetList,
+        getCases
     }
 })

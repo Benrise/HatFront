@@ -1,7 +1,7 @@
 import type { AxiosInstance } from 'axios';
-import type { EducationDto, UserDto } from '../model';
+import type { EducationDto, RequestDto, UserDto } from '../model';
 import type { CursorListDto, BaseDto } from '@/shared/api/types';
-import { CrudRepository } from '@/shared/api/crud';
+import { CrudRepository, type IListParameters } from '@/shared/api/crud';
 import type { TeamDto } from '@/entities/team/model';
 
 const fileRequestConfig: AxiosRequestConfig = {
@@ -46,13 +46,17 @@ export class UserRepository extends CrudRepository<UserDto>{
     async updateSkills(payload: number[]) {
         return this.axiosInstance.put(`${this.endpoint}/skills`, payload);
     }
-
+    
     async updateSpecializations(payload: number[]) {
         return this.axiosInstance.put(`${this.endpoint}/specializations`, payload);
     }
 
     async createRequest(user_id: number, payload: TeamDto) {
         return this.axiosInstance.post(`${this.endpoint}/${user_id}/request`, payload);
+    }
+
+    async listRequests(params?: IListParameters) {
+        return this.axiosInstance.get<CursorListDto<RequestDto>>(`${this.endpoint}/request`, { params: params });
     }
 }
 

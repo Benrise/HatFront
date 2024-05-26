@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { computed, ref } from 'vue'
-import { EProvider, type EducationDto, type UserDto } from './types'
+import { EProvider, RequestDto, type EducationDto, type UserDto } from './types'
 import { type BaseDto } from "@/shared/api/types";
 import { http } from '../api/http'
 
@@ -13,7 +13,9 @@ export const useUserStore = defineStore("user", () => {
 
     const user = ref<UserDto>({} as UserDto)
     const users = ref<UserDto[]>([] as UserDto[])
-    const users_cursor = ref()
+    const usersCursor = ref()
+    const requests = ref<RequestDto[]>([] as RequestDto[])
+    const requestsCursor = ref()
     const isLoading = ref(false)
     const isAuthorized = ref(false)
 
@@ -169,7 +171,7 @@ export const useUserStore = defineStore("user", () => {
     }
 
     const fetchList = async () => {
-        const { data, status} = await http.user.list({cursor: users_cursor.value});
+        const { data, status} = await http.user.list({cursor: usersCursor.value});
         if (status !== StatusCodes.OK) {
             toast({
                 variant: 'destructive',
@@ -216,8 +218,33 @@ export const useUserStore = defineStore("user", () => {
         }
     }
 
+    const fetchRequests = async () => {
+        const { data, status} = await http.user.listRequests({cursor: usersCursor.value});
+        if (status !== StatusCodes.OK) {
+            toast({
+                variant: 'destructive',
+                title: 'Ошибка',
+                description: `Не удалось загрузить список заявок.`,
+            });
+            return
+        }
+        addRequests(data.objects);
+        setRequestCursor(data.cursor);
+    }
+
+    const setRequestCursor = (cursor: number) => {
+        requestsCursor.value = cursor;
+    }
+
+    const addRequests = (data: RequestDto[]) => {
+        if (!data || data.length === 0) return
+        const existingIds = requests.value.map((request) => request.id);
+        const newRequests = data.filter((request) => !existingIds.includes(request.id));
+        requests.value.push(...newRequests);
+    }
+
     const setCursor = (cursor: number) => {
-        users_cursor.value = cursor;
+        usersCursor.value = cursor;
     }
 
     const logout = () => {
@@ -235,6 +262,7 @@ export const useUserStore = defineStore("user", () => {
         return undefined;
     });
     const getEducation = computed<EducationDto[] | undefined >(() => user.value.education);
+    const getRequests = computed<RequestDto[]>(() => requests.value);
 
     return { 
         logout, 
@@ -252,7 +280,9 @@ export const useUserStore = defineStore("user", () => {
         user,
         fetchList,
         getUsers,
-        invite
+        invite,
+        getRequests,
+        fetchRequests
     }
 })
 

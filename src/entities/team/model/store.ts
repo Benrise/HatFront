@@ -201,6 +201,32 @@ export const useTeamStore = defineStore("team", () => {
         }
     }
 
+    const join = async (team_id: number, payload: any, callback?: () => void) => {
+        try {
+            isLoading.value = true;
+            const { status } = await http.team.createRequest(team_id, payload);
+            if (status === StatusCodes.CREATED) {
+                toast({
+                    variant: 'success',
+                    title: 'Успех',
+                    description: `Заявка на вступление в команду отправлена`,
+                  });
+                  if (callback) callback();
+            }
+        }
+        catch (e) {
+            console.error('Error on creating request:', e);
+            toast({
+                variant: 'destructive',
+                title: `Ошибка`,
+                description: `Ошибка при отправке заявки. Попробуйте позже.`,
+            });
+        }
+        finally {
+            isLoading.value = false;
+        }
+    }
+
     const getList = computed<TeamDto[]>(() => teams.value);
     const getTeam = computed<TeamDto>(() => team.value);
     const getListCursor = computed(() => teamsCursor.value);
@@ -225,6 +251,7 @@ export const useTeamStore = defineStore("team", () => {
         getListMeCursor,
         createTeam,
         resetList,
-        hasOwnTeams
+        hasOwnTeams,
+        join
     }
 })

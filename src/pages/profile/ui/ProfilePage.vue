@@ -20,6 +20,9 @@ import { Button } from '@/shared/ui/button';
 import { UserPreview } from '@/entities/user/ui/preview';
 
 import { UserDetail } from '@/widgets/user/detail';
+import { RequestsList } from '@/widgets/user/requests';
+
+
 import { UserModel } from '@/entities/user'
 
 import { Avatar } from '@/features/avatar'
@@ -41,13 +44,8 @@ const tabs: ITabsConfig[] = [
   {
     value: "requests",
     title: "Заявки",
-    content: {},
+    content: RequestsList,
   },
-  {
-    value: "history",
-    title: "История",
-    content: {},
-  }
 ];
 </script>
 
