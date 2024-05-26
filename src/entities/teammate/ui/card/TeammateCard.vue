@@ -36,7 +36,7 @@
                             </TooltipProvider>
                         </Badge>
                     </template>
-                    <FormField v-if="openSpecializations && team"  class="teammate-card__role" name="specialization_ids" v-slot="{ componentField, values }">
+                    <FormField v-if="openSpecializations && team && isCaptain"  class="teammate-card__role" name="specializations" v-slot="{ componentField }">
                         <FormItem>
                             <FormControl>
                                 <TagsInputCombobox 
@@ -46,7 +46,7 @@
                             </FormControl>
                         </FormItem>
                     </FormField>
-                      <transition v-if="team" name="fade" mode="out-in">
+                      <transition v-if="team && isCaptain" name="fade" mode="out-in">
                         <Button :disabled="!specializations.length" type="button" variant="secondary" v-if="!openSpecializations" class="w-full" @click="toggleOpenSpecializations">
                             Назначить
                         </Button>
@@ -126,7 +126,7 @@ const { handleSubmit } = useForm({
   validationSchema: computed(() => formSchema),
   initialValues: {
     user_id: props.user.id,
-    specialization_ids: []
+    specializations: props.user.specializations
   }
 })
 
@@ -135,6 +135,7 @@ const closeSpecializationsCombobox = () => {
 }
 
 const teamStore = TeamModel.useTeamStore();
+const isCaptain = computed(() => teamStore.isCaptain)
 const isLoading = computed(() => teamStore.isLoading)
 
 const onSubmit = handleSubmit( async (updatedValues: any) => {

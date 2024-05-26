@@ -338,7 +338,7 @@ export const useTeamStore = defineStore("team", () => {
     const updateTeammateSpecializations = async (payload: any, callback?: () => void) => {
         try {
             isLoading.value = true;
-            payload.specialization_ids = payload.specialization_ids.map((specialization: any) => specialization.id);
+            payload.specialization_ids = payload.specializations.map((specialization: any) => specialization.id);
             const { status } = await http.team.updateTeammateSpecializations(team.value.id, [payload]);
             if (status === StatusCodes.OK) {
                 toast({
