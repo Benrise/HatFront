@@ -56,6 +56,10 @@ import { TeamsList } from '@/widgets/team/list';
 import { TeammatesList } from '@/widgets/teammate/list';
 
 import IconAdjustments from '~icons/heroicons/adjustments-horizontal';
+import { onUnmounted } from 'vue';
+import { UserModel } from '@/entities/user';
+import { HackathonModel } from '@/entities/hackathon';
+import { TeamModel } from '@/entities/team';
 
 const title = "Поиск";
 
@@ -76,6 +80,16 @@ const tabs: ITabsConfig[] = [
     content: TeammatesList,
   }
 ];
+
+const userStore = UserModel.useUserStore();
+const hackathonStore = HackathonModel.useHackathonStore();
+const teamStore = TeamModel.useTeamStore();
+
+onUnmounted(() => {
+  hackathonStore.resetList();
+  teamStore.resetList();
+  userStore.resetList();
+})
 </script>
 
 <style scoped lang="scss">
