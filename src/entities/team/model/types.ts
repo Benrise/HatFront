@@ -22,7 +22,7 @@ export class TeamDto extends BaseDto {
     specializations?: TeamSpecializationDto[];
     url_group?: string;
     user_count?: number = 0;
-    users?: UserDto[] = [];
+    users: UserDto[] = [];
   }
 
   export class CreateRequestDto {

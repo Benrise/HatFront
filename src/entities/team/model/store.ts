@@ -19,6 +19,7 @@ export const useTeamStore = defineStore("team", () => {
     const teamsCursor = ref()
     const isLoading = ref(false)
     const isCaptain = ref(false)
+    const isMember = ref(false)
     const hasOwnTeams = ref(false)
 
     const fetchList = async () => {
@@ -83,6 +84,7 @@ export const useTeamStore = defineStore("team", () => {
             data.users.forEach((user) => {
                 const userId = userStore.getUser?.id;
                 setCaptain((userId === user.id) && user.is_capitan);
+                setMember(userId === user.id);
             })
         }
         team.value = data;
@@ -90,6 +92,10 @@ export const useTeamStore = defineStore("team", () => {
 
     const setCaptain = (data: boolean) => {
         isCaptain.value = data;
+    }
+
+    const setMember = (data: boolean) => {
+        isMember.value = data;
     }
 
     const addTeams = (data: TeamDto[]) => {
@@ -164,12 +170,12 @@ export const useTeamStore = defineStore("team", () => {
         }
     }
 
-    const resetList = () => {
+    const resetList = async () => {
         teams.value = [];
         teamsCursor.value = undefined;
     }
 
-    const resetListMe = () => {
+    const resetListMe = async () => {
         myTeams.value = [];
         myTeamsCursor.value = undefined;
     }
@@ -227,12 +233,39 @@ export const useTeamStore = defineStore("team", () => {
         }
     }
 
+    const deleteTeam = async (team_id: number, callback?: () => void) => {
+        try {
+            isLoading.value = true;
+            const { status } = await http.team.delete(team_id);
+            if (status === StatusCodes.OK) {
+                toast({
+                    variant: 'warning',
+                    title: 'Внимание',
+                    description: `Команда удалена`,
+                });
+                await resetList()
+                if (callback) callback();
+                await fetchList();
+            }
+        }
+        catch (e) {
+            console.error('Error on deleting team:', e);
+            toast({
+                variant: 'destructive',
+                title: `Ошибка`,
+                description: `Не удалось удалить команду. Попробуйте позже.`,
+            });
+        }
+        finally {
+            isLoading.value = false;
+        }
+    }
+
     const getList = computed<TeamDto[]>(() => teams.value);
     const getTeam = computed<TeamDto>(() => team.value);
     const getListCursor = computed(() => teamsCursor.value);
     const getListMe = computed<TeamDto[]>(() => myTeams.value);
     const getListMeCursor = computed(() => teamsCursor.value);
-    const getCaptain = computed(() => isCaptain.value);
 
     return { 
         isLoading, 
@@ -244,7 +277,7 @@ export const useTeamStore = defineStore("team", () => {
         updateAvatar,
         deleteAvatar,
         isCaptain,
-        getCaptain,
+        isMember,
         fetchListMe,
         resetListMe,
         getListMe,
@@ -252,6 +285,7 @@ export const useTeamStore = defineStore("team", () => {
         createTeam,
         resetList,
         hasOwnTeams,
-        join
+        join,
+        deleteTeam
     }
 })

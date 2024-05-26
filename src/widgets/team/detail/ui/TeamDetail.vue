@@ -3,7 +3,12 @@
         <div class="team-detail__main">
           <div class="team-detail__image">
             <Avatar :store="teamStore" :entity="team" size="xl" editable></Avatar>
-            <Button variant="outline" class="w-full">Покинуть команду</Button>
+            <Leave v-if="isMember" :team="team" :isCaptain="isCaptain">
+              <Button variant="outline" class="w-full">Покинуть команду</Button>
+            </Leave>
+            <Join v-if="!isMember" :team="team">
+              <Button  variant="outline" class="w-full">Вступить в команду</Button>
+            </Join>
           </div>
           <div class="team-detail__info">
               <div class="team-detail__name">
@@ -49,24 +54,31 @@
 </template>
 
 <script setup lang="ts">
-import TeammateCard from './../../../../entities/teammate/ui/card/TeammateCard.vue'
+import TeammateCard from '@/entities/teammate/ui/card/TeammateCard.vue'
 import { HackathonCard } from '@/entities/hackathon';
 import { computed, onBeforeMount, type ComputedRef } from 'vue';
 import { useRoute } from 'vue-router';
 
 import { TeamModel } from '@/entities/team';
+import { UserModel } from '@/entities/user';
 
 import { Avatar } from '@/features/avatar'
 
 import { Button } from '@/shared/ui/button'
 import { Badge } from '@/shared/ui/badge';
 
+import { Join } from '@/features/team/join';
+import { Leave } from '@/features/team/leave';
+
 import IconGroup from '~icons/heroicons/user-group';
+
 import type { HackathonDto } from '@/entities/hackathon/model';
 
 const route = useRoute()
 
 const teamStore = TeamModel.useTeamStore();
+const userStore = UserModel.useUserStore();
+
 const teamId = computed(() => +route.params.id);
 
 onBeforeMount(() => {
@@ -78,6 +90,10 @@ const hackathon = computed(() => team.value.hackathon) as ComputedRef<HackathonD
 
 const visabilityTitle = computed(() => team.value.is_visible ? 'Открыта для набора' : 'Закрыта для набора');
 
+const user = computed(() => userStore.getUser);
+
+const isMember = computed(() => teamStore.isMember);
+const isCaptain = computed(() => teamStore.isCaptain);
 </script>
 
 <style scoped lang="scss">
