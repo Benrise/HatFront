@@ -7,10 +7,12 @@
               <Button variant="outline" class="w-full">Покинуть команду</Button>
             </Leave>
             <Join v-if="!isMember" :team="team">
-              <Button  variant="outline" class="w-full">Вступить в команду</Button>
+              <Button :disabled="team.has_request"  variant="outline" class="w-full">
+                 {{ team.has_request ? 'Заявка отправлена' : 'Вступить в команду' }}
+              </Button>
             </Join>
           </div>
-          <div class="team-detail__info">
+          <div v-if="!isCaptain" class="team-detail__info">
               <div class="team-detail__name">
                 {{ team.name }}
               </div>
@@ -56,11 +58,10 @@
 <script setup lang="ts">
 import TeammateCard from '@/entities/teammate/ui/card/TeammateCard.vue'
 import { HackathonCard } from '@/entities/hackathon';
-import { computed, onBeforeMount, type ComputedRef } from 'vue';
+import { computed, onBeforeMount, onUnmounted, type ComputedRef } from 'vue';
 import { useRoute } from 'vue-router';
 
 import { TeamModel } from '@/entities/team';
-import { UserModel } from '@/entities/user';
 
 import { Avatar } from '@/features/avatar'
 
@@ -77,20 +78,17 @@ import type { HackathonDto } from '@/entities/hackathon/model';
 const route = useRoute()
 
 const teamStore = TeamModel.useTeamStore();
-const userStore = UserModel.useUserStore();
 
 const teamId = computed(() => +route.params.id);
 
-onBeforeMount(() => {
-    teamStore.fetchTeam(teamId.value);
+onBeforeMount(async() => {
+    await teamStore.fetchTeam(teamId.value);
 })
 
 const team = computed(() => teamStore.getTeam);
 const hackathon = computed(() => team.value.hackathon) as ComputedRef<HackathonDto>;
 
 const visabilityTitle = computed(() => team.value.is_visible ? 'Открыта для набора' : 'Закрыта для набора');
-
-const user = computed(() => userStore.getUser);
 
 const isMember = computed(() => teamStore.isMember);
 const isCaptain = computed(() => teamStore.isCaptain);

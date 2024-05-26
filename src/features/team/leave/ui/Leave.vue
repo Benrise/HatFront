@@ -10,15 +10,24 @@
                 <span v-if="team.users.length === 1">
                     Вы являетесь капитаном и единственным участником команды. Если вы покинете команду, она будет расформирована. 
                 </span>
-                <span v-else>
-                    ПРИДУМАЙ ТЕКСТ 
+                <span v-else-if="team.users.length > 1">
+                  Вы являетесь капитаном. Чтобы покинуть команду, необходимо назначить нового капитана.
                 </span>
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel>Отмена</AlertDialogCancel>
-            <AlertDialogAction @click="deleteTeam(team.id, leaveTeamPage)" class="bg-destructive">
+            <AlertDialogAction
+              v-if="isCaptain && team.users.length === 1"
+              @click="deleteTeam(team.id, leaveTeamPage)" 
+              class="bg-destructive">
                 Удалить
+            </AlertDialogAction>
+            <AlertDialogAction v-if="isCaptain && team.users.length > 1">
+              Назначить
+            </AlertDialogAction>
+            <AlertDialogAction v-else @click="leaveTeam(team.id, leaveTeamPage)">
+              Покинуть
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
@@ -57,10 +66,14 @@ defineProps({
 
   const teamStore = TeamModel.useTeamStore();
 
-  const appRoutes = useAppRoutes()
+  const appRoutes = useAppRoutes();
 
   const leaveTeamPage = () => {
     router.push(appRoutes?.getHome() || '#')
+  }
+
+  const leaveTeam = (id: number, callback?: () => void) => {
+    teamStore.leaveTeam(id, callback);
   }
 
   const deleteTeam = (id: number, callback?: () => void) => {

@@ -4,7 +4,7 @@
         <slot />
       </DialogTrigger>
         <DialogContent class="w-full" as="form" @submit="onSubmit">
-          <DialogTitle>Приглашение в команду</DialogTitle>
+          <DialogTitle>Вступить в команду</DialogTitle>
           <div class="dialog__content join">
             <div class="join__header">
               <TeamBadge :team="team" @click="toggleOpen" />
@@ -135,6 +135,7 @@ const closeDialog = async () => {
     resetForm();
     await teamStore.resetList();
     await teamStore.fetchList();
+    await teamStore.fetchTeam(props.team.id);
 }
 
 const onSubmit = handleSubmit((values: any) => {

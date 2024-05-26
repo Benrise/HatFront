@@ -22,7 +22,7 @@
         <div v-if="!request" class="team-card__actions">
             <Join :team="team">
                 <Button :disabled="team.has_request" class="w-full">
-                    {{ team.has_request ? 'Заявка отправлена' : 'Отправить заявку' }}
+                    {{ team.has_request ? 'Заявка отправлена' : 'Вступить в команду' }}
                 </Button>
             </Join>
             <router-link :team="team" class="w-full" :to="appRoutes?.getTeam(team.id) || '/'">

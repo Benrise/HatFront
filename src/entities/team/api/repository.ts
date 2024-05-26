@@ -29,5 +29,8 @@ const fileRequestConfig: AxiosRequestConfig = {
 
     async createRequest(team_id: number, payload: TeamDto) {
       return this.axiosInstance.post(`${this.endpoint}/${team_id}/request`, payload);
-  }
+    }
+    async leave(team_id: number) {
+      return this.axiosInstance.put(`${this.endpoint}/${team_id}/leave`);
+    }
 }
