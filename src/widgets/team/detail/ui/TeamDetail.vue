@@ -105,6 +105,21 @@
               </FormField>
             </div>
             <div class="team-detail__field-group">
+              <div class="team-detail__title">
+                Компетенции
+              </div>
+              <div class="team-detail__fields">
+                <FormField name="skills" v-slot="{ componentField }">
+                  <FormItem class="team-detail__field">
+                    <FormLabel class="team-detail__field-label">Технологии</FormLabel>
+                    <FormControl>
+                      <TagsInputCombobox v-model="componentField.modelValue" @update:modelValue="componentField['onUpdate:modelValue']" :objects="skills"/>
+                    </FormControl>
+                  </FormItem>
+                </FormField>
+              </div>
+            </div>
+            <div class="team-detail__field-group">
               <FormField v-slot="{ componentField }" name="user_count">
                 <FormItem class="team-detail__field">
                   <FormLabel class="team-detail__field-label">Количество участников</FormLabel>
@@ -148,6 +163,7 @@ import { Badge } from '@/shared/ui/badge';
 import { Input } from '@/shared/ui/input';
 import { Textarea } from '@/shared/ui/textarea';
 import { RadioGroup, RadioGroupItem } from '@/shared/ui/radio-group'
+import { TagsInputCombobox } from '@/shared/ui/tags-input-combobox';
 
 import { Join } from '@/features/team/join';
 import { Leave } from '@/features/team/leave';
@@ -166,18 +182,26 @@ import {
 
 import { useForm } from 'vee-validate';
 import { formSchema } from '../model'
+import { UserModel } from '@/entities/user';
+
 
 const route = useRoute()
 
 const teamStore = TeamModel.useTeamStore();
+const specializationsStore = UserModel.useSpecializationsStore();
+const skillsStore = UserModel.useSkillsStore();
 
 const teamId = computed(() => +route.params.id);
 
-onBeforeMount(async() => {
+onBeforeMount(async () => {
     await teamStore.fetchTeam(teamId.value);
+    await skillsStore.fetchList();
+    await specializationsStore.fetchList();
 })
 
 const team = computed(() => teamStore.getTeam);
+const specializations = computed(() => specializationsStore.getSpecializations)
+const skills = computed(() => skillsStore.getSkills)
 const hackathon = computed(() => team.value.hackathon) as ComputedRef<HackathonDto>;
 
 const visabilityTitle = computed(() => team.value.is_visible ? 'Открыта для набора' : 'Закрыта для набора');
@@ -186,7 +210,7 @@ const isMember = computed(() => teamStore.isMember);
 const isCaptain = computed(() => teamStore.isCaptain);
 const isLoading = computed(() => teamStore.isLoading);
 
-const { handleSubmit, setValues } = useForm({
+const { handleSubmit, setValues, values } = useForm({
   validationSchema: computed(() => formSchema),
 })
 

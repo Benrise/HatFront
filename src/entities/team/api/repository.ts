@@ -37,4 +37,12 @@ const fileRequestConfig: AxiosRequestConfig = {
     async updateMain(team_id: number, payload: TeamDto) {
       return this.axiosInstance.put(`${this.endpoint}/${team_id}/main`, payload);
   }
+
+  async updateSpecializations(team_id: number, payload: number[]) {
+    return this.axiosInstance.put(`${this.endpoint}/${team_id}/specializations`, payload);
+  }
+
+    async updateSkills(team_id: number, payload: number[]) {
+      return this.axiosInstance.put(`${this.endpoint}/${team_id}/skills`, payload);
+  }
 }

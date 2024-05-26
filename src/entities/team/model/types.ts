@@ -12,14 +12,15 @@ export class TeamDto extends BaseDto {
     constructor () {
         super();
         this.skills = [];
+        this.specializations = [];
     }
     case_name?: string;
     description?: string;
     hackathon?: HackathonDto;
     is_visible?: boolean;
     photo_url?: string;
-    skills?: BaseDto[];
-    specializations?: TeamSpecializationDto[];
+    skills: BaseDto[];
+    specializations: TeamSpecializationDto[];
     url_group?: string;
     user_count?: number = 0;
     users: UserDto[] = [];

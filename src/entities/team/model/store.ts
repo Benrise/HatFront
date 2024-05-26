@@ -310,9 +310,11 @@ export const useTeamStore = defineStore("team", () => {
         try {
             isLoading.value = true;
             const mainResponse = await http.team.updateMain(id, payload);
+            const skillsResponse = await http.team.updateSkills(id, payload.skills.map((skill) => skill.id));
             
             if (
-                mainResponse.status === StatusCodes.OK
+                mainResponse.status === StatusCodes.OK &&
+                skillsResponse.status === StatusCodes.OK
             ) {
                 toast({
                     variant: 'success',
@@ -359,6 +361,6 @@ export const useTeamStore = defineStore("team", () => {
         deleteTeam,
         leaveTeam,
         resetItem,
-        updateTeam
+        updateTeam,
     }
 })
