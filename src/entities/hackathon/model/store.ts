@@ -42,16 +42,26 @@ export const useHackathonStore = defineStore("hackathon", () => {
     }
 
     const fetchHackathon = async (id: number) => {
-        const { data, status} = await http.hackathon.get(id);
-        if (status !== StatusCodes.OK) {
-            toast({
-                variant: 'destructive',
-                title: 'Ошибка',
-                description: `Не удалось загрузить хакатон`,
-            });
-            return
+        try {
+            isLoading.value = true;
+            const { data, status} = await http.hackathon.get(id);
+            if (status === StatusCodes.OK) {
+                setHackathon(data);
+            }
+            else {
+                toast({
+                    variant: 'destructive',
+                    title: 'Ошибка',
+                    description: `Не удалось загрузить хакатон`,
+                });
+            }
         }
-        setHackathon(data);
+        catch (e) {
+            console.error('Error on fetching hackathons:', e);
+        }
+        finally {
+            isLoading.value = false;
+        }
     }
     
     const setHackathon = (data: HackathonDto) => {

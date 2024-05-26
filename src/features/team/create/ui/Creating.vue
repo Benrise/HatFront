@@ -28,27 +28,33 @@
             </div>
             <div class="creating__field-group">
               <FormField v-slot="{ componentField }" name="case_id">
-                <FormItem v-if="cases.length" class="creating__field">
-                  <FormLabel class="creating__field-label">Кейс</FormLabel>
-                  <FormControl>
-                    <transition name="fade" mode="out-in">
-                      <RadioGroup
-                        class="flex flex-col space-y-1"
-                        v-bind="componentField"
-                      >
-                        <FormItem v-for="item in cases" :key="item.id" class="flex items-center space-y-0 gap-x-2">
-                          <FormControl>
-                            <RadioGroupItem :value="(item.id as unknown as string)"/>
-                          </FormControl>
-                          <FormLabel class="creating__field-label">
-                            {{ item.name }}
-                          </FormLabel>
-                        </FormItem>
-                      </RadioGroup>
-                    </transition>
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
+                  <transition name="fade" mode="out-in">
+                    <FormItem v-if="cases.length" class="creating__field">
+                      <FormLabel class="creating__field-label">Кейс</FormLabel>
+                      <FormControl>
+                          <RadioGroup
+                            class="flex flex-col space-y-1"
+                            v-bind="componentField"
+                          >
+                            <FormItem v-for="item in cases" :key="item.id" class="flex items-center space-y-0 gap-x-2">
+                              <FormControl>
+                                <RadioGroupItem :value="(item.id as unknown as string)"/>
+                              </FormControl>
+                              <FormLabel class="creating__field-label">
+                                {{ item.name }}
+                              </FormLabel>
+                            </FormItem>
+                          </RadioGroup>
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  </transition>
+                  <span v-if="!cases.length && !isHackathonLoading" class="creating__field-label opacity-50">Кейсы не найдены</span>
+                  <div v-if="isHackathonLoading" class="space-y-3">
+                    <Skeleton class="h-4 w-[150px]" />
+                    <Skeleton class="h-4 w-[150px]" />
+                    <Skeleton class="h-4 w-[150px]" />
+                  </div>
               </FormField>
             </div>
             <div class="creating__field-group">
@@ -117,7 +123,7 @@
             </div>
           </div>
           <DialogFooter class="flex gap-2">
-            <Button :loading="isLoading" type="submit" class="w-full">
+            <Button :loading="isTeamLoading" type="submit" class="w-full">
               Создать команду
             </Button>
           </DialogFooter>
@@ -148,6 +154,7 @@ import {
 } from '@/shared/ui/form';
 
 import { Combobox } from '@/shared/ui/combobox';
+import { Skeleton } from '@/shared/ui/skeleton';
 import { Input } from '@/shared/ui/input';
 import { RadioGroup, RadioGroupItem } from '@/shared/ui/radio-group'
 import { TeamModel } from '@/entities/team';
@@ -204,7 +211,9 @@ const onSubmit = handleSubmit((values: any) => {
   return teamStore.createTeam(values, callback);
 });
 
-const isLoading = computed(() => teamStore.isLoading);
+const isTeamLoading = computed(() => teamStore.isLoading);
+const isHackathonLoading = computed(() => hackathonStore.isLoading);
+
 
 const updateCaseFields = async (id: number | string | null) => {
   if (!id) return;
