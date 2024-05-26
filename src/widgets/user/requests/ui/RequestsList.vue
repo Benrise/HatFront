@@ -97,6 +97,7 @@ const rejectRequest = async (id: number, type: 'outcoming' | 'incoming') => {
 
     &__item {
         width: fit-content;
+        min-width: 324px;
         max-width: 324px;
     }
 
@@ -104,6 +105,8 @@ const rejectRequest = async (id: number, type: 'outcoming' | 'incoming') => {
         display: flex;
         flex-direction: row;
         gap: 16px;
+        width: 100%;
+        overflow-x: auto;
     }
 }
 </style>

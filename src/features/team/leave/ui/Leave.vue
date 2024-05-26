@@ -21,12 +21,12 @@
               v-if="isCaptain && team.users.length === 1"
               @click="deleteTeam(team.id, leaveTeamPage)" 
               class="bg-destructive">
-                Удалить
+                Расформировать
             </AlertDialogAction>
             <AlertDialogAction v-if="isCaptain && team.users.length > 1">
               Назначить
             </AlertDialogAction>
-            <AlertDialogAction v-else @click="leaveTeam(team.id, leaveTeamPage)">
+            <AlertDialogAction v-if="isCaptain && team.users.length !== 1" @click="leaveTeam(team.id, leaveTeamPage)">
               Покинуть
             </AlertDialogAction>
           </AlertDialogFooter>

@@ -28,7 +28,7 @@
                     <Button class="w-fit text-muted-foreground hover:text-foreground" variant="link">На страницу организатора</Button>
                 </div>
                 <div class="hackathon-detail__actions">
-                    <Button class="w-full">Найти команду</Button>
+                    <Button  class="w-full" disabled>Найти команду</Button>
                     <Button class="w-full" variant="outline">Создать команду</Button>
                 </div>
             </div>

@@ -1,6 +1,6 @@
 <template>
     <div class="relative w-full items-center">
-        <Input id="search" type="text" placeholder="Поиск..." class="pl-10" />
+        <Input disabled id="search" type="text" placeholder="Поиск..." class="pl-10" />
         <span class="absolute start-0 inset-y-0 flex items-center justify-center px-2">
           <IconSearch class="size-6 text-muted-foreground" />
         </span>

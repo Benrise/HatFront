@@ -5,9 +5,9 @@
             <ContentSection :title="title" :tabs="tabs">
                 <div class="home__search">
                     <SearchBar/>
-                    <div class="home__sorting home__sorting_desktop">
+                    <!-- <div class="home__sorting home__sorting_desktop">
                       <Sorting/>
-                    </div>
+                    </div> -->
                 </div>
                 <div class="home__controls home__controls_mobile">
                   <div class="home__sheet sheet">

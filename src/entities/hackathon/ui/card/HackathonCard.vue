@@ -46,7 +46,7 @@
                 </div>
             </div>
             <div v-if="!team" class="hackathon-card__actions">
-                <Button v-if="!hackathon.team_id" class="w-full">Найти команду</Button>
+                <Button v-if="!hackathon.team_id" class="w-full" disabled>Найти команду</Button>
                     <router-link 
                         :to="appRoutes?.getTeam(hackathon?.team_id || 0) || '0'"
                         class="w-full"

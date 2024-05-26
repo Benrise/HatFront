@@ -259,7 +259,7 @@ export const useTeamStore = defineStore("team", () => {
                 toast({
                     variant: 'warning',
                     title: 'Внимание',
-                    description: `Команда удалена`,
+                    description: `Команда расформирована`,
                 });
                 await resetList()
                 if (callback) callback();
@@ -339,7 +339,7 @@ export const useTeamStore = defineStore("team", () => {
         try {
             isLoading.value = true;
             payload.specialization_ids = payload.specializations.map((specialization: any) => specialization.id);
-            const { status } = await http.team.updateTeammateSpecializations(team.value.id, [payload]);
+            const { status } = await http.team.updateTeammateSpecializations(team.value.id, payload);
             if (status === StatusCodes.OK) {
                 toast({
                     variant: 'success',
