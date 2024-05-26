@@ -62,12 +62,5 @@
   </script>
   
   <style scoped lang="scss">
-  .avatar {
-    position: relative;
-    display: flex;
-  
-    cursor: pointer;
-  
-    width: fit-content;
-  }
+    @import './styles';
   </style>

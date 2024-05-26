@@ -127,9 +127,4 @@ const fetch = async () => {
     await props.store.fetchList();
   }
 }
-
 </script>
-
-<style scoped>
-
-</style>

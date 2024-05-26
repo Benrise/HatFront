@@ -138,7 +138,6 @@ import {
 import { Textarea } from '@/shared/ui/textarea';
 
 import { computed, ref, type PropType } from 'vue';
-import { UserBadge } from '@/entities/user';
 import type { UserDto } from '@/entities/user/model';
 import { UserPreview } from '@/entities/user';
 
@@ -153,18 +152,15 @@ import {
 import { Combobox } from '@/shared/ui/combobox';
 import { Input } from '@/shared/ui/input';
 import { RadioGroup, RadioGroupItem } from '@/shared/ui/radio-group'
-import { Checkbox } from '@/shared/ui/checkbox';
-import { TeamDto } from '@/entities/team/model';
 import { TeamModel } from '@/entities/team';
 import { HackathonModel } from '@/entities/hackathon';
 
 import { formSchema } from '../model';
 
 import { useForm } from 'vee-validate';
-import type { BaseDto } from '@/shared/api/types';
 import { CaseDto } from '@/entities/hackathon/model';
 
-const props = defineProps({
+defineProps({
   user: {
     type: Object as PropType<UserDto>,
     required: true,
@@ -211,44 +207,5 @@ const updateCaseFields = async (hackathon_id: number | string | null) => {
 </script>
 
 <style scoped lang="scss">
-.creating {
-
-  display: flex;
-  flex-direction: column;
-  @include adaptiveValue('gap', 24, 16);
-
-  @media screen and (max-width: 379px) {
-    overflow-y: auto;
-    max-height: 400px;
-  }
-
-  &__field-group {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
-
-  &__field {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-  }
-
-  &__field-label {
-    @include body(14);
-  }
-
-  &__item {
-    @include body();
-    width: fit-content;
-    white-space: nowrap;
-    display: flex;
-    flex-direction: row;
-    gap: 4px;
-
-    @media screen and (max-width: 500px) {
-      white-space: wrap;
-    }
-  }
-}
+@import './styles';
 </style>

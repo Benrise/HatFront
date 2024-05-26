@@ -53,29 +53,4 @@ const tabs: ITabsConfig[] = [
 
 <style scoped lang="scss">
 @import './styles';
-
-.profile {
-  &__container {
-    display: flex;
-    flex-direction: row;
-    gap: 48px;
-  }
-
-  &__image {
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
-    height: fit-content;
-
-    @media screen and (min-width: 1200px) {
-      padding: 24px;
-      border: 1px solid hsl(var(--border));
-      border-radius: 16px;
-    }
-
-    @media screen and (max-width: 779.98px) {
-      display: none;
-    }
-  }
-}
 </style>

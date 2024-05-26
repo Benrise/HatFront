@@ -24,9 +24,5 @@ const forwardedProps = useForwardProps(delegatedProps)
 </template>
 
 <style scoped lang="scss">
-.description {
-  @include body();
-  color: hsl(var(--muted-foreground));
-}
-
+@import './styles.scss';
 </style>

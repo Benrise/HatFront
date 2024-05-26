@@ -1,0 +1,4 @@
+.description {
+    @include body();
+    color: hsl(var(--muted-foreground));
+  }

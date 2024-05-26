@@ -1,0 +1,47 @@
+.invitation {
+
+    display: flex;
+    flex-direction: column;
+    @include adaptiveValue('gap', 24, 16);
+  
+    @media screen and (max-width: 379px) {
+      overflow-y: auto;
+      max-height: 400px;
+    }
+  
+    &__header {
+      display: flex;
+      flex-direction: row;
+      @include adaptiveValue('gap', 36, 8);
+    }
+  
+    &__field-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+  
+    &__field {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+  
+    &__field-label {
+      @include body(14);
+    }
+  
+  
+    &__item {
+      @include body();
+      width: fit-content;
+      white-space: nowrap;
+      display: flex;
+      flex-direction: row;
+      gap: 4px;
+  
+      @media screen and (max-width: 500px) {
+        white-space: wrap;
+      }
+    }
+  }

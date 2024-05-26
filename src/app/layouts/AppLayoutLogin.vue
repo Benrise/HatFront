@@ -5,10 +5,5 @@
 </template>
 
 <style scoped lang="scss">
-.login-layout {
-    display: flex;
-    flex-direction: row;
-    width: 100%;
-    flex: 1;
-}
+@import './styles';
 </style>

@@ -16,14 +16,6 @@
   </script>
   
   <style scoped lang="scss">
-  .default-layout {
-    display: flex;
-    flex-direction: column;
-    min-height: 100%;
-
-    &__main {
-      flex: 1 1 auto;
-    }
-  }
+  @import './styles';
   </style>
   
