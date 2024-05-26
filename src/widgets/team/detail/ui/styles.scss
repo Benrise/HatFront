@@ -79,4 +79,28 @@
         align-items: center;
       }
     }
+
+    &__field-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+  }
+
+  &__fields {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(224px, 1fr));
+      gap: 24px;
+      grid-auto-flow: dense;
+      width: 100%;
+  }
+
+    &__field {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+  }
+
+  &__field-label {
+    @include body(14);
+  }
 }

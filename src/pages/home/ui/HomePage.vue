@@ -85,10 +85,10 @@ const userStore = UserModel.useUserStore();
 const hackathonStore = HackathonModel.useHackathonStore();
 const teamStore = TeamModel.useTeamStore();
 
-onUnmounted(() => {
-  hackathonStore.resetList();
-  teamStore.resetList();
-  userStore.resetList();
+onUnmounted(async () => {
+  await hackathonStore.resetList();
+  await teamStore.resetList();
+  await userStore.resetList();
 })
 </script>
 

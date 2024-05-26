@@ -39,6 +39,84 @@
               </div>
             </div>
           </div>
+          <form v-else class="team-detail__info" @submit="onSubmit">
+            <div class="team-detail__field-group">
+              <div class="team-detail__fields">
+                <FormField v-slot="{ componentField }" name="name">
+                  <FormItem class="team-detail__field">
+                    <FormLabel class="team-detail__field-label">Название</FormLabel>
+                    <FormControl>
+                      <Input type="text" placeholder="Введите название команды" v-bind="componentField" />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                </FormField>
+                <FormField v-slot="{ componentField }" name="url_group">
+                  <FormItem class="team-detail__field">
+                    <FormLabel class="team-detail__field-label">Ссылка на беседу</FormLabel>
+                    <FormControl>
+                      <Input type="text" placeholder="https://example.com" v-bind="componentField" />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                </FormField>
+              </div>
+            </div>
+            <div class="team-detail__field-group">
+              <FormField v-slot="{ componentField }" name="description">
+                <FormItem class="team-detail__field">
+                  <FormLabel class="team-detail__field-label">Описание команды</FormLabel>
+                  <FormControl>
+                    <Textarea class="resize-none" placeholder="Кратко о команде" v-bind="componentField" />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              </FormField>
+            </div>
+            <div class="team-detail__field-group">
+              <FormField v-slot="{ componentField }" name="is_visible">
+                <FormItem class="team-detail__field">
+                  <FormLabel class="team-detail__field-label">Статус</FormLabel>
+                  <FormControl>
+                    <RadioGroup
+                      class="flex flex-col space-y-1"
+                      v-bind="componentField"
+                    >
+                      <FormItem class="flex items-center space-y-0 gap-x-2">
+                        <FormControl>
+                          <RadioGroupItem :value="(true as unknown as string)" />
+                        </FormControl>
+                        <FormLabel class="team-detail__field-label">
+                          В поиске участников
+                        </FormLabel>
+                      </FormItem>
+                      <FormItem class="flex items-center space-y-0 gap-x-2">
+                        <FormControl>
+                          <RadioGroupItem :value="(false as unknown as string)" />
+                        </FormControl>
+                        <FormLabel class="team-detail__field-label">
+                          Набор закрыт
+                        </FormLabel>
+                      </FormItem>
+                    </RadioGroup>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              </FormField>
+            </div>
+            <div class="team-detail__field-group">
+              <FormField v-slot="{ componentField }" name="user_count">
+                <FormItem class="team-detail__field">
+                  <FormLabel class="team-detail__field-label">Количество участников</FormLabel>
+                  <FormControl>
+                    <Input disabled class="w-fit" placeholder="1-5" v-bind="componentField" />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              </FormField>
+            </div>
+            <Button class="w-fit" :loading="isLoading" type="submit">Сохранить</Button>
+          </form>
         </div>
         <div class="team-detail__section">
           <div class="team-detail__section-title">
@@ -58,7 +136,7 @@
 <script setup lang="ts">
 import TeammateCard from '@/entities/teammate/ui/card/TeammateCard.vue'
 import { HackathonCard } from '@/entities/hackathon';
-import { computed, onBeforeMount, onUnmounted, type ComputedRef } from 'vue';
+import { computed, onBeforeMount, watch, type ComputedRef } from 'vue';
 import { useRoute } from 'vue-router';
 
 import { TeamModel } from '@/entities/team';
@@ -67,6 +145,9 @@ import { Avatar } from '@/features/avatar'
 
 import { Button } from '@/shared/ui/button'
 import { Badge } from '@/shared/ui/badge';
+import { Input } from '@/shared/ui/input';
+import { Textarea } from '@/shared/ui/textarea';
+import { RadioGroup, RadioGroupItem } from '@/shared/ui/radio-group'
 
 import { Join } from '@/features/team/join';
 import { Leave } from '@/features/team/leave';
@@ -74,6 +155,17 @@ import { Leave } from '@/features/team/leave';
 import IconGroup from '~icons/heroicons/user-group';
 
 import type { HackathonDto } from '@/entities/hackathon/model';
+
+import {
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@/shared/ui/form';
+
+import { useForm } from 'vee-validate';
+import { formSchema } from '../model'
 
 const route = useRoute()
 
@@ -92,6 +184,23 @@ const visabilityTitle = computed(() => team.value.is_visible ? 'Открыта �
 
 const isMember = computed(() => teamStore.isMember);
 const isCaptain = computed(() => teamStore.isCaptain);
+const isLoading = computed(() => teamStore.isLoading);
+
+const { handleSubmit, setValues } = useForm({
+  validationSchema: computed(() => formSchema),
+})
+
+onBeforeMount(() => {
+  setValues(team.value)
+})
+
+watch(team, () => {
+  setValues(team.value)
+})
+
+const onSubmit = handleSubmit((updatedValues: any) => {
+  return teamStore.updateTeam(teamId.value, updatedValues);
+})
 </script>
 
 <style scoped lang="scss">

@@ -37,16 +37,25 @@ export const useTeamStore = defineStore("team", () => {
     }
 
     const fetchTeam = async (id: number) => {
-        const { data, status} = await http.team.get(id);
-        if (status !== StatusCodes.OK) {
-            toast({
-                variant: 'destructive',
-                title: 'Ошибка',
-                description: `Не удалось загрузить хакатон`,
-            });
-            return
+        try {
+            isLoading.value = true;
+            const { data, status} = await http.team.get(id);
+            if (status !== StatusCodes.OK) {
+                toast({
+                    variant: 'destructive',
+                    title: 'Ошибка',
+                    description: `Не удалось загрузить данные команды`,
+                });
+                return
+            }
+            setTeam(data);
         }
-        setTeam(data);
+        catch (e) {
+            console.error('Error on fetching team:', e);
+        }
+        finally {
+            isLoading.value = false;
+        }
     }
 
     const fetchListMe = async () => {
@@ -297,6 +306,31 @@ export const useTeamStore = defineStore("team", () => {
         }
     }
 
+    const updateTeam = async (id:number, payload: TeamDto) => {
+        try {
+            isLoading.value = true;
+            const mainResponse = await http.team.updateMain(id, payload);
+            
+            if (
+                mainResponse.status === StatusCodes.OK
+            ) {
+                toast({
+                    variant: 'success',
+                    title: 'Успех',
+                    description: `Данные команды успешно обновлены!`,
+                });
+            }
+        }
+        catch (e) {
+            console.error('Error on updating user:', e);
+        }
+        finally {
+            
+            await fetchTeam(team.value.id);
+            isLoading.value = false;
+        }    
+    }
+
     const getList = computed<TeamDto[]>(() => teams.value);
     const getTeam = computed<TeamDto>(() => team.value);
     const getListCursor = computed(() => teamsCursor.value);
@@ -324,6 +358,7 @@ export const useTeamStore = defineStore("team", () => {
         join,
         deleteTeam,
         leaveTeam,
-        resetItem
+        resetItem,
+        updateTeam
     }
 })
