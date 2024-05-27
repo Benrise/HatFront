@@ -3,7 +3,7 @@
         <div class="team-detail__main">
           <div class="team-detail__image">
             <Avatar :store="teamStore" :entity="team" size="xl" editable></Avatar>
-            <Leave v-if="isMember" :team="team" :isCaptain="isCaptain">
+            <Leave v-if="isMember" :team="team" :isCaptain="isCaptain" :isMember="isMember">
               <Button variant="outline" class="w-full">Покинуть команду</Button>
             </Leave>
             <Join v-if="!isMember" :team="team">

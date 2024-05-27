@@ -13,10 +13,15 @@
             <div class="team-card__tags">
                 <Badge v-for="skill in team.skills" :key="skill.id" class="team-card__tag">{{ skill.name }}</Badge>
             </div>
-            <div class="team-card__roles">
+            <div class="team-card__roles" v-if="desired_specializations.length">
+                <div class="team-card__description"> Роли в команде:</div>
+                <Badge v-for="specialization in desired_specializations" :key="specialization.id" class="team-card__role">
+                    <div class="!max-w-[192px] !overflow-hidden text-ellipsis"> {{ specialization.name }}</div>
+                </Badge>
+            </div>
+            <div v-else  class="team-card__roles">
                 <Badge v-for="specialization in team.specializations" :key="specialization.id" class="team-card__role">
                     <div class="!max-w-[192px] !overflow-hidden text-ellipsis"> {{ specialization.name }}</div>
-                    {{ `(${specialization.current} / ${specialization.required})` }}
                 </Badge>
             </div>
         </div>
@@ -48,6 +53,8 @@ import { TeamDto } from '@/entities/team/model';
 import { Join } from '@/features/team/join';
 
 import { useAppRoutes } from '@/router/AppRoutes';
+import type { PropType } from 'vue';
+import type { BaseDto } from '@/shared/api/types';
 
 defineProps ({
     team: {
@@ -57,6 +64,10 @@ defineProps ({
     request: {
         type: Boolean,
         default: false
+    },
+    desired_specializations: {
+        type: Array as PropType<BaseDto[]>,
+        default: () => []
     }
 })
 

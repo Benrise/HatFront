@@ -125,7 +125,6 @@ const toggleOpenSpecializations = () => {
 const { handleSubmit } = useForm({
   validationSchema: computed(() => formSchema),
   initialValues: {
-    user_id: props.user.id,
     specializations: props.user.specializations
   }
 })
@@ -139,7 +138,7 @@ const isCaptain = computed(() => teamStore.isCaptain)
 const isLoading = computed(() => teamStore.isLoading)
 
 const onSubmit = handleSubmit( async (updatedValues: any) => {
-    await teamStore.updateTeammateSpecializations(updatedValues, closeSpecializationsCombobox)
+    await teamStore.updateTeammateSpecializations(props.user.id, updatedValues, closeSpecializationsCombobox)
 })
 </script>
 

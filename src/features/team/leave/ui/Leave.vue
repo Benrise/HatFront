@@ -26,7 +26,7 @@
             <AlertDialogAction v-if="isCaptain && team.users.length > 1">
               Назначить
             </AlertDialogAction>
-            <AlertDialogAction v-if="isCaptain && team.users.length !== 1" @click="leaveTeam(team.id, leaveTeamPage)">
+            <AlertDialogAction v-if="(isCaptain || isMember) && team.users.length !== 1" @click="leaveTeam(team.id, leaveTeamPage)">
               Покинуть
             </AlertDialogAction>
           </AlertDialogFooter>
@@ -57,6 +57,10 @@ defineProps({
       required: true
     },
     isCaptain: {
+      type: Boolean,
+      default: false
+    },
+    isMember: {
       type: Boolean,
       default: false
     }

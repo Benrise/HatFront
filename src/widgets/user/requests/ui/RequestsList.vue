@@ -7,7 +7,7 @@
             <transition name="fade" mode="out-in">
                 <Skeleton v-if="isLoading" class="h-[192px] w-[324px] rounded-xl" />
                 <div v-else-if="!isLoading && incomingRequests.length" class="requests__list">
-                    <TeamCard :team="request.team" v-for="request in incomingRequests" :key="request.id" class="requests__item" request>
+                    <TeamCard :desired_specializations="request.desired_specializations" :team="request.team" v-for="request in incomingRequests" :key="request.id" class="requests__item" request>
                         <template #request-actions>
                             <Button @click="rejectRequest(request.id, 'incoming')" class="w-full" variant="outline">Отменить</Button>
                         </template>
@@ -25,7 +25,7 @@
             <transition name="fade" mode="out-in">
                 <Skeleton v-if="isLoading" class="h-[192px] w-[324px] rounded-xl" />
                 <div v-else-if="!isLoading && outcomingRequests.length" class="requests__list">
-                    <TeamCard :team="request.team" v-for="request in outcomingRequests" :key="request.id" class="requests__item" request>
+                    <TeamCard :desired_specializations="request.desired_specializations" :team="request.team" v-for="request in outcomingRequests" :key="request.id" class="requests__item" request>
                         <template #request-actions>
                             <Button @click="acceptRequest(request.id, 'outcoming')" class="w-full">Принять</Button>
                             <Button @click="rejectRequest(request.id, 'outcoming')" class="w-full" variant="outline">Отклонить</Button>

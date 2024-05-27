@@ -9,7 +9,7 @@
                       <Sorting/>
                     </div> -->
                 </div>
-                <div class="home__controls home__controls_mobile">
+                <!-- <div class="home__controls home__controls_mobile">
                   <div class="home__sheet sheet">
                     <Sheet>
                       <SheetTrigger as-child>
@@ -29,7 +29,7 @@
                     <div class="home_sorting home__sorting_mobile">
                       <Sorting/>
                     </div>
-                </div>
+                </div> -->
             </ContentSection>
         </div>
     </div>  
