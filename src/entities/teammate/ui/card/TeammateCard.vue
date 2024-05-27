@@ -19,22 +19,32 @@
             </div>
             <form class="teammate-card__roles" @submit="onSubmit">
                     <template v-if="!openSpecializations">
-                        <Badge v-for="specialization in user.specializations" :key="specialization.id" class="teammate-card__role">
-                            <div class="!max-w-[192px] !overflow-hidden text-ellipsis"> {{ specialization.name }}</div>
-                        </Badge>
-                        <Badge v-if="user?.specializations?.length === 0" class="teammate-card__role">
-                            Специализации не указаны
-                            <TooltipProvider v-if="!specializations.length && team" >
-                                <Tooltip>
-                                  <TooltipTrigger>
-                                    <IconAttention class="text-orange-500 ml-2" />
-                                  </TooltipTrigger>
-                                  <TooltipContent side="bottom">
-                                    <p>У команды отсутствуют специализации</p>
-                                  </TooltipContent>
-                                </Tooltip>
-                            </TooltipProvider>
-                        </Badge>
+                        <div v-if="desired_specializations.length" class="team-card__roles">
+                            <div class="team-card__description"> Роли в команде:</div>
+                            <Badge v-for="specialization in desired_specializations" :key="specialization.id" class="team-card__role">
+                                <div class="!max-w-[192px] !overflow-hidden text-ellipsis"> {{ specialization.name }}</div>
+                            </Badge>
+                        </div>
+                        <div v-else class="team-card__roles">
+                            <Badge v-for="specialization in user.specializations" :key="specialization.id" class="teammate-card__role">
+                                <div class="!max-w-[192px] !overflow-hidden text-ellipsis"> {{ specialization.name }}</div>
+                            </Badge>
+                        </div>
+                        <div v-if="user?.specializations?.length === 0 && !request" class="team-card__roles">
+                            <Badge class="teammate-card__role">
+                                Специализации не указаны
+                                <TooltipProvider v-if="!specializations.length && team" >
+                                    <Tooltip>
+                                    <TooltipTrigger>
+                                        <IconAttention class="text-orange-500 ml-2" />
+                                    </TooltipTrigger>
+                                    <TooltipContent side="bottom">
+                                        <p>У команды отсутствуют специализации</p>
+                                    </TooltipContent>
+                                    </Tooltip>
+                                </TooltipProvider>
+                            </Badge>
+                        </div>
                     </template>
                     <FormField v-if="openSpecializations && team && isCaptain"  class="teammate-card__role" name="specializations" v-slot="{ componentField }">
                         <FormItem>
@@ -56,12 +66,17 @@
                     </transition>
             </form>
         </div>
-        <div class="teammate-card__actions">
+        <div  v-if="!request" class="teammate-card__actions">
             <Invitation v-if="!team" :user="user">
                 <Button class="w-full">Пригласить</Button>
             </Invitation>
             <UserPreview v-model:open="open" :user="user" team/>
             <Button variant="outline" class="w-full" @click="toggleOpen">Подробнее</Button>
+        </div>
+        <div v-else class="teammate-card__actions">
+            <slot name="request-actions">
+
+            </slot>
         </div>
     </div>
 </template>
@@ -108,7 +123,15 @@ const props = defineProps({
     specializations: {
         type: Array as PropType<BaseDto[]>,
         default: () => []
-    }
+    },
+    request: {
+        type: Boolean,
+        default: false
+    },
+    desired_specializations: {
+        type: Array as PropType<BaseDto[]>,
+        default: () => []
+    },
 })
 
 const open = ref(false)

@@ -2,7 +2,7 @@
     <div class="team-detail">
         <div class="team-detail__main">
           <div class="team-detail__image">
-            <Avatar :store="teamStore" :entity="team" size="xl" editable></Avatar>
+            <Avatar :store="teamStore" :entity="team" size="xl" :editable="isCaptain"></Avatar>
             <Leave v-if="isMember" :team="team" :isCaptain="isCaptain" :isMember="isMember">
               <Button variant="outline" class="w-full">Покинуть команду</Button>
             </Leave>
@@ -138,7 +138,7 @@
                                 type="number"
                                 class="w-[64px]"
                                 :class="{ 'border-red-500': errorMessage }"
-                                placeholder="Необходимое количество"
+                                placeholder="1"
                               />
                             </TooltipTrigger>
                             <TooltipContent v-if="!errorMessage" side="bottom">
@@ -173,7 +173,19 @@
             <div class="team-detail__field-group">
               <FormField v-slot="{ componentField }" name="is_visible">
                 <FormItem class="team-detail__field">
-                  <FormLabel class="team-detail__field-label">Статус</FormLabel>
+                  <FormLabel class="team-detail__field-label flex gap-2 items-center">
+                    Статус
+                    <TooltipProvider>
+                      <Tooltip>
+                      <TooltipTrigger as-child>
+                          <IconQuestion class="opacity-50"/>
+                      </TooltipTrigger>
+                      <TooltipContent side="bottom">
+                          <p>Видимость команды в поисковой выдаче</p>
+                      </TooltipContent>
+                      </Tooltip>
+                  </TooltipProvider>
+                  </FormLabel>
                   <FormControl>
                     <RadioGroup
                       class="flex flex-col space-y-1"
@@ -217,6 +229,43 @@
           <div class="team-detail__users">
             <TeammateCard class="w-fit" v-for="user in team.users" :key="user.id" :user="user" :specializations="team.specializations" team/>
           </div>
+        </div>
+        <div v-if="isCaptain" class="team-detail__section">
+          <div class="team-detail__section-title">
+            Входящие
+          </div>
+          <transition name="fade" mode="out-in">
+            <Skeleton v-if="isLoading" class="h-[192px] w-[324px] rounded-xl" />
+            <div v-else-if="!isLoading && incomingRequests.length" class="team-detail__requests requests">
+                <TeammateCard :desired_specializations="request.desired_specializations" :user="request.user" v-for="request in incomingRequests" :key="request.id" class="requests__item" request>
+                    <template #request-actions>
+                        <Button @click="acceptRequest(request.id, 'incoming')" class="w-full">Принять</Button>
+                        <Button @click="rejectRequest(request.id, 'incoming')" class="w-full" variant="outline">Отклонить</Button>
+                    </template>
+                </TeammateCard>
+            </div>
+            <div v-else class="requests__empty opacity-50">
+                Заявки отсутствуют
+            </div>
+        </transition>
+        </div>
+        <div v-if="isCaptain" class="team-detail__section">
+          <div class="team-detail__section-title">
+            Исходящие
+          </div>
+          <transition name="fade" mode="out-in">
+            <Skeleton v-if="isLoading" class="h-[192px] w-[324px] rounded-xl" />
+            <div v-else-if="!isLoading && outcomingRequests.length" class="requests__list requests">
+                <TeammateCard :desired_specializations="request.desired_specializations" :user="request.user" v-for="request in outcomingRequests" :key="request.id" class="requests__item" request>
+                    <template #request-actions>
+                      <Button @click="rejectRequest(request.id, 'outcoming')" class="w-full" variant="outline">Отменить</Button>
+                    </template>
+                </TeammateCard>
+            </div>
+            <div v-else class="requests__empty opacity-50">
+                Приглашения отсутствуют
+            </div>
+        </transition>
         </div>
     </div>
 </template>
@@ -264,6 +313,9 @@ import {
   TooltipTrigger,
 } from '@/shared/ui/tooltip'
 
+import { Skeleton } from '@/shared/ui/skeleton'
+
+import IconQuestion from '~icons/heroicons/question-mark-circle-16-solid';
 
 const route = useRoute()
 
@@ -274,10 +326,18 @@ const skillsStore = UserModel.useSkillsStore();
 const teamId = computed(() => +route.params.id);
 
 onBeforeMount(async () => {
+  fetch()
+})
+
+const fetch = async () => {
     await teamStore.fetchTeam(teamId.value);
     await skillsStore.fetchList();
     await specializationsStore.fetchList();
-})
+
+    if (incomingRequests.value.length > 0 || outcomingRequests.value.length > 0) return 
+    await teamStore.fetchIncomingRequests();
+    await teamStore.fetchOutcomingRequests();
+}
 
 const team = computed(() => teamStore.getTeam);
 const specializations = computed(() => specializationsStore.getSpecializations)
@@ -305,6 +365,17 @@ watch(team, () => {
 const onSubmit = handleSubmit((updatedValues: any) => {
   return teamStore.updateTeam(teamId.value, updatedValues);
 })
+
+const incomingRequests = computed(() => teamStore.getIncomingRequests);
+const outcomingRequests = computed(() => teamStore.getOutcomingRequests);
+
+const acceptRequest = async (id: number, type: 'outcoming' | 'incoming') => {
+  await teamStore.acceptRequest(id, type);
+}
+
+const rejectRequest = async (id: number, type: 'outcoming' | 'incoming') => {
+  await teamStore.rejectRequest(id, type);
+}
 </script>
 
 <style scoped lang="scss">

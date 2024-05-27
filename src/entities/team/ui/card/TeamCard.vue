@@ -1,5 +1,17 @@
 <template>
     <div class="team-card">
+        <TooltipProvider v-if="me" >
+            <Tooltip>
+            <TooltipTrigger class="team-card__visability" as-child>
+                <IconVisible v-if="team.is_visible"/>
+                <IconInvisible class="opacity-50" v-else />
+            </TooltipTrigger>
+            <TooltipContent side="bottom">
+                <p v-if="team.is_visible">В поиске участников</p>
+                <p v-else>Набор закрыт</p>
+            </TooltipContent>
+            </Tooltip>
+        </TooltipProvider>
         <div class="team-card__main">
             <router-link :to="appRoutes?.getTeam(team.id) || '/'" class="w-fit">
                 <TeamBadge :team="team"></TeamBadge>
@@ -26,7 +38,7 @@
             </div>
         </div>
         <div v-if="!request" class="team-card__actions">
-            <Join :team="team">
+            <Join v-if="!me" :team="team">
                 <Button :disabled="team.has_request" class="w-full">
                     {{ team.has_request ? 'Заявка отправлена' : 'Вступить в команду' }}
                 </Button>
@@ -56,6 +68,16 @@ import { useAppRoutes } from '@/router/AppRoutes';
 import type { PropType } from 'vue';
 import type { BaseDto } from '@/shared/api/types';
 
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/shared/ui/tooltip'
+
+import IconVisible from '~icons/heroicons/eye-20-solid';
+import IconInvisible from '~icons/heroicons/eye-slash-solid';
+
 defineProps ({
     team: {
         type: TeamDto,
@@ -68,6 +90,10 @@ defineProps ({
     desired_specializations: {
         type: Array as PropType<BaseDto[]>,
         default: () => []
+    },
+    me: {
+        type: Boolean,
+        default: false
     }
 })
 

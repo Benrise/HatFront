@@ -1,0 +1,1 @@
+export { default as UserTeamsList } from './UserTeamsList.vue';

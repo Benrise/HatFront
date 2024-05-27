@@ -3,10 +3,9 @@ import { useToast } from '@/shared/ui/toast/use-toast';
 import { http } from '../api';
 import { StatusCodes } from 'http-status-codes';
 import { computed, ref } from 'vue';
-import { CreateTeamDto, TeamDto, TeamSpecializationDto } from './types';
+import { CreateTeamDto, TeamDto, TeamRequestDto } from './types';
 
 import { UserModel } from '@/entities/user';
-import type { BaseDto } from '@/shared/api/types';
 
 export const useTeamStore = defineStore("team", () => {
     const { toast } = useToast();
@@ -22,6 +21,10 @@ export const useTeamStore = defineStore("team", () => {
     const isCaptain = ref(false)
     const isMember = ref(false)
     const hasOwnTeams = ref(false)
+    const incomingRequests = ref<TeamRequestDto[]>([] as TeamRequestDto[])
+    const outcomingRequests = ref<TeamRequestDto[]>([] as TeamRequestDto[])
+    const incomingRequestsCursor = ref()
+    const outcomingRequestsCursor = ref()
 
     const fetchList = async () => {
         const { data, status} = await http.team.list({cursor: teamsCursor.value});
@@ -362,11 +365,154 @@ export const useTeamStore = defineStore("team", () => {
         }
     }
 
+    const fetchIncomingRequests = async () => {
+        try {
+            isLoading.value = true;
+            const { data, status} = await http.team.listRequests(team.value.id, {cursor: teamsCursor.value, is_to_team: true});
+            if (status !== StatusCodes.OK) {
+                toast({
+                    variant: 'destructive',
+                    title: 'Ошибка',
+                    description: `Не удалось загрузить список заявок.`,
+                });
+                return
+            }
+            addIncomingRequests(data.objects);
+            setIncomingRequestsCursor(data.cursor);
+        }
+        catch (e) {
+            console.error('Error on fetching requests:', e);
+        }
+        finally {
+            isLoading.value = false;
+        }
+    }
+
+    const fetchOutcomingRequests = async () => {
+        try {
+            const { data, status} = await http.team.listRequests(team.value.id, {cursor: teamsCursor.value, is_to_team: false});
+            if (status !== StatusCodes.OK) {
+                toast({
+                    variant: 'destructive',
+                    title: 'Ошибка',
+                    description: `Не удалось загрузить список заявок.`,
+                });
+                return
+            }
+            addOutcomingRequests(data.objects);
+            setOutcomingRequestsCursor(data.cursor);
+        }
+        catch (e) {
+            console.error('Error on fetching requests:', e);
+        }
+        finally {
+            isLoading.value = false;
+        }
+    }
+
+    const setIncomingRequestsCursor = (cursor: number) => {
+        incomingRequestsCursor.value = cursor;
+    }
+
+    const addIncomingRequests = (data: TeamRequestDto[]) => {
+        if (!data || data.length === 0) return
+        const existingIds = incomingRequests.value.map((request) => request.id);
+        const newRequests = data.filter((request) => !existingIds.includes(request.id));
+        incomingRequests.value.push(...newRequests);
+    }
+
+    const setOutcomingRequestsCursor = (cursor: number) => {
+        outcomingRequestsCursor.value = cursor;
+    }
+
+    const addOutcomingRequests = (data: TeamRequestDto[]) => {
+        if (!data || data.length === 0) return
+        const existingIds = outcomingRequests.value.map((request) => request.id);
+        const newRequests = data.filter((request) => !existingIds.includes(request.id));
+        outcomingRequests.value.push(...newRequests);
+    }
+
+    const acceptRequest = async (request_id: number, type: 'outcoming' | 'incoming') => {
+        try {
+            isLoading.value = true;
+            const { status } = await http.request.put(request_id);
+            if (status === StatusCodes.OK) {
+                toast({
+                    variant: 'success',
+                    title: 'Успех',
+                    description: `Заявка принята`,
+                  });
+                  if (type === 'outcoming') {
+                    resetOutcomingRequests();
+                    await fetchOutcomingRequests();
+                  }
+                  if (type === 'incoming') {
+                    resetIncomingRequests();
+                    await fetchIncomingRequests();
+                  }
+            }
+        }
+        catch (e) {
+            console.error('Error on deleting avatar:', e);
+            toast({
+                variant: 'destructive',
+                title: `Ошибка`,
+                description: `Не удалось принять заявку. Попробуйте позже.`,
+            });
+        }
+        finally {
+            isLoading.value = false;
+        }
+    }
+
+    const rejectRequest = async (request_id: number, type: 'outcoming' | 'incoming') => {
+        try {
+            isLoading.value = true;
+            const { status } = await http.request.delete(request_id);
+            if (status === StatusCodes.OK) {
+                toast({
+                    variant: 'warning',
+                    title: 'Внимание',
+                    description: type === 'outcoming' ? `Заявка отменена` : `Заявка отклонена`,
+                  });
+                  if (type === 'outcoming') {
+                    resetOutcomingRequests();
+                    await fetchOutcomingRequests();
+                  }
+                  if (type === 'incoming') {
+                    resetIncomingRequests();
+                    await fetchIncomingRequests();
+                  }
+            }
+        }
+        catch (e) {
+            console.error('Error on deleting avatar:', e);
+            toast({
+                variant: 'destructive',
+                title: `Ошибка`,
+                description: `Не удалось отклонить заявку. Попробуйте позже.`,
+            });
+        }
+        finally {
+            isLoading.value = false;
+        }
+    }
+
+    const resetIncomingRequests = () => {
+        incomingRequests.value = [];
+    }
+
+    const resetOutcomingRequests = () => {
+        outcomingRequests.value = [];
+    }
+
     const getList = computed<TeamDto[]>(() => teams.value);
     const getTeam = computed<TeamDto>(() => team.value);
     const getListCursor = computed(() => teamsCursor.value);
     const getListMe = computed<TeamDto[]>(() => myTeams.value);
     const getListMeCursor = computed(() => teamsCursor.value);
+    const getIncomingRequests = computed<TeamRequestDto[]>(() => incomingRequests.value);
+    const getOutcomingRequests = computed<TeamRequestDto[]>(() => outcomingRequests.value);
 
     return { 
         isLoading, 
@@ -391,6 +537,12 @@ export const useTeamStore = defineStore("team", () => {
         leaveTeam,
         resetItem,
         updateTeam,
-        updateTeammateSpecializations
+        updateTeammateSpecializations,
+        acceptRequest,
+        rejectRequest,
+        fetchIncomingRequests,
+        fetchOutcomingRequests,
+        getIncomingRequests,
+        getOutcomingRequests
     }
 })

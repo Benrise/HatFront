@@ -1,6 +1,6 @@
-import { CrudRepository } from '@/shared/api/crud';
+import { CrudRepository, type IListParameters } from '@/shared/api/crud';
 import type { AxiosInstance } from 'axios';
-import type { TeamDto, TeamSpecializationDto } from '../model';
+import type { TeamDto, TeamRequestDto, TeamSpecializationDto } from '../model';
 import type { CursorListDto } from '@/shared/api/types';
 
 const fileRequestConfig: AxiosRequestConfig = {
@@ -10,6 +10,10 @@ const fileRequestConfig: AxiosRequestConfig = {
     },
   },
 };
+
+export interface IRequestListParameters extends IListParameters {
+  is_to_team?: boolean
+}
 
 
   export class TeamRepository extends CrudRepository<TeamDto> {
@@ -36,17 +40,27 @@ const fileRequestConfig: AxiosRequestConfig = {
 
     async updateMain(team_id: number, payload: TeamDto) {
       return this.axiosInstance.put(`${this.endpoint}/${team_id}/main`, payload);
-  }
+    }
 
-  async updateSpecializations(team_id: number, payload: TeamSpecializationDto[]) {
-    return this.axiosInstance.put(`${this.endpoint}/${team_id}/specializations`, payload);
-  }
+    async updateSpecializations(team_id: number, payload: TeamSpecializationDto[]) {
+      return this.axiosInstance.put(`${this.endpoint}/${team_id}/specializations`, payload);
+    }
 
-  async updateSkills(team_id: number, payload: number[]) {
-      return this.axiosInstance.put(`${this.endpoint}/${team_id}/skills`, payload);
-  }
+    async updateSkills(team_id: number, payload: number[]) {
+        return this.axiosInstance.put(`${this.endpoint}/${team_id}/skills`, payload);
+    }
 
   async updateTeammateSpecializations(user_id: number, team_id: number, payload: any) {
       return this.axiosInstance.put(`${this.endpoint}/${team_id}/specializations/${user_id}`, payload);
+  }
+
+  async listRequests(team_id: number, params?: IRequestListParameters) {
+      return this.axiosInstance.get<CursorListDto<TeamRequestDto>>(`${this.endpoint}/${team_id}/request`, { params: params });
+  }
+}
+
+export class RequestsRepository extends CrudRepository<TeamRequestDto> {
+  constructor(protected endpoint: string, protected axiosInstance: AxiosInstance) {
+      super(endpoint, axiosInstance);
   }
 }

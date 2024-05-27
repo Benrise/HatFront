@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { computed, ref } from 'vue'
-import { EProvider, RequestDto, type EducationDto, type UserDto } from './types'
+import { EProvider, UserRequestDto, type EducationDto, type UserDto } from './types'
 import { type BaseDto } from "@/shared/api/types";
 import { http } from '../api/http'
 
@@ -14,8 +14,8 @@ export const useUserStore = defineStore("user", () => {
     const user = ref<UserDto>({} as UserDto)
     const users = ref<UserDto[]>([] as UserDto[])
     const usersCursor = ref()
-    const incomingRequests = ref<RequestDto[]>([] as RequestDto[])
-    const outcomingRequests = ref<RequestDto[]>([] as RequestDto[])
+    const incomingRequests = ref<UserRequestDto[]>([] as UserRequestDto[])
+    const outcomingRequests = ref<UserRequestDto[]>([] as UserRequestDto[])
     const incomingRequestsCursor = ref()
     const outcomingRequestsCursor = ref()
     const isLoading = ref(false)
@@ -275,7 +275,7 @@ export const useUserStore = defineStore("user", () => {
         incomingRequestsCursor.value = cursor;
     }
 
-    const addIncomingRequests = (data: RequestDto[]) => {
+    const addIncomingRequests = (data: UserRequestDto[]) => {
         if (!data || data.length === 0) return
         console.log(data)
         const existingIds = incomingRequests.value.map((request) => request.id);
@@ -287,7 +287,7 @@ export const useUserStore = defineStore("user", () => {
         outcomingRequestsCursor.value = cursor;
     }
 
-    const addOutcomingRequests = (data: RequestDto[]) => {
+    const addOutcomingRequests = (data: UserRequestDto[]) => {
         if (!data || data.length === 0) return
         const existingIds = outcomingRequests.value.map((request) => request.id);
         const newRequests = data.filter((request) => !existingIds.includes(request.id));
@@ -305,11 +305,11 @@ export const useUserStore = defineStore("user", () => {
                     description: `Заявка принята`,
                   });
                   if (type === 'outcoming') {
-                    resetOutcomingRequests();
+                    await resetOutcomingRequests();
                     await fetchOutcomingRequests();
                   }
                   if (type === 'incoming') {
-                    resetIncomingRequests();
+                    await resetIncomingRequests();
                     await fetchIncomingRequests();
                   }
             }
@@ -360,11 +360,11 @@ export const useUserStore = defineStore("user", () => {
         }
     }
 
-    const resetIncomingRequests = () => {
+    const resetIncomingRequests = async () => {
         incomingRequests.value = [];
     }
 
-    const resetOutcomingRequests = () => {
+    const resetOutcomingRequests = async () => {
         outcomingRequests.value = [];
     }
 
@@ -387,8 +387,8 @@ export const useUserStore = defineStore("user", () => {
         return undefined;
     });
     const getEducation = computed<EducationDto[] | undefined >(() => user.value.education);
-    const getIncomingRequests = computed<RequestDto[]>(() => incomingRequests.value);
-    const getOutcomingRequests = computed<RequestDto[]>(() => outcomingRequests.value);
+    const getIncomingRequests = computed<UserRequestDto[]>(() => incomingRequests.value);
+    const getOutcomingRequests = computed<UserRequestDto[]>(() => outcomingRequests.value);
 
     return { 
         logout, 

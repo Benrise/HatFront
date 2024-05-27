@@ -1,5 +1,5 @@
 import type { AxiosInstance } from 'axios';
-import type { EducationDto, RequestDto, UserDto } from '../model';
+import type { EducationDto, UserRequestDto, UserDto } from '../model';
 import type { CursorListDto, BaseDto } from '@/shared/api/types';
 import { CrudRepository, type IListParameters } from '@/shared/api/crud';
 import type { TeamDto } from '@/entities/team/model';
@@ -59,7 +59,7 @@ export class UserRepository extends CrudRepository<UserDto>{
     }
 
     async listRequests(params?: IRequestListParameters) {
-        return this.axiosInstance.get<CursorListDto<RequestDto>>(`${this.endpoint}/request`, { params: params });
+        return this.axiosInstance.get<CursorListDto<UserRequestDto>>(`${this.endpoint}/request`, { params: params });
     }
 }
 
@@ -87,7 +87,7 @@ export class SpecializationsRepository {
     }
 }
 
-export class RequestsRepository extends CrudRepository<RequestDto> {
+export class RequestsRepository extends CrudRepository<UserRequestDto> {
     constructor(protected endpoint: string, protected axiosInstance: AxiosInstance) {
         super(endpoint, axiosInstance);
     }

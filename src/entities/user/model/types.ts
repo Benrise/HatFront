@@ -47,7 +47,7 @@ export enum EProvider {
     MIREA = "/images/png/mirea.png"
 }
 
-export class RequestDto extends BaseDto {
+export class UserRequestDto extends BaseDto {
     desired_specializations?: BaseDto[] = [];
     message?: string = "";
     team: TeamDto & {

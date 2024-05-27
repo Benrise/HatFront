@@ -21,15 +21,18 @@ import { UserPreview } from '@/entities/user/ui/preview';
 
 import { UserDetail } from '@/widgets/user/detail';
 import { RequestsList } from '@/widgets/user/requests';
+import { UserTeamsList } from '@/widgets/user/teams';
 
 
 import { UserModel } from '@/entities/user'
 
 import { Avatar } from '@/features/avatar'
 
-import { computed } from 'vue';
+import { computed, onMounted } from 'vue';
+import { TeamModel } from '@/entities/team';
 
 const userStore = UserModel.useUserStore();
+const teamStore = TeamModel.useTeamStore();
 
 const user = computed(() => userStore.getUser);
 
@@ -46,7 +49,18 @@ const tabs: ITabsConfig[] = [
     title: "Заявки",
     content: RequestsList,
   },
+  {
+    value: "teams",
+    title: "Команды",
+    content: UserTeamsList,
+  },
 ];
+
+onMounted(async () => {
+  await userStore.resetIncomingRequests();
+  await userStore.resetOutcomingRequests();
+  await teamStore.resetListMe();
+})
 </script>
 
 <style scoped lang="scss">
