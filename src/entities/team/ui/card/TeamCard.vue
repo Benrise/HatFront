@@ -19,7 +19,7 @@
             <Badge v-if="team.hackathon" variant="secondary" class="w-fit">{{ team.hackathon?.name }}</Badge>
             <div class="team-card__info">
                 <div class="team-card__description">
-                    Сборная студентов двух любимых вузов, которые любят ночевать в вузе во время хакатонов, отсылать решение за 6 секунд... 
+                    {{ team.description }} 
                 </div>
             </div>
             <div class="team-card__tags">
