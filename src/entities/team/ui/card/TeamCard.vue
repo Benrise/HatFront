@@ -26,7 +26,6 @@
                 <Badge v-for="skill in team.skills" :key="skill.id" class="team-card__tag">{{ skill.name }}</Badge>
             </div>
             <div class="team-card__roles" v-if="desired_specializations.length">
-                <div class="team-card__description"> Роли в команде:</div>
                 <Badge v-for="specialization in desired_specializations" :key="specialization.id" class="team-card__role">
                     <div class="!max-w-[192px] !overflow-hidden text-ellipsis"> {{ specialization.name }}</div>
                 </Badge>

@@ -19,18 +19,17 @@
             </div>
             <form class="teammate-card__roles" @submit="onSubmit">
                     <template v-if="!openSpecializations">
-                        <div v-if="desired_specializations.length" class="team-card__roles">
-                            <div class="team-card__description"> Роли в команде:</div>
-                            <Badge v-for="specialization in desired_specializations" :key="specialization.id" class="team-card__role">
+                        <div v-if="desired_specializations.length" class="teammate-card__roles">
+                            <Badge v-for="specialization in desired_specializations" :key="specialization.id" class="teammate-card__role">
                                 <div class="!max-w-[192px] !overflow-hidden text-ellipsis"> {{ specialization.name }}</div>
                             </Badge>
                         </div>
-                        <div v-else class="team-card__roles">
+                        <div v-else class="teammate-card__roles">
                             <Badge v-for="specialization in user.specializations" :key="specialization.id" class="teammate-card__role">
                                 <div class="!max-w-[192px] !overflow-hidden text-ellipsis"> {{ specialization.name }}</div>
                             </Badge>
                         </div>
-                        <div v-if="user?.specializations?.length === 0 && !request" class="team-card__roles">
+                        <div v-if="user?.specializations?.length === 0 && !request" class="teammate-card__roles">
                             <Badge class="teammate-card__role">
                                 Специализации не указаны
                                 <TooltipProvider v-if="!specializations.length && team" >
