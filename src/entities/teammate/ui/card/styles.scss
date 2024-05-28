@@ -22,6 +22,7 @@
         @include adaptiveValue('gap', 12, 6);
         align-items: center;
         justify-content: center;
+        width: 100%;
     }
 
     &__info {

@@ -56,14 +56,17 @@
                             </FormControl>
                         </FormItem>
                     </FormField>
-                      <transition v-if="team && isCaptain" name="fade" mode="out-in">
+                      <div class="teammate-card__actions" v-if="team && isCaptain">
                         <Button :disabled="!specializations.length" type="button" variant="secondary" v-if="!openSpecializations" class="w-full" @click="toggleOpenSpecializations">
                             Назначить
                         </Button>
                         <Button type="submit" v-else class="w-full" :loading="isLoading" >
                             Сохранить
                         </Button>
-                    </transition>
+                        <Button type="button" variant="secondary" v-if="openSpecializations" class="w-fit" @click="toggleOpenSpecializations">
+                            <IconXmark/>
+                        </Button>
+                    </div>
             </form>
         </div>
         <div  v-if="!request" class="teammate-card__actions">
@@ -109,7 +112,9 @@ import {
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from '@/shared/ui/tooltip'
+} from '@/shared/ui/tooltip';
+
+import IconXmark from '~icons/heroicons/x-mark-20-solid';
 
 const props = defineProps({
     user: {
@@ -153,7 +158,7 @@ const { handleSubmit } = useForm({
 })
 
 const closeSpecializationsCombobox = () => {
-    openSpecializations.value = false
+    openSpecializations.value = false;
 }
 
 const teamStore = TeamModel.useTeamStore();

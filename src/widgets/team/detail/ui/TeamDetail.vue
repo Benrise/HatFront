@@ -256,7 +256,7 @@
           <transition name="fade" mode="out-in">
             <Skeleton v-if="isRequestsLoading" class="h-[192px] w-[324px] rounded-xl" />
             <div v-else-if="!isLoading && outcomingRequests.length" class="requests__list requests">
-                <TeammateCard :desired_specializations="request.desired_specializations" :user="request.user" v-for="request in outcomingRequests" :key="request.id" class="requests__item" request>
+                <TeammateCard @update:specializations="fetch" :desired_specializations="request.desired_specializations" :user="request.user" v-for="request in outcomingRequests" :key="request.id" class="requests__item" request>
                     <template #request-actions>
                       <Button @click="rejectRequest(request.id, 'outcoming')" class="w-full" variant="outline">Отменить</Button>
                     </template>
