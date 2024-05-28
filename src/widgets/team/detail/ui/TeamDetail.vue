@@ -235,7 +235,7 @@
             Входящие
           </div>
           <transition name="fade" mode="out-in">
-            <Skeleton v-if="isLoading" class="h-[192px] w-[324px] rounded-xl" />
+            <Skeleton v-if="isRequestsLoading" class="h-[192px] w-[324px] rounded-xl" />
             <div v-else-if="!isLoading && incomingRequests.length" class="team-detail__requests requests">
                 <TeammateCard :desired_specializations="request.desired_specializations" :user="request.user" v-for="request in incomingRequests" :key="request.id" class="requests__item" request>
                     <template #request-actions>
@@ -254,7 +254,7 @@
             Исходящие
           </div>
           <transition name="fade" mode="out-in">
-            <Skeleton v-if="isLoading" class="h-[192px] w-[324px] rounded-xl" />
+            <Skeleton v-if="isRequestsLoading" class="h-[192px] w-[324px] rounded-xl" />
             <div v-else-if="!isLoading && outcomingRequests.length" class="requests__list requests">
                 <TeammateCard :desired_specializations="request.desired_specializations" :user="request.user" v-for="request in outcomingRequests" :key="request.id" class="requests__item" request>
                     <template #request-actions>
@@ -325,20 +325,6 @@ const skillsStore = UserModel.useSkillsStore();
 
 const teamId = computed(() => +route.params.id);
 
-onBeforeMount(async () => {
-  fetch()
-})
-
-const fetch = async () => {
-    await teamStore.fetchTeam(teamId.value);
-    await skillsStore.fetchList();
-    await specializationsStore.fetchList();
-
-    if (incomingRequests.value.length > 0 || outcomingRequests.value.length > 0) return 
-    await teamStore.fetchIncomingRequests();
-    await teamStore.fetchOutcomingRequests();
-}
-
 const team = computed(() => teamStore.getTeam);
 const specializations = computed(() => specializationsStore.getSpecializations)
 const skills = computed(() => skillsStore.getSkills)
@@ -349,12 +335,24 @@ const visabilityTitle = computed(() => team.value.is_visible ? 'Открыта �
 const isMember = computed(() => teamStore.isMember);
 const isCaptain = computed(() => teamStore.isCaptain);
 const isLoading = computed(() => teamStore.isLoading);
+const isRequestsLoading = computed(() => teamStore.isRequestsLoading);
 
 const { handleSubmit, setValues, values } = useForm({
   validationSchema: computed(() => formSchema),
 })
 
-onBeforeMount(() => {
+const fetch = async () => {
+    await teamStore.fetchTeam(teamId.value);
+    await skillsStore.fetchList();
+    await specializationsStore.fetchList();
+
+    if (incomingRequests.value.length > 0 || outcomingRequests.value.length > 0 || !isCaptain.value) return
+    await teamStore.fetchIncomingRequests();
+    await teamStore.fetchOutcomingRequests();
+}
+
+onBeforeMount(async () => {
+  await fetch()
   setValues(team.value)
 })
 

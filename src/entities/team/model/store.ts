@@ -18,6 +18,7 @@ export const useTeamStore = defineStore("team", () => {
     const myTeamsCursor = ref()
     const teamsCursor = ref()
     const isLoading = ref(false)
+    const isRequestsLoading = ref(false)
     const isCaptain = ref(false)
     const isMember = ref(false)
     const hasOwnTeams = ref(false)
@@ -52,7 +53,7 @@ export const useTeamStore = defineStore("team", () => {
                 });
                 return
             }
-            setTeam(data);
+            await setTeam(data);
         }
         catch (e) {
             console.error('Error on fetching team:', e);
@@ -90,26 +91,26 @@ export const useTeamStore = defineStore("team", () => {
         hasOwnTeams.value = data;
     }
     
-    const setTeam = (data: TeamDto) => {
+    const setTeam = async (data: TeamDto) => {
         if (!data) return
 
         if (data.users?.length) {
-            data.users.forEach((user) => {
+            data.users.forEach( async (user) => {
                 const userId = userStore.getUser?.id;
                 if (userId === user.id) {
-                    setCaptain(user.is_capitan);
-                    setMember(true);
+                    await setCaptain(user.is_capitan);
+                    await setMember(true);
                 }
             })
         }
         team.value = data;
     }
 
-    const setCaptain = (data: boolean) => {
+    const setCaptain = async (data: boolean) => {
         isCaptain.value = data;
     }
 
-    const setMember = (data: boolean) => {
+    const setMember = async (data: boolean) => {
         isMember.value = data;
     }
 
@@ -230,7 +231,7 @@ export const useTeamStore = defineStore("team", () => {
 
     const join = async (team_id: number, payload: any, callback?: () => void) => {
         try {
-            isLoading.value = true;
+            isRequestsLoading.value = true;
             const { status } = await http.team.createRequest(team_id, payload);
             if (status === StatusCodes.CREATED) {
                 toast({
@@ -250,7 +251,7 @@ export const useTeamStore = defineStore("team", () => {
             });
         }
         finally {
-            isLoading.value = false;
+            isRequestsLoading.value = false;
         }
     }
 
@@ -367,7 +368,7 @@ export const useTeamStore = defineStore("team", () => {
 
     const fetchIncomingRequests = async () => {
         try {
-            isLoading.value = true;
+            isRequestsLoading.value = true;
             const { data, status} = await http.team.listRequests(team.value.id, {cursor: teamsCursor.value, is_to_team: true});
             if (status !== StatusCodes.OK) {
                 toast({
@@ -384,12 +385,13 @@ export const useTeamStore = defineStore("team", () => {
             console.error('Error on fetching requests:', e);
         }
         finally {
-            isLoading.value = false;
+            isRequestsLoading.value = false;
         }
     }
 
     const fetchOutcomingRequests = async () => {
         try {
+            isRequestsLoading.value = true;
             const { data, status} = await http.team.listRequests(team.value.id, {cursor: teamsCursor.value, is_to_team: false});
             if (status !== StatusCodes.OK) {
                 toast({
@@ -406,7 +408,7 @@ export const useTeamStore = defineStore("team", () => {
             console.error('Error on fetching requests:', e);
         }
         finally {
-            isLoading.value = false;
+            isRequestsLoading.value = false;
         }
     }
 
@@ -434,7 +436,7 @@ export const useTeamStore = defineStore("team", () => {
 
     const acceptRequest = async (request_id: number, type: 'outcoming' | 'incoming') => {
         try {
-            isLoading.value = true;
+            isRequestsLoading.value = true;
             const { status } = await http.request.put(request_id);
             if (status === StatusCodes.OK) {
                 toast({
@@ -461,13 +463,13 @@ export const useTeamStore = defineStore("team", () => {
             });
         }
         finally {
-            isLoading.value = false;
+            isRequestsLoading.value = false;
         }
     }
 
     const rejectRequest = async (request_id: number, type: 'outcoming' | 'incoming') => {
         try {
-            isLoading.value = true;
+            isRequestsLoading.value = true;
             const { status } = await http.request.delete(request_id);
             if (status === StatusCodes.OK) {
                 toast({
@@ -494,7 +496,7 @@ export const useTeamStore = defineStore("team", () => {
             });
         }
         finally {
-            isLoading.value = false;
+            isRequestsLoading.value = false;
         }
     }
 
@@ -543,6 +545,7 @@ export const useTeamStore = defineStore("team", () => {
         fetchIncomingRequests,
         fetchOutcomingRequests,
         getIncomingRequests,
-        getOutcomingRequests
+        getOutcomingRequests,
+        isRequestsLoading,
     }
 })

@@ -1,6 +1,7 @@
 <template>
     <div class="avatar">
-      <Avatar :size="size" class="avatar__main">
+      <Skeleton v-if="isLoading" :class="skeletonSize" class="rounded-full"></Skeleton>
+      <Avatar v-else :size="size" class="avatar__main">
         <AvatarImage class="avatar__image" :src="avatarSrc" alt="Аватар" />
         <AvatarFallback class="avatar__fallback">{{ avatarFallback }}</AvatarFallback>
       </Avatar>
@@ -10,11 +11,12 @@
           :is-loading="isLoading"
           @update-avatar="uploadFile" 
           @remove-avatar="removeAvatar"
-          />
+      />
     </div>
   </template>
   
   <script setup lang="ts">
+  import Skeleton from '@/shared/ui/skeleton/Skeleton.vue'
   import { UpdateAvatar } from '@/features/update-avatar'
   import { computed, type PropType } from 'vue';
 
@@ -41,15 +43,30 @@
       required: true
     }
   });
-  const isLoading = computed<boolean>( () => props.store.isLoading);
+  const isLoading = computed<boolean>(() => props.store.isLoading);
   
-  const name = computed(() => props.entity.name || props.entity.first_name || '?');
-
-  const avatarFallback = name.value.charAt(0).toUpperCase();
+  const name = computed(() => (props.entity.name || props.entity.first_name) || '?');
+  const avatarFallback = computed(() => name.value.charAt(0).toUpperCase());
+  
   const avatarSrc = computed(() => {
     return props.entity.photo_url ? STATIC_URL + props.entity.photo_url : '#';
   })
-  
+
+  const skeletonSize = computed(() => {
+    switch (props.size) {
+      case 'sm':
+        return 'w-10 h-10 text-xs';
+      case 'base':
+        return 'w-16 h-16 text-2xl';
+      case 'lg':
+        return 'w-32 h-32 text-5xl';
+      case 'xl':
+        return 'w-56 h-56 text-8xl';
+      default:
+        return 'w-10 h-10 text-xs';
+    }
+  });
+
   const uploadFile = (file: File) => {
     if (file) {
         props.store.updateAvatar(file);
