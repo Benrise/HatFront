@@ -39,7 +39,7 @@
                           <SelectValue placeholder="Выберите кейс" />
                         </SelectTrigger>
                       </FormControl>
-                      <SelectContent>
+                      <SelectContent align="center">
                         <SelectGroup>
                           <SelectItem v-for="item in cases" :key="item.id" :value="(item.id as unknown as string)">
                             {{ item.name }}

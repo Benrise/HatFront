@@ -368,11 +368,11 @@ const incomingRequests = computed(() => teamStore.getIncomingRequests);
 const outcomingRequests = computed(() => teamStore.getOutcomingRequests);
 
 const acceptRequest = async (id: number, type: 'outcoming' | 'incoming') => {
-  await teamStore.acceptRequest(id, type);
+  await teamStore.acceptRequest(id, type, fetch);
 }
 
 const rejectRequest = async (id: number, type: 'outcoming' | 'incoming') => {
-  await teamStore.rejectRequest(id, type);
+  await teamStore.rejectRequest(id, type, fetch);
 }
 </script>
 

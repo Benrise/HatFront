@@ -444,7 +444,7 @@ export const useTeamStore = defineStore("team", () => {
         outcomingRequests.value.push(...newRequests);
     }
 
-    const acceptRequest = async (request_id: number, type: 'outcoming' | 'incoming') => {
+    const acceptRequest = async (request_id: number, type: 'outcoming' | 'incoming', callback?: () => void) => {
         try {
             isRequestsLoading.value = true;
             const { status } = await http.request.put(request_id);
@@ -462,6 +462,7 @@ export const useTeamStore = defineStore("team", () => {
                     resetIncomingRequests();
                     await fetchIncomingRequests();
                   }
+                  if (callback) callback();
             }
         }
         catch (e) {
@@ -477,7 +478,7 @@ export const useTeamStore = defineStore("team", () => {
         }
     }
 
-    const rejectRequest = async (request_id: number, type: 'outcoming' | 'incoming') => {
+    const rejectRequest = async (request_id: number, type: 'outcoming' | 'incoming', callback?: () => void) => {
         try {
             isRequestsLoading.value = true;
             const { status } = await http.request.delete(request_id);
@@ -495,6 +496,7 @@ export const useTeamStore = defineStore("team", () => {
                     resetIncomingRequests();
                     await fetchIncomingRequests();
                   }
+                  if (callback) callback();
             }
         }
         catch (e) {
