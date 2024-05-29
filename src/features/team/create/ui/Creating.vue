@@ -6,7 +6,7 @@
         <DialogContent class="dialog w-full" as="form" @submit="onSubmit">
           <DialogTitle>Создание команды</DialogTitle>
           <div class="dialog__content creating">
-            <div class="invitation__field-group">
+            <div class="creating__field-group">
               <div class="creating__field">
                 <div class="creating__field-label">Хакатон</div>
                 <Combobox
@@ -17,7 +17,7 @@
                   :disabled="!!hackathonId"
                 />
                 <div v-if="errors.case_id" class="text-[0.8rem] font-medium text-destructive">
-                  <span v-if="!cases.length">
+                  <span v-if="!cases.length && selectedHackathon">
                     У хакатона отсутствуют кейсы, выберете другой хакатон
                   </span>
                   <span v-if="!selectedHackathon">
@@ -28,33 +28,29 @@
             </div>
             <div class="creating__field-group">
               <FormField v-slot="{ componentField }" name="case_id">
-                  <transition name="fade" mode="out-in">
-                    <FormItem v-if="cases.length" class="creating__field">
-                      <FormLabel class="creating__field-label">Кейс</FormLabel>
+                  <FormItem class="creating__field">
+                    <FormLabel class="creating__field-label">Кейс</FormLabel>
+                    <div v-if="isHackathonLoading" class="space-y-3">
+                      <Skeleton class="h-[36px] w-full" />
+                    </div>
+                    <Select v-if="cases.length && !isHackathonLoading" v-bind="componentField">
                       <FormControl>
-                          <RadioGroup
-                            class="flex flex-col space-y-1"
-                            v-bind="componentField"
-                          >
-                            <FormItem v-for="item in cases" :key="item.id" class="flex items-center space-y-0 gap-x-2">
-                              <FormControl>
-                                <RadioGroupItem :value="(item.id as unknown as string)"/>
-                              </FormControl>
-                              <FormLabel class="creating__field-label">
-                                {{ item.name }}
-                              </FormLabel>
-                            </FormItem>
-                          </RadioGroup>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Выберите кейс" />
+                        </SelectTrigger>
                       </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  </transition>
-                  <span v-if="!cases.length && !isHackathonLoading" class="creating__field-label opacity-50">Кейсы не найдены</span>
-                  <div v-if="isHackathonLoading" class="space-y-3">
-                    <Skeleton class="h-4 w-[150px]" />
-                    <Skeleton class="h-4 w-[150px]" />
-                    <Skeleton class="h-4 w-[150px]" />
-                  </div>
+                      <SelectContent>
+                        <SelectGroup>
+                          <SelectItem v-for="item in cases" :key="item.id" :value="(item.id as unknown as string)">
+                            {{ item.name }}
+                          </SelectItem>
+                        </SelectGroup>
+                      </SelectContent>
+                    </Select>
+                    <span v-if="!cases.length && !isHackathonLoading && selectedHackathon" class="creating__field-label opacity-50">Кейсы не найдены</span>
+                    <span v-if="!selectedHackathon && !isHackathonLoading && !cases.length" class="creating__field-label opacity-50">Хакатон не выбран</span>
+                    <FormMessage />
+                  </FormItem>
               </FormField>
             </div>
             <div class="creating__field-group">
@@ -164,6 +160,15 @@ import { formSchema } from '../model';
 
 import { useForm } from 'vee-validate';
 import { CaseDto } from '@/entities/hackathon/model';
+
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/shared/ui/select'
 
 const openCreating = ref(false);
 

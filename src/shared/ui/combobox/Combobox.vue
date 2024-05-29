@@ -114,7 +114,7 @@ const items = computed<BaseDto[]>(() => {
   }
 })
 
-const isLoading = computed(() => props.store.isLoading)
+const isLoading = computed(() => props.store.isListLoading)
 
 watch(open, async () => {
   if (open.value) {

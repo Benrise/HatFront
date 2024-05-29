@@ -18,6 +18,7 @@ export const useTeamStore = defineStore("team", () => {
     const myTeamsCursor = ref()
     const teamsCursor = ref()
     const isLoading = ref(false)
+    const isListLoading = ref(false)
     const isRequestsLoading = ref(false)
     const isCaptain = ref(false)
     const isMember = ref(false)
@@ -28,17 +29,26 @@ export const useTeamStore = defineStore("team", () => {
     const outcomingRequestsCursor = ref()
 
     const fetchList = async () => {
-        const { data, status} = await http.team.list({cursor: teamsCursor.value});
-        if (status !== StatusCodes.OK) {
-            toast({
-                variant: 'destructive',
-                title: 'Ошибка',
-                description: `Не удалось загрузить список хакатонов`,
-            });
-            return
+        try {
+            isListLoading.value = true;
+            const { data, status} = await http.team.list({cursor: teamsCursor.value});
+            if (status !== StatusCodes.OK) {
+                toast({
+                    variant: 'destructive',
+                    title: 'Ошибка',
+                    description: `Не удалось загрузить список команд`,
+                });
+                return
+            }
+            addTeams(data.objects);
+            setCursor(data.cursor);
         }
-        addTeams(data.objects);
-        setCursor(data.cursor);
+        catch (e) {
+            console.error('Error on fetching hackathons:', e);
+        }
+        finally {
+            isListLoading.value = false;
+        }
     }
 
     const fetchTeam = async (id: number) => {
@@ -65,7 +75,7 @@ export const useTeamStore = defineStore("team", () => {
 
     const fetchListMe = async () => {
         try {
-            isLoading.value = true;
+            isListLoading.value = true;
             const { data, status} = await http.team.listMe();
             if (status !== StatusCodes.OK) {
                 toast({
@@ -83,7 +93,7 @@ export const useTeamStore = defineStore("team", () => {
             console.error('Error on fetching teams:', e);
         }
         finally {
-            isLoading.value = false;
+            isListLoading.value = false;
         }
     }
 
@@ -547,5 +557,6 @@ export const useTeamStore = defineStore("team", () => {
         getIncomingRequests,
         getOutcomingRequests,
         isRequestsLoading,
+        isListLoading
     }
 })

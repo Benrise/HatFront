@@ -25,6 +25,7 @@ export class TeamDto extends BaseDto {
     user_count?: number = 0;
     users: UserDto[] = [];
     has_request?: boolean;
+    has_team?: boolean;
   }
 
   export class CreateRequestDto {

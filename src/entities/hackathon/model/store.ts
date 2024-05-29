@@ -13,10 +13,11 @@ export const useHackathonStore = defineStore("hackathon", () => {
     const hackathons_cursor = ref()
     const cases = ref<CaseDto[]>([])
     const isLoading = ref(false)
+    const isListLoading= ref(false)
 
     const fetchList = async () => {
         try {
-            isLoading.value = true;
+            isListLoading.value = true;
             const { data, status} = await http.hackathon.list({cursor: hackathons_cursor.value});
             if (status !== StatusCodes.OK) {
                 toast({
@@ -33,7 +34,7 @@ export const useHackathonStore = defineStore("hackathon", () => {
             console.error('Error on fetching hackathons:', e);
         }
         finally {
-            isLoading.value = false;
+            isListLoading.value = false;
         }
     }
 
@@ -98,6 +99,7 @@ export const useHackathonStore = defineStore("hackathon", () => {
         fetchHackathon, 
         getHackathon,
         resetList,
-        getCases
+        getCases,
+        isListLoading
     }
 })
