@@ -48,34 +48,26 @@
             </div>
         </div>
         <template v-if="!!cases && cases.length">
-            <Tabs orientation="vertical" :default-value="hackathon.cases[0].id" class="hackathon-detail__cases tabs">
-                <TabsList class="tabs__list">
-                    <div class="tabs__title">
-                        Кейсы
+            <div class="hackathon-detail__cases cases">
+                <div class="cases__title">
+                    Кейсы
+                </div>
+                <div class="cases__items">
+                    <div v-for="case_ in cases" :key="case_.id" class="cases__item case">
+                        <div class="case__preview">
+                            <div class="case__title">
+                                {{ case_.name }}
+                            </div>
+                            <div class="case__owner opacity-50">
+                                {{ case_.owner }}
+                            </div>
+                        </div>
+                        <CasePreview :item="case_" :hackathon-id="hackathonId">
+                            <Button class="w-fit">Подробнее</Button>
+                        </CasePreview>
                     </div>
-                    <TabsTrigger class="tabs__trigger" v-for="item in hackathon.cases" :key="item.id" :value="item.id">
-                            {{ item.name }}
-                    </TabsTrigger>
-                </TabsList>
-                <TabsContent class="tabs__content content" v-for="item in hackathon.cases" :key="item.id" :value="item.id">
-                    <div class="content__group">
-                        <div class="content__title">
-                            Описание кейса
-                        </div>
-                        <div class="content__body">
-                            {{ item.task }}
-                        </div>
-                    </div>
-                    <div class="content__group">
-                        <div class="content__title">
-                            Предполагаемый результат
-                        </div>
-                        <div class="content__body">
-                            {{ item.result }}
-                        </div>
-                    </div>
-                </TabsContent>
-            </Tabs>
+                </div>
+            </div>
         </template>
     </div>
 </template>
@@ -92,12 +84,11 @@ import IconClipboardCheck from '~icons/heroicons/clipboard-document-check';
 import { Badge } from '@/shared/ui/badge';
 import { Button } from '@/shared/ui/button';
 
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/shared/ui/tabs';
-
 import { format } from "@formkit/tempo";
 
 import { HackathonModel } from '@/entities/hackathon';
 import { HackathonPoster } from '@/entities/hackathon';
+import { CasePreview } from '@/entities/case';
 
 const route = useRoute()
 
@@ -175,7 +166,7 @@ const cases = computed(() => hackathonStore.getCases);
         position: relative;
         display: flex;
         flex-direction: column;
-        gap: 4px;
+        gap: 8px;
         @include body($line-height:32);
     }
 
@@ -205,104 +196,59 @@ const cases = computed(() => hackathonStore.getCases);
     }
 }
 
-.tabs {
+.cases {
     display: flex;
-    width: 100%;
-    @include adaptiveValue('gap', 64, 32);
-    
-    &__list {
-        display: flex;
-        flex-direction: column;
-        height: 100%;
-        background: none;
-        gap: 24px;
+    flex-direction: column;
+    gap: 8px;
+
+    &__items {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(312px, 1fr));
+        grid-gap: 1rem;
     }
 
-    &__trigger {
-        position: relative;
-
-        border-radius: 12px;
-
-        flex-grow: 1;
-        flex-basis: 0;
-        box-sizing: border-box;
-        max-width: 464px;
-
-        text-wrap: wrap;
-        word-wrap: break-word;
-        word-break: break-word;
-
-        padding: 28px 28px;
-        background-color: hsl(var(--card));
-        width: 100%;
-
-        border: 1px solid hsl(var(--border));
-
-        &[data-state="active"] {
-            @include gradientBorder()
+    @media screen and (max-width: 380px) {
+        &__items {
+            grid-template-columns: repeat(auto-fit, minmax(224px, 1fr));
         }
     }
 
     &__title {
         @include subtitle();
-        width: 100%;
-    }
-
-    @media screen and (max-width: 724px) {
-        flex-direction: column;
     }
 }
 
-.content {
+.case {
+    position: relative;
+
     display: flex;
     flex-direction: column;
     gap: 24px;
+    justify-content: space-between;
 
-    max-width: 60%;
+    @include adaptiveValue('padding', 24, 16);
+    background-color: hsl(var(--card));
+    width: 100%;
 
-    &__group {
-        display: flex;
-        flex-direction: column;
-        gap: 4px;
-    }
+    border: 1px solid hsl(var(--border));
 
-    &__body {
-        @include body($line-height:32);
+    border-radius: 12px;
+
+    &:hover {
+        @include gradientBorder()
     }
 
     &__title {
-        @include subtitle();
+        @include body($line-height:32);
+        width: 100%;
     }
 
-    @media screen and (max-width: 724px) {
-        max-width: 100%;
+    &__preview {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
     }
-}
-
-@keyframes fadeIn {
-    from {
-      opacity: 0;
-      transform: translateX(30px);
-    }
-    to {
-      opacity: 1;
-    }
-  }
-  
-@keyframes fadeOut {
-    from {
-        opacity: 1;
-        transform: translateX(0);
-    }
-    to {
-        opacity: 0;
-        transform: translateX(30px);
-    }
-}
-.content[data-state="active"] {
-    animation: fadeIn 300ms ease-out;
-}
-.content[data-state="inactive"] {
-    animation: fadeOut 300ms ease-in;
+    
+    @include adaptiveValue('min-height', 224, 156);
 }
 </style>

@@ -3,7 +3,8 @@ import { useToast } from '@/shared/ui/toast/use-toast';
 import { http } from '../api';
 import { StatusCodes } from 'http-status-codes';
 import { computed, ref } from 'vue';
-import { CaseDto, HackathonDto } from './types';
+import { HackathonDto } from './types';
+import type { CaseDto } from '@/entities/case/model';
 
 export const useHackathonStore = defineStore("hackathon", () => {
     const { toast } = useToast();

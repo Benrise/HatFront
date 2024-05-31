@@ -132,4 +132,8 @@ const fetch = async () => {
     await props.store.fetchList();
   }
 }
+
+if (!items.value.length) {
+  fetch();
+}
 </script>

@@ -10,6 +10,7 @@
 }
 
 @mixin gradientBorder {
+
 	&::after {
 		filter: blur(5px); 
 	}
@@ -36,7 +37,7 @@
 }
 
 @mixin subtitle(
-	$font-weight: 400,
+	$font-weight: 500,
 	$font-size: 22,
 	$font-size-mobile: 16,
 	$line-height: 29,
@@ -48,7 +49,7 @@
 }
 
 @mixin title {
-	font-weight: 400;
+	font-weight: 500;
 	color: var(--foreground);
 	@include adaptiveValue("font-size", 32, 24, 700, 280, 1);
 	@include adaptiveValue("line-height", 39, 29, 700, 280, 1);

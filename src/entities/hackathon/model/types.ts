@@ -1,3 +1,4 @@
+import type { CaseDto } from "@/entities/case/model";
 import { BaseDto } from "@/shared/api/types";
 
 export class TimingsDto {
@@ -6,24 +7,17 @@ export class TimingsDto {
     break?: string;
   }
   
-  export class PrizesDto {
-    first?: number;
-    second?: number;
-    third?: number;
+  export class PrizeDto {
+    place?: number;
+    prizes?: string[];
   }
 
-  export class CaseDto extends BaseDto {
-    task?: string;
-    result?: string;
-    input_data?: string;
-  }
-  
   export class HackathonDto extends BaseDto {
     description?: string;
     people_from?: number;
     people_to?: number;
     prize_fund?: number;
-    prizes?: PrizesDto;
+    prizes?: PrizeDto;
     time_end?: string;
     time_end_registration?: string;
     time_start?: string;

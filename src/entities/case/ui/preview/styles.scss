@@ -1,0 +1,46 @@
+.case-preview {
+    display: flex;
+    flex-direction: column;
+    @include adaptiveValue('gap', 48, 24);
+
+    &__group {
+        display: flex;
+        flex-direction: column;
+        @include adaptiveValue('gap', 16, 12);
+    }
+
+    &__item {
+        @include body($font-weight: 500);
+        width: fit-content;
+        white-space: nowrap;
+        display: flex;
+        flex-direction: row;
+        gap: 4px;
+
+        @media screen and (max-width: 500px) {
+            white-space: wrap;
+        }
+    }
+
+    &__description {
+        opacity: 0.5;
+        text-wrap: wrap;
+        word-wrap: break-word;
+        word-break: break-word;
+        font-weight: 400;
+        line-height: 170%;
+    }
+
+    @media screen and (max-width: 379px) {
+        overflow-y: auto;
+        max-height: 400px;
+    }
+}
+
+.dialog {
+    &__content {
+        display: flex;
+        flex-direction: column;
+        @include adaptiveValue('gap', 48, 12);
+    }
+}

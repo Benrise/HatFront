@@ -33,7 +33,7 @@
                     <div v-if="isHackathonLoading" class="space-y-3">
                       <Skeleton class="h-[36px] w-full" />
                     </div>
-                    <Select v-if="cases.length && !isHackathonLoading" v-bind="componentField">
+                    <Select v-if="cases.length && !isHackathonLoading" v-bind="componentField" :disabled="!!caseId">
                       <FormControl>
                         <SelectTrigger>
                           <SelectValue placeholder="Выберите кейс" />
@@ -159,7 +159,7 @@ import { HackathonModel } from '@/entities/hackathon';
 import { formSchema } from '../model';
 
 import { useForm } from 'vee-validate';
-import { CaseDto } from '@/entities/hackathon/model';
+import type { CaseDto } from "@/entities/case/model";
 
 import {
   Select,
@@ -180,6 +180,10 @@ const props = defineProps({
     type: Number || String,
     default: 0
   },
+  caseId: {
+    type: Number || String,
+    default: 0
+  },
   callback: {
     type: Function,
     default: undefined
@@ -187,7 +191,7 @@ const props = defineProps({
 })
 
 const fetch = async (state: boolean) => {
-  if (!state) {
+  if (!state && !props.caseId) {
     resetForm();
     cases.value = [];
     selectedHackathon.value = props.hackathonId || undefined;
@@ -202,7 +206,7 @@ const hackathon = computed(() => hackathonStore.getHackathon);
 const selectedHackathon = ref<number | string >();
 const cases = ref<CaseDto[]>([]);
 
-const { handleSubmit, resetForm, errors } = useForm({
+const { handleSubmit, resetForm, errors, setValues } = useForm({
   validationSchema: computed(() => formSchema),
 });
 
@@ -226,6 +230,10 @@ const updateCaseFields = async (id: number | string | null) => {
   if (hackathon.value) {
     cases.value = hackathon.value.cases;
   }
+}
+
+if (props.caseId) {
+  setValues({ case_id: props.caseId })
 }
 </script>
 
