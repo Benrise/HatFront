@@ -15,19 +15,21 @@ import { useIntersectionObserver } from '@vueuse/core'
 
 const teamStore = TeamModel.useTeamStore();
 
-const fetch = async () => {
-    if (teams.value.length > 0) return
+const fetch = async (intersect: boolean) => {
+    if (teams.value.length > 0 && !intersect) return
     await teamStore.fetchList();
 }
 
 const observer = ref<HTMLElement | null>(null)
 const teams = computed(() => teamStore.getList);
+const intersect = ref(false);
 
 useIntersectionObserver(
     observer,
     ([{ isIntersecting }]) => {
         if (isIntersecting) {
-            fetch();
+            fetch(intersect.value);
+            intersect.value = true
         }
     },
     {

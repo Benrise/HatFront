@@ -317,14 +317,6 @@ const specializationsStore = UserModel.useSpecializationsStore();
 
 const isLoading = computed<boolean>( () => userStore.isLoading);
 
-const fetch = async () => {
-  await educationLevelsStore.fetchList();
-  await skillsStore.fetchList();
-  await specializationsStore.fetchList();
-  await userStore.fetchUser();
-}
-fetch()
-
 const specializations = computed<BaseDto[]>(() => specializationsStore.getSpecializations)
 const skills = computed<BaseDto[]>(() => skillsStore.getSkills)
 const education_levels = computed<BaseDto[]>(() => educationLevelsStore.getEducationLevels)
@@ -367,6 +359,14 @@ const removeEducation = (values: UserDto, index: number, id?: number) => {
     education: newEducation
   }));
 }
+
+const fetch = async () => {
+  if (!userStore.getUser) await userStore.fetchUser();
+  if (!educationLevelsStore.getEducationLevels.length) await educationLevelsStore.fetchList(); 
+  if (!skillsStore.getSkills.length) await skillsStore.fetchList();
+  if (!specializationsStore.getSpecializations.length) await specializationsStore.fetchList();
+}
+fetch()
 
 </script>
 <style scoped lang="scss">

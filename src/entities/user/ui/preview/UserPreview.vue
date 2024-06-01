@@ -72,8 +72,8 @@
                         </div>
                     </div>
                 </div>
-                <DialogFooter class="flex gap-2">
-                    <Button type="button" class="w-full" :disabled="me || team">
+                <DialogFooter class="flex gap-2" v-if="!me">
+                    <Button type="button" class="w-full" :disabled="team">
                         Пригласить в команду
                     </Button>
                     <Button type="button" variant="outline" class="w-full">

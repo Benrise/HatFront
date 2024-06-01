@@ -11,7 +11,7 @@ export const useHackathonStore = defineStore("hackathon", () => {
 
     const hackathon = ref<HackathonDto>({} as HackathonDto)
     const hackathons = ref<HackathonDto[]>([])
-    const hackathons_cursor = ref()
+    const hackathonsCursor = ref()
     const cases = ref<CaseDto[]>([])
     const isLoading = ref(false)
     const isListLoading= ref(false)
@@ -19,7 +19,7 @@ export const useHackathonStore = defineStore("hackathon", () => {
     const fetchList = async () => {
         try {
             isListLoading.value = true;
-            const { data, status} = await http.hackathon.list({cursor: hackathons_cursor.value});
+            const { data, status} = await http.hackathon.list({cursor: hackathonsCursor.value});
             if (status !== StatusCodes.OK) {
                 toast({
                     variant: 'destructive',
@@ -41,7 +41,7 @@ export const useHackathonStore = defineStore("hackathon", () => {
 
     const resetList = async () => {
         hackathons.value = [];
-        hackathons_cursor.value = undefined;
+        hackathonsCursor.value = undefined;
     }
 
     const fetchHackathon = async (id: number) => {
@@ -80,7 +80,7 @@ export const useHackathonStore = defineStore("hackathon", () => {
     }
 
     const setCursor = (cursor: number) => {
-        hackathons_cursor.value = cursor;
+        hackathonsCursor.value = cursor;
     }
 
     const setCases = (data: CaseDto[]) => {
@@ -89,7 +89,7 @@ export const useHackathonStore = defineStore("hackathon", () => {
 
     const getList = computed<HackathonDto[]>(() => hackathons.value);
     const getHackathon = computed<HackathonDto>(() => hackathon.value);
-    const getListCursor = computed(() => hackathons_cursor.value);
+    const getListCursor = computed(() => hackathonsCursor.value);
     const getCases = computed(() => hackathon.value.cases);
 
     return { 

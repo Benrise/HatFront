@@ -19,6 +19,7 @@ export const useUserStore = defineStore("user", () => {
     const incomingRequestsCursor = ref()
     const outcomingRequestsCursor = ref()
     const isLoading = ref(false)
+    const isRequestsLoading = ref(false)
     const isAuthorized = ref(false)
 
     const resetList = async () => {
@@ -227,7 +228,7 @@ export const useUserStore = defineStore("user", () => {
 
     const fetchIncomingRequests = async () => {
         try {
-            isLoading.value = true;
+            isRequestsLoading.value = true;
             const { data, status} = await http.user.listRequests({cursor: usersCursor.value, is_to_team: true});
             if (status !== StatusCodes.OK) {
                 toast({
@@ -244,12 +245,13 @@ export const useUserStore = defineStore("user", () => {
             console.error('Error on fetching requests:', e);
         }
         finally {
-            isLoading.value = false;
+            isRequestsLoading.value = false;
         }
     }
 
     const fetchOutcomingRequests = async () => {
         try {
+            isRequestsLoading.value = true;
             const { data, status} = await http.user.listRequests({cursor: usersCursor.value, is_to_team: false});
             if (status !== StatusCodes.OK) {
                 toast({
@@ -267,7 +269,7 @@ export const useUserStore = defineStore("user", () => {
             console.error('Error on fetching requests:', e);
         }
         finally {
-            isLoading.value = false;
+            isRequestsLoading.value = false;
         }
     }
 
@@ -277,7 +279,6 @@ export const useUserStore = defineStore("user", () => {
 
     const addIncomingRequests = (data: UserRequestDto[]) => {
         if (!data || data.length === 0) return
-        console.log(data)
         const existingIds = incomingRequests.value.map((request) => request.id);
         const newRequests = data.filter((request) => !existingIds.includes(request.id));
         incomingRequests.value.push(...newRequests);
@@ -296,7 +297,7 @@ export const useUserStore = defineStore("user", () => {
 
     const acceptRequest = async (request_id: number, type: 'outcoming' | 'incoming') => {
         try {
-            isLoading.value = true;
+            isRequestsLoading.value = true;
             const { status } = await http.request.put(request_id);
             if (status === StatusCodes.OK) {
                 toast({
@@ -323,13 +324,13 @@ export const useUserStore = defineStore("user", () => {
             });
         }
         finally {
-            isLoading.value = false;
+            isRequestsLoading.value = false;
         }
     }
 
     const rejectRequest = async (request_id: number, type: 'outcoming' | 'incoming') => {
         try {
-            isLoading.value = true;
+            isRequestsLoading.value = true;
             const { status } = await http.request.delete(request_id);
             if (status === StatusCodes.OK) {
                 toast({
@@ -356,7 +357,7 @@ export const useUserStore = defineStore("user", () => {
             });
         }
         finally {
-            isLoading.value = false;
+            isRequestsLoading.value = false;
         }
     }
 
@@ -393,7 +394,8 @@ export const useUserStore = defineStore("user", () => {
     return { 
         logout, 
         isAuthorized, 
-        isLoading, 
+        isLoading,
+        isRequestsLoading,
         fetchUser, 
         getUser, 
         updateAvatar, 
