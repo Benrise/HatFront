@@ -1,6 +1,6 @@
 <template>
     <div class="flex flex-col gap-3">
-        <SearchBar/>
+        <!-- <SearchBar/> -->
         <div class="hackathons-list">
             <TransitionGroup name="list" appear>
                 <HackathonCard v-for="hackathon in hackathons" :key="hackathon.id" :hackathon="hackathon"/>

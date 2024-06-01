@@ -30,7 +30,7 @@
                     </a>
                 </div>
                 <div class="hackathon-detail__actions">
-                    <Button  class="w-full" disabled>Найти команду</Button>
+                    <!-- <Button  class="w-full" disabled>Найти команду</Button> -->
                     <Creating :hackathonId="hackathon.id" :callback="openCreatedTeam">
                         <Button variant="outline" class="w-full">Создать команду</Button>
                     </Creating>

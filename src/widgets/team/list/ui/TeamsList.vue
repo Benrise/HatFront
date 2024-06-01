@@ -1,6 +1,6 @@
 <template>
     <div class="flex flex-col gap-3">
-        <SearchBar/>
+        <!-- <SearchBar/> -->
         <div class="teams-list">
             <TransitionGroup name="list" appear>
                 <TeamCard v-for="team in teams" :key="team.id" :team="team"/>

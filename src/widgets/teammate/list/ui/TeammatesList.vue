@@ -1,6 +1,6 @@
 <template>
     <div class="flex flex-col gap-3">
-        <SearchBar/>
+        <!-- <SearchBar/> -->
         <div class="teammates-list">
             <TransitionGroup name="list" appear>
                 <TeammateCard v-for="user in users" :key="user.id" :user="user"/>
