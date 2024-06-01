@@ -87,9 +87,52 @@
               </FormField>
             </div>
             <div class="creating__field-group">
+              <FormField v-slot="{ componentField }" name="is_full">
+                <FormItem class="creating__field">
+                  <FormLabel class="creating__field-label flex gap-2 items-center">
+                    Статус
+                    <TooltipProvider>
+                      <Tooltip>
+                      <TooltipTrigger as-child>
+                          <IconQuestion class="opacity-50"/>
+                      </TooltipTrigger>
+                      <TooltipContent side="bottom">
+                          <p>Статус набора в команду</p>
+                      </TooltipContent>
+                      </Tooltip>
+                  </TooltipProvider>
+                  </FormLabel>
+                  <FormControl>
+                    <RadioGroup
+                      class="flex flex-col space-y-1"
+                      v-bind="componentField"
+                    >
+                      <FormItem class="flex items-center space-y-0 gap-x-2">
+                        <FormControl>
+                          <RadioGroupItem :value="(false as unknown as string)" />
+                        </FormControl>
+                        <FormLabel class="creating__field-label">
+                          В поиске участников
+                        </FormLabel>
+                      </FormItem>
+                      <FormItem class="flex items-center space-y-0 gap-x-2">
+                        <FormControl>
+                          <RadioGroupItem :value="(true as unknown as string)" />
+                        </FormControl>
+                        <FormLabel class="creating__field-label">
+                          Набор закрыт
+                        </FormLabel>
+                      </FormItem>
+                    </RadioGroup>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              </FormField>
+            </div>
+            <div class="creating__field-group">
               <FormField v-slot="{ componentField }" name="is_visible">
                 <FormItem class="creating__field">
-                  <FormLabel class="creating__field-label">Статус</FormLabel>
+                  <FormLabel class="creating__field-label">Видимость</FormLabel>
                   <FormControl>
                     <RadioGroup
                       class="flex flex-col space-y-1"
@@ -100,7 +143,7 @@
                           <RadioGroupItem :value="(true as unknown as string)" />
                         </FormControl>
                         <FormLabel class="creating__field-label">
-                          В поиске участников
+                          Видна
                         </FormLabel>
                       </FormItem>
                       <FormItem class="flex items-center space-y-0 gap-x-2">
@@ -108,7 +151,7 @@
                           <RadioGroupItem :value="(false as unknown as string)" />
                         </FormControl>
                         <FormLabel class="creating__field-label">
-                          Набор закрыт
+                          Скрыта
                         </FormLabel>
                       </FormItem>
                     </RadioGroup>

@@ -13,4 +13,5 @@ export const formSchema = yup.object({
       })
     ).nullable(),
     is_visible: yup.boolean().required().default(true),
+    is_full: yup.boolean().required().default(false),
   });

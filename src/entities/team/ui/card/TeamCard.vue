@@ -18,7 +18,9 @@
                     </Tooltip>
                 </TooltipProvider>
             </div>
-            <Badge v-if="team.hackathon" variant="secondary" class="w-fit">{{ team.hackathon?.name }}</Badge>
+            <RouterLink v-if="team.hackathon" :to="appRoutes?.getHackathon(team.hackathon?.id || 0) || '/'" class="w-fit">
+                <Badge variant="secondary" class="w-fit">{{ team.hackathon?.name }}</Badge>
+            </RouterLink>
             <div class="team-card__info">
                 <div class="team-card__description">
                     {{ team.description }} 

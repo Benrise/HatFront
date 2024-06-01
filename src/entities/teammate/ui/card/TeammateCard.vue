@@ -7,7 +7,7 @@
                         <span class="text-sm text-muted-foreground">{{ user.is_capitan ? 'Капитан' : '' }}</span>
                     </template>
                 </UserBadge>
-                <div v-if="!team" class="teammate-card__description">
+                <div v-if="!team && user.about" class="teammate-card__description">
                     {{ user.about }}
                 </div>
             </div>

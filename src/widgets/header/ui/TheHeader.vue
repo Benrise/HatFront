@@ -86,14 +86,14 @@
                                         <SheetClose>
                                             <li class="menu__item menu__item_mobile"><a class="header__link" href="#steps">Шаги</a></li>
                                         </SheetClose>
-                                        <SheetClose v-if="isAuthorized" >
+                                        <SheetClose v-if="isAuthorized">
                                             <li class="menu__item menu__item_mobile">
                                                 <router-link :to="appRoutes?.getProfile() || '#'" class="header__link">
                                                     Профиль
                                                 </router-link>
                                             </li>
                                         </SheetClose>
-                                        <SheetClose v-if="isAuthorized" >
+                                        <SheetClose v-if="isAuthorized">
                                             <li class="menu__item menu__item_mobile">
                                                 <router-link to="#" class="header__link" variant="secondary" @click="logout">
                                                     Выход
@@ -111,6 +111,13 @@
                                         </SheetClose>
                                     </ul>
                                     <ul v-else class="menu__list menu__list_mobile">
+                                        <SheetClose v-if="isAuthorized">
+                                            <li class="menu__item menu__item_mobile">
+                                                <router-link :to="appRoutes?.getProfile() || '#'" class="header__link">
+                                                    Профиль
+                                                </router-link>
+                                            </li>
+                                        </SheetClose>
                                         <SheetClose>
                                             <li class="menu__item menu__item_mobile">
                                                 <router-link class="header__link" :to="appRoutes?.getHome() || '#'">
@@ -122,13 +129,6 @@
                                             <li class="menu__item menu__item_mobile">
                                                 <router-link class="header__link" :to="appRoutes?.getPromo() || '#'">
                                                     О сервисе
-                                                </router-link>
-                                            </li>
-                                        </SheetClose>
-                                        <SheetClose v-if="isAuthorized">
-                                            <li class="menu__item menu__item_mobile">
-                                                <router-link :to="appRoutes?.getProfile() || '#'" class="header__link">
-                                                    Профиль
                                                 </router-link>
                                             </li>
                                         </SheetClose>

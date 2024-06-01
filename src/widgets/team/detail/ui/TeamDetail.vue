@@ -171,10 +171,53 @@
               </div>
             </div>
             <div class="team-detail__field-group">
-              <FormField v-slot="{ componentField }" name="is_visible">
+              <FormField v-slot="{ componentField }" name="is_full">
                 <FormItem class="team-detail__field">
                   <FormLabel class="team-detail__field-label flex gap-2 items-center">
                     Статус
+                    <TooltipProvider>
+                      <Tooltip>
+                      <TooltipTrigger as-child>
+                          <IconQuestion class="opacity-50"/>
+                      </TooltipTrigger>
+                      <TooltipContent side="bottom">
+                          <p>Статус набора в команду</p>
+                      </TooltipContent>
+                      </Tooltip>
+                  </TooltipProvider>
+                  </FormLabel>
+                  <FormControl>
+                    <RadioGroup
+                      class="flex flex-col space-y-1"
+                      v-bind="componentField"
+                    >
+                      <FormItem class="flex items-center space-y-0 gap-x-2">
+                        <FormControl>
+                          <RadioGroupItem :value="(false as unknown as string)" />
+                        </FormControl>
+                        <FormLabel class="team-detail__field-label">
+                          В поиске участников
+                        </FormLabel>
+                      </FormItem>
+                      <FormItem class="flex items-center space-y-0 gap-x-2">
+                        <FormControl>
+                          <RadioGroupItem :value="(true as unknown as string)" />
+                        </FormControl>
+                        <FormLabel class="team-detail__field-label">
+                          Набор закрыт
+                        </FormLabel>
+                      </FormItem>
+                    </RadioGroup>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              </FormField>
+            </div>
+            <div class="team-detail__field-group">
+              <FormField v-slot="{ componentField }" name="is_visible">
+                <FormItem class="team-detail__field">
+                  <FormLabel class="team-detail__field-label flex gap-2 items-center">
+                    Видимость
                     <TooltipProvider>
                       <Tooltip>
                       <TooltipTrigger as-child>
@@ -196,7 +239,7 @@
                           <RadioGroupItem :value="(true as unknown as string)" />
                         </FormControl>
                         <FormLabel class="team-detail__field-label">
-                          В поиске участников
+                          Видна
                         </FormLabel>
                       </FormItem>
                       <FormItem class="flex items-center space-y-0 gap-x-2">
@@ -204,7 +247,7 @@
                           <RadioGroupItem :value="(false as unknown as string)" />
                         </FormControl>
                         <FormLabel class="team-detail__field-label">
-                          Набор закрыт
+                          Скрыта
                         </FormLabel>
                       </FormItem>
                     </RadioGroup>

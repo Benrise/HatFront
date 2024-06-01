@@ -18,6 +18,7 @@ export class TeamDto extends BaseDto {
     description?: string;
     hackathon?: HackathonDto;
     is_visible?: boolean;
+    is_full?: boolean;
     photo_url?: string;
     skills: BaseDto[];
     specializations: TeamSpecializationDto[];

@@ -4,10 +4,8 @@
     flex-direction: column;
     @include adaptiveValue('gap', 24, 16);
   
-    @media screen and (max-width: 379px) {
-      overflow-y: auto;
-      max-height: 400px;
-    }
+    overflow-y: auto;
+    max-height: 640px;
   
     &__field-group {
       display: flex;
