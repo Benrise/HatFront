@@ -34,7 +34,7 @@
                                 Специализации не указаны
                                 <TooltipProvider v-if="!specializations.length && team" >
                                     <Tooltip>
-                                    <TooltipTrigger>
+                                    <TooltipTrigger @click="(e) => e.preventDefault()" as-child>
                                         <IconAttention class="text-orange-500 ml-2" />
                                     </TooltipTrigger>
                                     <TooltipContent side="bottom">
