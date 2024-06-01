@@ -1,10 +1,13 @@
 <template>
-    <div class="hackathons-list">
-        <TransitionGroup name="list" appear>
-            <HackathonCard v-for="hackathon in hackathons" :key="hackathon.id" :hackathon="hackathon"/>
-        </TransitionGroup>
+    <div class="flex flex-col gap-3">
+        <SearchBar/>
+        <div class="hackathons-list">
+            <TransitionGroup name="list" appear>
+                <HackathonCard v-for="hackathon in hackathons" :key="hackathon.id" :hackathon="hackathon"/>
+            </TransitionGroup>
+        </div>
+        <div ref="observer"></div>
     </div>
-    <div ref="observer"></div>
 </template>
 
 <script setup lang="ts">
@@ -12,6 +15,8 @@ import { HackathonModel } from '@/entities/hackathon';
 import { HackathonCard } from '@/entities/hackathon/ui';
 import { computed, ref } from 'vue';
 import { useIntersectionObserver } from '@vueuse/core'
+
+import { SearchBar } from '@/features/search-bar';
 
 const hackathonStore = HackathonModel.useHackathonStore();
 

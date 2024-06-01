@@ -19,7 +19,7 @@ export const useHackathonStore = defineStore("hackathon", () => {
     const fetchList = async () => {
         try {
             isListLoading.value = true;
-            const { data, status} = await http.hackathon.list({cursor: hackathonsCursor.value});
+            const { data, status} = await http.hackathon.list({cursor: hackathonsCursor.value, });
             if (status !== StatusCodes.OK) {
                 toast({
                     variant: 'destructive',

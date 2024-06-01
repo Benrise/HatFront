@@ -1,10 +1,13 @@
 <template>
-    <div class="teams-list">
-        <TransitionGroup name="list" appear>
-            <TeamCard v-for="team in teams" :key="team.id" :team="team"/>
-        </TransitionGroup>
-    </div>
-    <div ref="observer"></div>
+    <div class="flex flex-col gap-3">
+        <SearchBar/>
+        <div class="teams-list">
+            <TransitionGroup name="list" appear>
+                <TeamCard v-for="team in teams" :key="team.id" :team="team"/>
+            </TransitionGroup>
+        </div>
+        <div ref="observer"></div>
+    </div>  
 </template>
 
 <script setup lang="ts">
@@ -12,6 +15,8 @@ import { TeamCard } from '@/entities/team/ui/card';
 import { TeamModel } from '@/entities/team';
 import { computed, ref } from 'vue';
 import { useIntersectionObserver } from '@vueuse/core'
+
+import { SearchBar } from '@/features/search-bar';
 
 const teamStore = TeamModel.useTeamStore();
 

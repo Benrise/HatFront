@@ -1,10 +1,13 @@
 <template>
-    <div class="teammates-list">
-        <TransitionGroup name="list" appear>
-            <TeammateCard v-for="user in users" :key="user.id" :user="user"/>
-        </TransitionGroup>
+    <div class="flex flex-col gap-3">
+        <SearchBar/>
+        <div class="teammates-list">
+            <TransitionGroup name="list" appear>
+                <TeammateCard v-for="user in users" :key="user.id" :user="user"/>
+            </TransitionGroup>
+        </div>
+        <div ref="observer"></div>
     </div>
-    <div ref="observer"></div>
 </template>
 
 <script setup lang="ts">
@@ -12,6 +15,8 @@ import { UserModel } from '@/entities/user';
 import { TeammateCard } from '@/entities/teammate/ui';
 import { computed, ref } from 'vue';
 import { useIntersectionObserver } from '@vueuse/core'
+
+import { SearchBar } from '@/features/search-bar';
 
 const userStore = UserModel.useUserStore();
 
