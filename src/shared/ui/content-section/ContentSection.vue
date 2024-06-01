@@ -76,11 +76,12 @@ const tabsLabels: Record<string, string> = props.tabs?.reduce((acc: Record<strin
   return acc
 }, {})
 
-const defaultTab = props.tabs && props.tabs[0].value;
+const defaultTab = window.location.hash ? window.location.hash.substring(1) : props.tabs && props.tabs[0].value;
 const dropdownTabsValue = ref<StringOrNumber>(defaultTab);
 
 const updateTab = (value: StringOrNumber) => {
   dropdownTabsValue.value = value;
+  window.location.hash = `#${value}`;
 }
 </script>
 

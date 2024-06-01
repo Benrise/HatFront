@@ -63,17 +63,6 @@
               </div>
             </div>
             <div class="team-detail__field-group">
-              <FormField v-slot="{ componentField }" name="description">
-                <FormItem class="team-detail__field">
-                  <FormLabel class="team-detail__field-label">Описание команды</FormLabel>
-                  <FormControl>
-                    <Textarea class="resize-none" placeholder="Кратко о команде" v-bind="componentField" />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              </FormField>
-            </div>
-            <div class="team-detail__field-group">
               <FormField v-slot="{ componentField }" name="user_count">
                 <FormItem class="team-detail__field">
                   <FormLabel class="team-detail__field-label">Количество участников</FormLabel>
@@ -251,6 +240,17 @@
                         </FormLabel>
                       </FormItem>
                     </RadioGroup>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              </FormField>
+            </div>
+            <div class="team-detail__field-group">
+              <FormField v-slot="{ componentField }" name="description">
+                <FormItem class="team-detail__field">
+                  <FormLabel class="team-detail__field-label">Описание команды</FormLabel>
+                  <FormControl>
+                    <Textarea class="resize-none" placeholder="Кратко о команде" v-bind="componentField" />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
