@@ -76,31 +76,10 @@
               </FormField>
             </div>
             <div class="creating__field-group">
-              <FormField v-slot="{ componentField }" name="description">
-                <FormItem class="creating__field">
-                  <FormLabel class="creating__field-label">Описание команды</FormLabel>
-                  <FormControl>
-                    <Textarea class="resize-none" placeholder="Кратко о команде" v-bind="componentField" />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              </FormField>
-            </div>
-            <div class="creating__field-group">
               <FormField v-slot="{ componentField }" name="is_full">
                 <FormItem class="creating__field">
                   <FormLabel class="creating__field-label flex gap-2 items-center">
                     Статус
-                    <TooltipProvider>
-                      <Tooltip>
-                      <TooltipTrigger as-child>
-                          <IconQuestion class="opacity-50"/>
-                      </TooltipTrigger>
-                      <TooltipContent side="bottom">
-                          <p>Статус набора в команду</p>
-                      </TooltipContent>
-                      </Tooltip>
-                  </TooltipProvider>
                   </FormLabel>
                   <FormControl>
                     <RadioGroup
@@ -155,6 +134,17 @@
                         </FormLabel>
                       </FormItem>
                     </RadioGroup>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              </FormField>
+            </div>
+            <div class="creating__field-group">
+              <FormField v-slot="{ componentField }" name="description">
+                <FormItem class="creating__field">
+                  <FormLabel class="creating__field-label">Описание команды</FormLabel>
+                  <FormControl>
+                    <Textarea class="resize-none" placeholder="Кратко о команде" v-bind="componentField" />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

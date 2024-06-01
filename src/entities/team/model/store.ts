@@ -321,6 +321,33 @@ export const useTeamStore = defineStore("team", () => {
         }
     }
 
+    const updateCaptain = async (user_id: number, callback?: () => void) => {
+        try {
+            isLoading.value = true;
+            const { status } = await http.team.updateCaptain(team.value.id, user_id);
+            if (status === StatusCodes.OK) {
+                toast({
+                    variant: 'warning',
+                    title: 'Внимание',
+                    description: `Вы покинули успешно покинули команду`,
+                });
+                if (callback) callback();
+                await fetchTeam(team.value.id);
+            }
+        }
+        catch (e) {
+            console.error('Error on updating captain:', e);
+            toast({
+                variant: 'destructive',
+                title: `Ошибка`,
+                description: `Не удалось изменить капитана команды. Попробуйте позже.`,
+            });
+        } 
+        finally {
+            isLoading.value = false;
+        }
+    }
+
     const updateTeam = async (id:number, payload: TeamDto) => {
         try {
             isLoading.value = true;
@@ -559,6 +586,7 @@ export const useTeamStore = defineStore("team", () => {
         getIncomingRequests,
         getOutcomingRequests,
         isRequestsLoading,
-        isListLoading
+        isListLoading,
+        updateCaptain
     }
 })

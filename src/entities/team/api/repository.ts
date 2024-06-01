@@ -57,6 +57,10 @@ export interface IRequestListParameters extends IListParameters {
   async listRequests(team_id: number, params?: IRequestListParameters) {
       return this.axiosInstance.get<CursorListDto<TeamRequestDto>>(`${this.endpoint}/${team_id}/request`, { params: params });
   }
+
+  async updateCaptain(team_id: number, user_id: number) {
+      return this.axiosInstance.put(`${this.endpoint}/${team_id}/${user_id}`);
+  }
 }
 
 export class RequestsRepository extends CrudRepository<TeamRequestDto> {

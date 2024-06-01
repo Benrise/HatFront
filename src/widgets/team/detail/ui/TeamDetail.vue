@@ -25,10 +25,10 @@
                 {{ visabilityTitle }}
               </Badge>
             </div>
-            <div class="team-detail__description">
+            <div v-if="team.description" class="team-detail__description">
               {{ team.description }}
             </div>
-            <div class="team-detail__additionals">
+            <div v-if="team.skills?.length || team.specializations?.length" class="team-detail__additionals">
               <div class="team-detail__tags">
                 <Badge v-for="skill in team.skills" :key="skill.id" class="team-card__tag">{{ skill.name }}</Badge>
               </div>
