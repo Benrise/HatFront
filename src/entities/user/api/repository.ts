@@ -76,14 +76,14 @@ export class SkillsRepository {
     constructor(protected endpoint: string, private axiosInstance: AxiosInstance) {}
 
     async get() {
-        return this.axiosInstance.get<CursorListDto<BaseDto>>(`${this.endpoint}`);
+        return this.axiosInstance.get<BaseDto[]>(`${this.endpoint}`);
     }
 }
 export class SpecializationsRepository {
     constructor(protected endpoint: string, private axiosInstance: AxiosInstance) {}
 
     async get() {
-        return this.axiosInstance.get<CursorListDto<BaseDto>>(`${this.endpoint}`);
+        return this.axiosInstance.get<BaseDto[]>(`${this.endpoint}`);
     }
 }
 

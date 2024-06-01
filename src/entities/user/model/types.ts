@@ -4,16 +4,12 @@ import { BaseDto } from "@/shared/api/types";
 export class UserDto extends BaseDto {
     constructor() {
         super();
-        this.education = [];
-        this.providers = [];
-        this.skills = [];
-        this.specializations = [];
     }
     photo_url?: string;
     providers?: BaseDto[];
-    education: EducationDto[];
-    skills: BaseDto[];
-    specializations: BaseDto[];
+    education: EducationDto[] = [];
+    skills: BaseDto[] = [];
+    specializations: BaseDto[] = [];
     about?: string;
     age?: number | string;
     city?: string;

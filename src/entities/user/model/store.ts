@@ -450,7 +450,6 @@ export const useEducationLevelsStore = defineStore("educationLevels", () => {
 export const useSkillsStore = defineStore("skills", () => {
     const isLoading = ref(false)
     const skills = ref<BaseDto[]>([])
-    const cursor = ref(0)
 
     const fetchList = async () => {
         try {
@@ -458,8 +457,7 @@ export const useSkillsStore = defineStore("skills", () => {
             const { data, status } = await http.skills.get();
 
             if (status === StatusCodes.OK) {
-                skills.value = data.objects;
-                cursor.value = data.cursor;
+                skills.value = data;
             }
         }
 
@@ -473,13 +471,12 @@ export const useSkillsStore = defineStore("skills", () => {
 
     const getSkills = computed(() => skills.value);
 
-    return { fetchList, getSkills, isLoading, cursor }
+    return { fetchList, getSkills, isLoading }
 })
 
 export const useSpecializationsStore = defineStore("specializations", () => {
     const isLoading = ref(false)
     const specializations = ref<BaseDto[]>([])
-    const cursor = ref(0)
 
     const fetchList = async () => {
         try {
@@ -487,8 +484,7 @@ export const useSpecializationsStore = defineStore("specializations", () => {
             const { data, status } = await http.specializations.get();
 
             if (status === StatusCodes.OK) {
-                specializations.value = data.objects;
-                cursor.value = data.cursor;
+                specializations.value = data;
             }
         }
 
@@ -502,5 +498,5 @@ export const useSpecializationsStore = defineStore("specializations", () => {
 
     const getSpecializations = computed(() => specializations.value);
 
-    return { fetchList, getSpecializations, isLoading, cursor }
+    return { fetchList, getSpecializations, isLoading }
 })
