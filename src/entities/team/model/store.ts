@@ -384,7 +384,7 @@ export const useTeamStore = defineStore("team", () => {
                 toast({
                     variant: 'destructive',
                     title: 'Ошибка',
-                    description: `Не удалось загрузить список заявок.`,
+                    description: `Не удалось загрузить список исходящих заявок.`,
                 });
                 return
             }
@@ -407,7 +407,7 @@ export const useTeamStore = defineStore("team", () => {
                 toast({
                     variant: 'destructive',
                     title: 'Ошибка',
-                    description: `Не удалось загрузить список заявок.`,
+                    description: `Не удалось загрузить список входящих заявок.`,
                 });
                 return
             }

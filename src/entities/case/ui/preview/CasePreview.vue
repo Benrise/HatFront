@@ -44,9 +44,11 @@
                             Зарегистрироваться на кейс
                         </Button>
                     </Creating>
-                    <Button variant="outline" type="button" class="w-full">
-                        На страницу кейса
-                    </Button>
+                    <a class=w-full :href="item.url_website">
+                        <Button variant="outline" type="button" class="w-full">
+                            На страницу кейса
+                        </Button>
+                    </a>
                 </DialogFooter>
             </div>
         </DialogContent>

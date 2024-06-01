@@ -9,7 +9,8 @@ export class TimingsDto {
   
   export class PrizeDto {
     place?: number;
-    prizes?: string[];
+    money_prize?: number;
+    alternative_prizes?: string[];
   }
 
   export class HackathonDto extends BaseDto {

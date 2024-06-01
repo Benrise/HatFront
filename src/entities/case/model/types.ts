@@ -5,4 +5,5 @@ export class CaseDto extends BaseDto {
     resources?: string;
     result?: string;
     task?: string;
+    url_website?: string;
   }
