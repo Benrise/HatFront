@@ -5,11 +5,11 @@
             <slot/>
         </DialogTrigger>
         <DialogContent class="sm:max-w-fit">
-            <div class="dialog__content">
-                <DialogHeader class="flex flex-col gap-2">
-                    <DialogTitle class="text-left">{{item.name}}</DialogTitle>
-                    <DialogDescription class="text-left">{{ item.owner }}</DialogDescription>
-                </DialogHeader>
+            <DialogHeader class="flex flex-col gap-2">
+                <DialogTitle class="text-left">{{item.name}}</DialogTitle>
+                <DialogDescription class="text-left">{{ item.owner }}</DialogDescription>
+            </DialogHeader>
+            <div class="dialog__content case-preview">
                 <div class="case-preview">
                     <div class="case-preview__group">
                         <div class="case-preview__item !flex-col font-medium">
@@ -44,7 +44,7 @@
                             Зарегистрироваться на кейс
                         </Button>
                     </Creating>
-                    <a class=w-full :href="item.url_website">
+                    <a v-if="item.url_website" class=w-full :href="item.url_website">
                         <Button variant="outline" type="button" class="w-full">
                             На страницу кейса
                         </Button>

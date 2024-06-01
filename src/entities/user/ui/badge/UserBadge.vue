@@ -28,7 +28,7 @@ const props = defineProps<IProps>()
 
 const computedSize = computed(() => props.team ? 'lg' : props.size);
 
-const fullName = computed(() => props.user.first_name + ' ' + props.user.second_name + ' ' + (props.user.patronymic ? props.user.patronymic : ''));
+const fullName = computed(() => props.user.second_name + ' ' + props.user.first_name + ' ' + (props.user.patronymic ? props.user.patronymic : ''));
 
 const userStore = UserModel.useUserStore();
 </script>

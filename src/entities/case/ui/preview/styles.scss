@@ -3,6 +3,9 @@
     flex-direction: column;
     @include adaptiveValue('gap', 48, 24);
 
+    overflow-y: auto;
+    max-height: 640px;
+
     &__group {
         display: flex;
         flex-direction: column;

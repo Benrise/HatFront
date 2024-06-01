@@ -1,5 +1,5 @@
 <template>
-<div class="hackathon-card" v-if="hackathon?.id" :class="team ? 'max-w-[724px] !p-3' : '' ">
+<div class="hackathon-card" v-if="hackathon?.id" :class="team ? 'max-w-[824px] !p-3' : '' ">
         <router-link 
             :to="appRoutes?.getHackathon(hackathon.id) || '0'"
             class="w-full"
