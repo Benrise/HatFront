@@ -224,14 +224,18 @@ const props = defineProps({
 })
 
 const fetch = async (state: boolean) => {
-  if (!state && !props.caseId) {
+  if (state) {
+    if (props.hackathonId) {
+      selectedHackathon.value = props.hackathonId;
+      updateCaseFields(props.hackathonId);
+    }
+    if (props.caseId) {
+      setValues({ case_id: props.caseId });
+    }
+  } else {
     resetForm();
     cases.value = [];
     selectedHackathon.value = props.hackathonId || undefined;
-  }
-  else {
-    selectedHackathon.value = props.hackathonId;
-    updateCaseFields(props.hackathonId);
   }
 }
 
