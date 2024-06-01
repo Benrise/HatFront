@@ -14,6 +14,7 @@ export class TimingsDto {
 
   export class HackathonDto extends BaseDto {
     description?: string;
+    about?: string;
     people_from?: number;
     people_to?: number;
     prize_fund?: number;

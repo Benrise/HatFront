@@ -25,11 +25,15 @@
                     <div class="hackathon-detail__description">
                         {{ hackathon.description }}
                     </div>
-                    <Button class="w-fit text-muted-foreground hover:text-foreground" variant="link">На страницу организатора</Button>
+                    <a :href="hackathon.url_web">
+                        <Button class="w-fit text-muted-foreground hover:text-foreground" variant="link">На страницу организатора</Button>
+                    </a>
                 </div>
                 <div class="hackathon-detail__actions">
                     <Button  class="w-full" disabled>Найти команду</Button>
-                    <Button class="w-full" variant="outline">Создать команду</Button>
+                    <Creating :hackathonId="hackathon.id" :callback="openCreatedTeam">
+                        <Button variant="outline" class="w-full">Создать команду</Button>
+                    </Creating>
                 </div>
             </div>
             <div class="hackathon-detail__right">
@@ -40,11 +44,12 @@
             <div class="hackathon-detail__description-title">
                 О хакатоне
             </div>
-            <div class="hackathon-detail__description-body">
-                «GeoVision Hack» - трёхдневное соревнование в гибридном формате, которое соберет талантливых разработчиков со всей России для работы над увлекательным кейсом!В рамках хакатона участники объединятся в команды для работы над кейсом, предоставленным одной из ведущих компаний в сфере IT-рекрутмента  – SENSE, а также партнёрами мероприятия.
-                <br>
-                <br>
-                Партнерами соревнования стали 3 крупные компании: Кластер «Геотех», MyGeoMap, Институт перспективных исследований нефти и газа МГУ.  Принять участие в хакатоне смогут студенты ИТ-направлений; junior, middle и senior разработчики, готовые разработать лучшее решение актуального кейса!  Командам предстоит поработать над решением кейса «Алгоритм для автооцифровки данных геофизических исследований скважин (ГИС)». 24-25 мая команды пройдут чек-поинты в онлайн-формате, а уже 26 мая участники приглашаются на площадку в Москве пройдет питч-сессия. Если ваша команда из региона, вам доступно участие в онлайн-формате, если из Москвы, то приглашаем вас на площадку для презентации своей работы перед экспертами.
+            <div class="prose dark:prose-invert
+                    prose-h1:font-bold prose-h1:text-xl
+                    prose-a:text-blue-600 prose-p:text-justify prose-img:rounded-xl
+                    prose-headings:underline"
+            >
+                <VueMarkdown :source="markdownSrc"/>
             </div>
         </div>
         <template v-if="!!cases && cases.length">
@@ -73,7 +78,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import { useRoute } from 'vue-router'
 
 import IconCalendar from '~icons/heroicons/calendar-days-20-solid';
@@ -90,6 +95,11 @@ import { HackathonModel } from '@/entities/hackathon';
 import { HackathonPoster } from '@/entities/hackathon';
 import { CasePreview } from '@/entities/case';
 
+import { Creating } from '@/features/team/create';
+import { router, useAppRoutes } from '@/router';
+
+import VueMarkdown from 'vue-markdown-render'
+
 const route = useRoute()
 
 const hackathonStore = HackathonModel.useHackathonStore();
@@ -102,6 +112,14 @@ if (hackathonId.value) {
 
 const hackathon = computed(() => hackathonStore.getHackathon);
 const cases = computed(() => hackathonStore.getCases);
+
+const appRoutes = useAppRoutes()
+
+const openCreatedTeam = async (team_id: number) => {
+    router.push(appRoutes?.getTeam(team_id) || '#')
+}
+
+const markdownSrc = computed(() => hackathon.value?.about || 'Подробное описание отсутствует')
 </script>
 
 <style lang="scss" scoped>

@@ -32,12 +32,14 @@
     "vaul-vue": "^0.1.0",
     "vee-validate": "^4.12.7",
     "vue": "^3.4.21",
+    "vue-markdown-render": "^2.2.1",
     "vue-router": "^4.3.0",
     "yup": "^1.4.0"
   },
   "devDependencies": {
     "@iconify/json": "^2.2.205",
     "@rushstack/eslint-patch": "^1.8.0",
+    "@tailwindcss/typography": "^0.5.13",
     "@tsconfig/node20": "^20.1.4",
     "@types/node": "^20.12.5",
     "@vitejs/plugin-vue": "^5.0.4",
