@@ -20,10 +20,10 @@ export class TimingsDto {
     people_to?: number;
     prize_fund?: number;
     prizes?: PrizeDto;
-    time_end?: string;
-    time_end_registration?: string;
-    time_start?: string;
-    time_start_registration?: string;
+    time_end?: string = "1970-01-01 00:00:00";
+    time_end_registration?: string = "1970-01-01 00:00:00";
+    time_start?: string = "1970-01-01 00:00:00";
+    time_start_registration?: string = "1970-01-01 00:00:00";
     timings?: TimingsDto;
     url_group?: string;
     url_web?: string;

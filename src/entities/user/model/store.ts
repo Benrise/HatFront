@@ -261,7 +261,6 @@ export const useUserStore = defineStore("user", () => {
                 });
                 return
             }
-            console.log(data.objects);
             addOutcomingRequests(data.objects);
             setOutcomingRequestsCursor(data.cursor);
         }

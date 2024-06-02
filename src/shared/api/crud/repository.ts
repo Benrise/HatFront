@@ -1,12 +1,12 @@
 
 import type { AxiosInstance } from 'axios';
-import { CursorListDto } from '../types';
+import { BaseDto, CursorListDto } from '../types';
 
 export interface IListParameters {
     cursor?: number
 }
 
-export class  CrudRepository<T> {
+export class  CrudRepository<T extends BaseDto> {
     constructor(protected endpoint: string, protected axiosInstance: AxiosInstance) {}
 
     list(params?: IListParameters) {

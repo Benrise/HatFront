@@ -25,7 +25,7 @@
                     <div class="hackathon-detail__description">
                         {{ hackathon.description }}
                     </div>
-                    <a :href="hackathon.url_web">
+                    <a v-if="hackathon?.url_web" :href="hackathon?.url_web">
                         <Button class="w-fit text-muted-foreground hover:text-foreground" variant="link">На страницу организатора</Button>
                     </a>
                 </div>
