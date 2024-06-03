@@ -78,11 +78,6 @@ export const useTeamStore = defineStore("team", () => {
             isListLoading.value = true;
             const { data, status} = await http.team.listMe();
             if (status !== StatusCodes.OK) {
-                toast({
-                    variant: 'destructive',
-                    title: 'Ошибка',
-                    description: `Не удалось загрузить список команд`,
-                });
                 return
             }
             setHasTeams(data.objects.length > 0);
@@ -90,6 +85,11 @@ export const useTeamStore = defineStore("team", () => {
             setCursorMe(data.cursor);
         }
         catch (e) {
+            toast({
+                variant: 'destructive',
+                title: 'Ошибка',
+                description: `Не удалось загрузить список команд`,
+            });
             console.error('Error on fetching teams:', e);
         }
         finally {

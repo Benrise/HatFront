@@ -19,6 +19,7 @@ export const useUserStore = defineStore("user", () => {
     const incomingRequestsCursor = ref()
     const outcomingRequestsCursor = ref()
     const isLoading = ref(false)
+    const isListLoading = ref(false)
     const isRequestsLoading = ref(false)
     const isAuthorized = ref(false)
 
@@ -179,17 +180,26 @@ export const useUserStore = defineStore("user", () => {
     }
 
     const fetchList = async () => {
-        const { data, status} = await http.user.list({cursor: usersCursor.value});
-        if (status !== StatusCodes.OK) {
+        try {
+            isListLoading.value = true;
+            const { data, status} = await http.user.list({cursor: usersCursor.value});
+            if (status !== StatusCodes.OK) {
+                return
+            }
+            addUsers(data.objects);
+            setCursor(data.cursor);
+        }
+        catch (e) {
+            console.error('Error on fetching users:', e);
             toast({
                 variant: 'destructive',
                 title: 'Ошибка',
                 description: `Не удалось загрузить список пользователей.`,
             });
-            return
         }
-        addUsers(data.objects);
-        setCursor(data.cursor);
+        finally {
+            isListLoading.value = false;
+        }
     }
 
     const addUsers = (data: UserDto[]) => {
@@ -416,7 +426,8 @@ export const useUserStore = defineStore("user", () => {
         rejectRequest,
         resetIncomingRequests,
         resetOutcomingRequests,
-        resetList
+        resetList,
+        isListLoading
     }
 })
 

@@ -36,7 +36,7 @@
             </div>
             <div v-if="team.specializations.length"  class="team-card__roles">
                 <Badge v-for="specialization in team.specializations" :key="specialization.id" class="team-card__role">
-                    <div class="!max-w-[192px] !overflow-hidden text-ellipsis"> {{ specialization.name }}</div>
+                    <div class="!max-w-[192px] !overflow-hidden text-ellipsis"> {{ specialization.name }} {{ `(${specialization.current}/${specialization.required})` }}</div>
                 </Badge>
             </div>
         </div>

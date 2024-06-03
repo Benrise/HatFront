@@ -4,8 +4,7 @@
             <div class="requests__title">
                 Отправленные заявки в команду
             </div>
-            <Skeleton v-if="isRequestsLoading" class="h-[192px] w-[324px] rounded-xl" />
-            <TransitionGroup v-else name="list" appear>
+            <TransitionGroup name="list" appear>
                 <div v-if="incomingRequests.length" class="requests__list">
                     <TeamCard :desired_specializations="request.desired_specializations" :team="request.team" v-for="request in incomingRequests" :key="request.id" class="requests__item" request>
                         <template #request-actions>
@@ -22,8 +21,7 @@
             <div class="requests__title">
                Приглашения в команду
             </div>
-            <Skeleton v-if="isRequestsLoading" class="h-[192px] w-[324px] rounded-xl" />
-            <TransitionGroup v-else name="list" appear>
+            <TransitionGroup name="list" appear>
                 <div v-if="outcomingRequests.length" class="requests__list">
                     <TeamCard :desired_specializations="request.desired_specializations" :team="request.team" v-for="request in outcomingRequests" :key="request.id" class="requests__item" request>
                         <template #request-actions>
@@ -48,8 +46,6 @@ import { computed } from 'vue';
 
 import { Button } from '@/shared/ui/button';
 
-import { Skeleton } from '@/shared/ui/skeleton'
-
 const userStore = UserModel.useUserStore();
 
 const incomingRequests = computed(() => userStore.getIncomingRequests);
@@ -61,8 +57,6 @@ const fetch = async () => {
   await userStore.fetchOutcomingRequests();
 }
 fetch();
-
-const isRequestsLoading = computed(() => userStore.isRequestsLoading);
 
 const acceptRequest = async (id: number, type: 'outcoming' | 'incoming') => {
   await userStore.acceptRequest(id, type);
