@@ -4,6 +4,7 @@ import { BaseDto, CursorListDto } from '../types';
 
 export interface IListParameters {
     cursor?: number
+    start_with?: string
 }
 
 export class  CrudRepository<T extends BaseDto> {

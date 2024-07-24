@@ -16,10 +16,19 @@ export const useHackathonStore = defineStore("hackathon", () => {
     const isLoading = ref(false)
     const isListLoading= ref(false)
 
+    const searchQuery = ref<string>('');
+
+    const updateSearchQuery = async (query?: string) => {
+        hackathons.value = [];
+        hackathonsCursor.value = undefined;
+        searchQuery.value = query || '';
+        await fetchList();
+      };
+
     const fetchList = async () => {
         try {
             isListLoading.value = true;
-            const { data, status} = await http.hackathon.list({cursor: hackathonsCursor.value, });
+            const { data, status} = await http.hackathon.list({cursor: hackathonsCursor.value, start_with: searchQuery.value});
             if (status !== StatusCodes.OK) {
                 toast({
                     variant: 'destructive',
@@ -73,7 +82,7 @@ export const useHackathonStore = defineStore("hackathon", () => {
     }
 
     const addHackathons = (data: HackathonDto[]) => {
-        if (!data || data.length === 0) return
+        if (!data || data.length === 0 && !searchQuery.value) return
         const existingIds = hackathons.value.map((hackathon) => hackathon.id);
         const newHackathons = data.filter((hackathon) => !existingIds.includes(hackathon.id));
         hackathons.value.push(...newHackathons);
@@ -101,6 +110,8 @@ export const useHackathonStore = defineStore("hackathon", () => {
         getHackathon,
         resetList,
         getCases,
-        isListLoading
+        isListLoading,
+        updateSearchQuery,
+        searchQuery
     }
 })

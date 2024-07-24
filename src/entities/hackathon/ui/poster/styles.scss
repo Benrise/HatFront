@@ -14,26 +14,37 @@
         border-radius: 12px;
         border: 1px solid hsl(var(--border));
         img {
-            object-fit: cover;
-            width: 100%;
             border-radius: 12px;
+            width: 100%;
         }
     }
 
-    &__bg {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        filter: brightness(0.5);
-    }
-
     &__wrapper {
-        height: 100%;
+        position: relative;
+        width: 100%;
+        padding-top: 56.25%;
     }
 
-    &__main {
+    &__main, &__fallback, &__bg {
         transition: scale 0.2s ease;
         z-index: 1;
+        position: absolute;
+        width: auto;
+        max-height: 100%;
+        left: 50%;
+        position: absolute;
+        top: 50%;
+        height: 100%;
+        transform: translate(-50%, -50%);
+    }
+
+    &__main, &__fallback {
+        object-fit: contain;
+    }
+
+    &__bg {
+        object-fit: cover;
+        filter: brightness(0.5);
     }
 
     &__button {
@@ -63,10 +74,6 @@
     }
 
     @media screen and (max-width: 768px) {
-        &__bg {
-            display: none;
-        }
-
         &__main {
             width: 100%;
             height: 100%;
