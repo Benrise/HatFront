@@ -3,8 +3,13 @@
         <div class="hackathon-detail__main">
             <div class="hackathon-detail__left">
                 <div class="hackathon-detail__info">
-                    <h1 class="hackathon-detail__title">{{hackathon.name}}</h1>
-                    <div class="hackathon-detail__additionals">
+                    <div class="hackathon-detail__header">
+                        <div class="hackathon-detail__title">{{hackathon.name}}</div>
+                        <div class="hackathon-detail__description">
+                            {{ hackathon.description }}
+                        </div>
+                    </div>
+                    <div class="hackathon-detail__tags">
                         <Badge variant="outline" v-if="hackathon.time_start && hackathon.time_end">
                             <IconCalendar class="mr-2"/>
                             {{ format(hackathon.time_start, "short")}} - {{ format(hackathon.time_end, "short") }}
@@ -21,9 +26,6 @@
                             <IconClipboardCheck class="mr-2"/>
                             Регистрация открыта до {{ format(hackathon.time_end_registration, "DD.MM.YYYY HH:mm")}}
                         </Badge>
-                    </div>
-                    <div class="hackathon-detail__description">
-                        {{ hackathon.description }}
                     </div>
                     <a v-if="hackathon?.url_web" :href="hackathon?.url_web">
                         <Button class="w-fit text-muted-foreground hover:text-foreground" variant="link">На страницу организатора</Button>
@@ -60,7 +62,7 @@
                     Кейсы
                 </div>
                 <div class="cases__items">
-                    <div v-for="case_ in cases" :key="case_.id" class="cases__item case">
+                    <div v-for="(case_, index) in cases" :key="case_.id" class="cases__item case">
                         <div class="case__preview">
                             <div class="case__title">
                                 {{ case_.name }}
@@ -72,6 +74,9 @@
                         <CasePreview :item="case_" :hackathon-id="hackathonId">
                             <Button class="w-fit">Подробнее</Button>
                         </CasePreview>
+                        <div class="case__number">
+                            {{ index + 1 }}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -125,150 +130,5 @@ const markdownSrc = computed(() => hackathon.value?.about || 'Подробное
 </script>
 
 <style lang="scss" scoped>
-.hackathon-detail {
-
-    display: flex;
-    flex-direction: column;
-    @include adaptiveValue('gap', 128, 48);
-
-    &__main {
-        display: flex;
-        width: 100%;
-        justify-content: space-between;
-        @include adaptiveValue('gap', 64, 12);
-    }
-
-    &__additionals,
-    &__tags {
-        display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
-        gap: 8px;
-    }
-
-    &__title {
-        @include title();
-    }
-
-    &__left {
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        width: 50%;
-        @include adaptiveValue('gap', 48, 24);
-    }
-
-    &__info {
-        display: flex;
-        flex-direction: column;
-        gap: 24px;
-        max-width: 624px;
-        width: 100%;
-    }
-
-    &__actions {
-        display: flex;
-        flex-direction: row;
-        @include adaptiveValue('gap', 12, 6);
-        align-items: center;
-        justify-content: center;
-    }
-
-    &__right {
-        width: 50%
-    }
-
-    &__description {
-        @include body($line-height:32);
-    }
-
-    &__about {
-        position: relative;
-        display: flex;
-        flex-direction: column;
-        gap: 8px;
-        @include body($line-height:32);
-    }
-
-    &__description-title {
-        @include subtitle();
-    }
-
-    &__description-body {
-        @include body($line-height:32);
-    }
-    
-    @media screen and (max-width: 770px) {
-        &__main {
-            flex-direction: column-reverse;
-        }
-        
-        &__left,
-        &__right {
-            width: 100%;
-        }
-    }
-
-    @media screen and (max-width: 380px) {
-        &__actions {
-            flex-direction: column;
-        }
-    }
-}
-
-.cases {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-
-    &__items {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(312px, 1fr));
-        grid-gap: 1rem;
-    }
-
-    @media screen and (max-width: 380px) {
-        &__items {
-            grid-template-columns: repeat(auto-fit, minmax(224px, 1fr));
-        }
-    }
-
-    &__title {
-        @include subtitle();
-    }
-}
-
-.case {
-    position: relative;
-
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
-    justify-content: space-between;
-
-    @include adaptiveValue('padding', 24, 16);
-    background-color: hsl(var(--card));
-    width: 100%;
-
-    border: 1px solid hsl(var(--border));
-
-    border-radius: 12px;
-
-    &:hover {
-        @include gradientBorder()
-    }
-
-    &__title {
-        @include body($line-height:32);
-        width: 100%;
-    }
-
-    &__preview {
-        display: flex;
-        flex-direction: column;
-        gap: 8px;
-    }
-    
-    @include adaptiveValue('min-height', 224, 156);
-}
+@import './styles';
 </style>

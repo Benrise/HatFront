@@ -1,0 +1,150 @@
+.hackathon-detail {
+    display: flex;
+    flex-direction: column;
+    @include adaptiveValue('gap', 64, 36);
+
+    &__main {
+        display: flex;
+        width: 100%;
+        justify-content: space-between;
+        @include adaptiveValue('gap', 64, 12);
+    }
+
+    &__header {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+    }
+
+    &__description {
+        @include description();
+    }
+
+    &__tags {
+        @include tags();
+    }
+
+    &__title {
+        @include title();
+    }
+
+    &__left {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 50%;
+        @include adaptiveValue('gap', 48, 24);
+    }
+
+    &__info {
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+        max-width: 624px;
+        width: 100%;
+    }
+
+    &__actions {
+        @include actions();
+    }
+
+    &__right {
+        width: 50%
+    }
+
+    &__about {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+    }
+
+    &__description-title {
+        @include subtitle();
+    }
+
+    &__description-body {
+        @include body($line-height:32);
+    }
+    
+    @media screen and (max-width: 770px) {
+        &__main {
+            flex-direction: column-reverse;
+        }
+        
+        &__left,
+        &__right {
+            width: 100%;
+        }
+    }
+
+    @media screen and (max-width: 380px) {
+        &__actions {
+            flex-direction: column;
+        }
+    }
+}
+
+.cases {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    &__items {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(312px, 1fr));
+        grid-gap: 1rem;
+    }
+
+    @media screen and (max-width: 380px) {
+        &__items {
+            grid-template-columns: repeat(auto-fit, minmax(224px, 1fr));
+        }
+    }
+
+    &__title {
+        @include subtitle();
+    }
+}
+
+.case {
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    justify-content: space-between;
+
+    padding: 16px;
+    background-color: hsl(var(--card));
+    width: 100%;
+
+    border: 1px solid hsl(var(--border));
+
+    border-radius: 12px;
+
+    &:hover {
+        @include gradientBorder()
+    }
+
+    &__title {
+        @include body($line-height:32);
+        width: 100%;
+    }
+
+    &__preview {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    &__number {
+        position: absolute;
+        @include title();
+        right: 16px;
+        bottom: 16px;
+        color: hsl(var(--foreground));
+        opacity: 0.2;
+    }
+    
+    @include adaptiveValue('min-height', 224, 156);
+}

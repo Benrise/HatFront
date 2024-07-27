@@ -23,6 +23,15 @@ export const useUserStore = defineStore("user", () => {
     const isRequestsLoading = ref(false)
     const isAuthorized = ref(false)
 
+    const searchQuery = ref<string>('');
+
+    const updateSearchQuery = async (query?: string) => {
+        users.value = [];
+        usersCursor.value = undefined;
+        searchQuery.value = query || '';
+        await fetchList();
+    };
+
     const resetList = async () => {
         users.value = [];
         usersCursor.value = 0;
@@ -182,7 +191,7 @@ export const useUserStore = defineStore("user", () => {
     const fetchList = async () => {
         try {
             isListLoading.value = true;
-            const { data, status} = await http.user.list({cursor: usersCursor.value});
+            const { data, status} = await http.user.list({cursor: usersCursor.value, start_with: searchQuery.value});
             if (status !== StatusCodes.OK) {
                 return
             }
@@ -427,7 +436,9 @@ export const useUserStore = defineStore("user", () => {
         resetIncomingRequests,
         resetOutcomingRequests,
         resetList,
-        isListLoading
+        isListLoading,
+        updateSearchQuery,
+        searchQuery,
     }
 })
 
@@ -508,5 +519,9 @@ export const useSpecializationsStore = defineStore("specializations", () => {
 
     const getSpecializations = computed(() => specializations.value);
 
-    return { fetchList, getSpecializations, isLoading }
+    return { 
+        fetchList, 
+        getSpecializations, 
+        isLoading
+    }
 })

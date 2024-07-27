@@ -8,7 +8,7 @@
         </router-link>
         <div class="hackathon-card__main">
             <div class="hackathon-card__info">
-                <div class="hackathon-card__text">
+                <div class="hackathon-card__header">
                     <router-link 
                         :to="appRoutes?.getHackathon(hackathon.id) || '#'"
                         class="hackathon-card__title">
@@ -26,7 +26,7 @@
                     <Badge>backend</Badge>
                     <Badge>ml</Badge>
                 </div> -->
-                <div class="hackathon-card__additionals">
+                <div class="hackathon-card__tags">
                     <Badge variant="outline" v-if="hackathon.time_start && hackathon.time_end">
                         <IconCalendar class="mr-2"/>
                         {{ format(hackathon.time_start, "short")}} - {{ format(hackathon.time_end, "short") }}

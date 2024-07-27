@@ -28,10 +28,19 @@ export const useTeamStore = defineStore("team", () => {
     const incomingRequestsCursor = ref()
     const outcomingRequestsCursor = ref()
 
+    const searchQuery = ref<string>('');
+
+    const updateSearchQuery = async (query?: string) => {
+        teams.value = [];
+        teamsCursor.value = undefined;
+        searchQuery.value = query || '';
+        await fetchList();
+    };
+
     const fetchList = async () => {
         try {
             isListLoading.value = true;
-            const { data, status} = await http.team.list({cursor: teamsCursor.value});
+            const { data, status} = await http.team.list({cursor: teamsCursor.value, start_with: searchQuery.value});
             if (status !== StatusCodes.OK) {
                 toast({
                     variant: 'destructive',
@@ -587,6 +596,8 @@ export const useTeamStore = defineStore("team", () => {
         getOutcomingRequests,
         isRequestsLoading,
         isListLoading,
-        updateCaptain
+        updateCaptain,
+        searchQuery,
+        updateSearchQuery,
     }
 })

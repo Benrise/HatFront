@@ -41,10 +41,6 @@
         align-items: center;
     }
 
-    &__link {
-        text-decoration: underline;
-    }
-
     &__title {
         color: var(--foreground);
         @include title();

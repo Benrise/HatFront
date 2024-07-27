@@ -1,7 +1,7 @@
 .team-detail {
     display: flex;
     flex-direction: column;
-    @include adaptiveValue('gap', 128, 48);
+    @include adaptiveValue('gap', 64, 36);
 
     &__main {
         display: flex;

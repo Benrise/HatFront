@@ -1,10 +1,16 @@
 <template>
     <div class="flex flex-col gap-3">
-        <!-- <SearchBar/> -->
-        <div class="teammates-list">
+        <SearchBar :store="userStore"/>
+        <div v-if="!userStore.isListLoading && users.length" class="teammates-list">
             <TransitionGroup name="list" appear>
                 <TeammateCard v-for="user in users" :key="user.id" :user="user"/>
             </TransitionGroup>
+        </div>
+        <div v-else-if="userStore.isListLoading" class="h-[50vh] w-full flex items-center justify-center">
+            <IconLoading class="h-16 w-16 mr-2 animate-spin text-primary" />
+        </div>
+        <div v-else class="h-[50vh] w-full flex items-center justify-center">
+            <p>Ничего не найдено</p>
         </div>
         <div ref="observer"></div>
     </div>
@@ -19,6 +25,8 @@ import { useIntersectionObserver } from '@vueuse/core'
 import { SearchBar } from '@/features/search-bar';
 
 const userStore = UserModel.useUserStore();
+
+import IconLoading from '~icons/mingcute/loading-line';
 
 const fetch = async (intersect: boolean) => {
     if (users.value.length > 0 && !intersect) return

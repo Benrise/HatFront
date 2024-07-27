@@ -7,9 +7,5 @@
 
     &__name {
         @include body();
-
-        &:hover {
-            text-decoration: underline;
-        }
     }
 }

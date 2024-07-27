@@ -1,28 +1,14 @@
 .teammate-card {
-    display: flex;
-    flex-direction: column;
-    background-color: hsl(var(--card));
-    @include adaptiveValue('padding', 24, 12);
-    border-radius: 12px;
-    @include adaptiveValue('gap', 48, 16);
-    border: 1px solid hsl(var(--border));
-    justify-content: space-between;
-    width: 100%;
-
     &__main {
         width: 100%;
         display: flex;
         flex-direction: column;
         gap: 16px;
     }
+    @include entityCard();
 
     &__actions {
-        display: flex;
-        flex-direction: row;
-        @include adaptiveValue('gap', 12, 6);
-        align-items: center;
-        justify-content: center;
-        width: 100%;
+        @include actions();
     }
 
     &__info {
@@ -32,35 +18,11 @@
     }
 
     &__description {
-        @include body();
-        display: -webkit-box; 
-        -webkit-box-orient: vertical; 
-        -webkit-line-clamp: 3; 
-        overflow: hidden; 
-        text-overflow: ellipsis; 
-        @include body();
-        color: hsl(var(--muted-foreground));
-    }
-    &__skills {
-        display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
-        gap: 8px;
+        @include description();
     }
 
-    &__roles {
-        display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
-        gap: 8px;
-    }
-
-    &__role {
-        background: none;
-        color: hsl(var(--foreground));
-        border-left: 1px solid hsl(var(--accent));
-        border-radius: 0;
-        width: fit-content;
+    &__tags {
+        @include tags();
     }
     
     @media screen and (max-width: 1360px) {

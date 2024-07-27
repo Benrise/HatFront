@@ -114,3 +114,42 @@
 		}
 	}
 }
+
+@mixin entityCard() {
+	width: 100%;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-radius: 12px;
+    border: 1px solid hsl(var(--border));
+    background-color: hsl(var(--card));
+    @include adaptiveValue('gap', 48, 16);
+    @include adaptiveValue('padding', 24, 12);
+}
+
+@mixin tags() {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	gap: 8px;
+}
+
+@mixin description() {
+	@include body();
+	display: -webkit-box; 
+	-webkit-box-orient: vertical; 
+	-webkit-line-clamp: 3; 
+	overflow: hidden; 
+	text-overflow: ellipsis; 
+	@include body();
+	color: hsl(var(--muted-foreground));
+}
+
+@mixin actions() {
+	display: flex;
+	@include adaptiveValue('gap', 12, 6);
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+}

@@ -1,7 +1,7 @@
 <template>
     <div class="team-card">
         <div class="team-card__main">
-            <div class="flex flex-row w-full items-center justify-between gap-4">
+            <div class="team-card__header">
                 <router-link :to="appRoutes?.getTeam(team.id) || '/'" class="w-fit">
                     <TeamBadge :team="team" :me="me"/>
                 </router-link>
@@ -21,21 +21,19 @@
             <RouterLink v-if="team.hackathon" :to="appRoutes?.getHackathon(team.hackathon?.id || 0) || '/'" class="w-fit">
                 <Badge variant="secondary" class="w-fit">{{ team.hackathon?.name }}</Badge>
             </RouterLink>
-            <div class="team-card__info">
-                <div class="team-card__description">
-                    {{ team.description }} 
-                </div>
+            <div v-if="team.description" class="team-card__description">
+                {{ team.description }} 
             </div>
-            <div class="team-card__tags" v-if="team.skills.length">
-                <Badge v-for="skill in team.skills" :key="skill.id" class="team-card__tag">{{ skill.name }}</Badge>
+            <div v-if="team.skills.length" class="team-card__tags">
+                <Badge v-for="skill in team.skills" :key="skill.id">{{ skill.name }}</Badge>
             </div>
-            <div class="team-card__roles" v-if="desired_specializations.length">
-                <Badge v-for="specialization in desired_specializations" :key="specialization.id" class="team-card__role">
+            <div v-if="desired_specializations.length" class="team-card__tags">
+                <Badge variant="ghost" v-for="specialization in desired_specializations" :key="specialization.id">
                     <div class="!max-w-[192px] !overflow-hidden text-ellipsis"> {{ specialization.name }}</div>
                 </Badge>
             </div>
-            <div v-if="team.specializations.length"  class="team-card__roles">
-                <Badge v-for="specialization in team.specializations" :key="specialization.id" class="team-card__role">
+            <div v-if="team.specializations.length" class="team-card__tags">
+                <Badge variant="ghost" v-for="specialization in team.specializations" :key="specialization.id">
                     <div class="!max-w-[192px] !overflow-hidden text-ellipsis"> {{ specialization.name }} {{ `(${specialization.current}/${specialization.required})` }}</div>
                 </Badge>
             </div>
@@ -53,9 +51,7 @@
             </router-link>
         </div>
         <div v-else class="team-card__actions">
-            <slot name="request-actions">
-
-            </slot>
+            <slot name="request-actions"/>
         </div>
     </div>
 </template>

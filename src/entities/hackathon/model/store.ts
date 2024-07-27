@@ -23,7 +23,7 @@ export const useHackathonStore = defineStore("hackathon", () => {
         hackathonsCursor.value = undefined;
         searchQuery.value = query || '';
         await fetchList();
-      };
+    };
 
     const fetchList = async () => {
         try {
