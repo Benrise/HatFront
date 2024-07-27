@@ -69,7 +69,7 @@
                 <FormItem class="creating__field">
                   <FormLabel class="creating__field-label">Ссылка на беседу</FormLabel>
                   <FormControl>
-                    <Input type="text" placeholder="Введите название команды" v-bind="componentField" />
+                    <Input type="text" placeholder="https://example.com" v-bind="componentField" />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

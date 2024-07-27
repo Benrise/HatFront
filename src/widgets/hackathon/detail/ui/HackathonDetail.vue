@@ -33,9 +33,12 @@
                 </div>
                 <div class="hackathon-detail__actions">
                     <!-- <Button  class="w-full" disabled>Найти команду</Button> -->
-                    <Creating :hackathonId="hackathon.id" :callback="openCreatedTeam">
+                    <Creating v-if="!hackathon.team_id" :hackathonId="hackathon.id" :callback="openCreatedTeam">
                         <Button variant="outline" class="w-full">Создать команду</Button>
                     </Creating>
+                    <router-link class="w-full" v-else :to="appRoutes?.getTeam(hackathon.team_id) || '#'">
+                        <Button class="w-full">К команде</Button>
+                    </router-link>
                 </div>
             </div>
             <div class="hackathon-detail__right">

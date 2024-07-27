@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { type InternalAxiosRequestConfig, type AxiosResponse, AxiosError } from "axios";
 import { useToast } from '@/shared/ui/toast/use-toast';
+import { router } from '@/router';
 
 const { toast } = useToast();
 
@@ -46,6 +47,15 @@ axiosInstance.interceptors.response.use(
           title: 'Непредвиденная ошибка сервера',
           description: `Ошибка ${statusCode} - сервер недоступен`,
         })
+      }
+
+      if (statusCode && statusCode === 404) {
+        toast({
+          variant: 'destructive',
+          title: 'Непредвиденная ошибка сервера',
+          description: `Ошибка ${statusCode} - страница не найдена`,
+        })
+        router.replace('/')
       }
 
       Promise.reject(error);

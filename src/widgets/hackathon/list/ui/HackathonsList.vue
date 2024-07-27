@@ -1,15 +1,15 @@
 <template>
     <div class="flex flex-col gap-3">
         <SearchBar :store="hackathonStore"/>
-        <div v-if="!hackathonStore.isListLoading && hackathons.length" class="hackathons-list">
+        <div v-if="hackathons.length" class="hackathons-list">
             <TransitionGroup name="list" appear>
                 <HackathonCard v-for="hackathon in hackathons" :key="hackathon.id" :hackathon="hackathon"/>
             </TransitionGroup>
         </div>
-        <div v-else-if="hackathonStore.isListLoading" class="h-[50vh] w-full flex items-center justify-center">
-            <IconLoading class="h-16 w-16 mr-2 animate-spin text-primary" />
+        <div v-if="hackathonStore.isListLoading" class="w-full flex items-center justify-center">
+            <IconLoading class="h-12 w-12 mr-2 animate-spin text-primary" />
         </div>
-        <div v-else class="h-[50vh] w-full flex items-center justify-center">
+        <div v-if="!hackathons.length && !hackathonStore.isListLoading" class="w-full flex items-center justify-center">
             <p>Ничего не найдено</p>
         </div>
         <div ref="observer"></div>
