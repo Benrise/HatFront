@@ -142,7 +142,6 @@
 	-webkit-line-clamp: 3; 
 	overflow: hidden; 
 	text-overflow: ellipsis; 
-	@include body();
 	color: hsl(var(--muted-foreground));
 }
 

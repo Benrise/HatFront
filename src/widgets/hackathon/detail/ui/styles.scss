@@ -13,11 +13,12 @@
     &__header {
         display: flex;
         flex-direction: column;
-        gap: 4px;
+        gap: 8px;
     }
 
     &__description {
-        @include description();
+        @include body();
+        color: hsl(var(--muted-foreground));
     }
 
     &__tags {
