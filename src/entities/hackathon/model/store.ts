@@ -96,6 +96,11 @@ export const useHackathonStore = defineStore("hackathon", () => {
         cases.value = data;
     }
 
+    const setFilterValue = (name: string, value: string) => {
+        alert(name)
+        alert(value)
+    }
+
     const getList = computed<HackathonDto[]>(() => hackathons.value);
     const getHackathon = computed<HackathonDto>(() => hackathon.value);
     const getListCursor = computed(() => hackathonsCursor.value);
@@ -112,6 +117,7 @@ export const useHackathonStore = defineStore("hackathon", () => {
         getCases,
         isListLoading,
         updateSearchQuery,
-        searchQuery
+        searchQuery,
+        setFilterValue
     }
 })

@@ -2,10 +2,16 @@
 .filters {
     display: flex;
     flex-direction: column;
-    gap: 24px;
+    gap: 48px;
     width: 100%;
     max-width: 274px;
     height: fit-content;
+
+    &__main {
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+    }
 
     @media screen and (min-width: 1200px) {
         padding: 24px;

@@ -1,10 +1,21 @@
 <template>
     <div class="filters">
-        <div v-for="(filter, index) in filters" :key="index" class="filters__item item">
-            <div class="item__title">
-                {{ filter.title }}
+        <div class="filters__main">
+            <div v-for="(filter, index) in filters" :key="index" class="filters__item item">
+                <div class="item__title">
+                    {{ filter.title }}
+                </div>
+                <component 
+                    :is="filter.component" 
+                    :placeholders="filter.placeholders" 
+                    :options="filter.options" 
+                    :class="filter.class"
+                    v-model:model-value1="filter[filter.name[0] as keyof FilterConfig]"
+                    v-model:model-value2="filter[filter.name[1] as keyof FilterConfig]"
+                    @update:modelValue1="(ev: string) =>setFilter(filter.name[0], ev)"
+                    @update:modelValue2="(ev: string) =>setFilter(filter.name[1], ev)"
+                />
             </div>
-            <component :is="filter.component" :placeholders="filter.placeholders" :options="filter.options" :class="filter.class"/>
         </div>
         <div class="filters__actions">
             <Button class="filters__action" variant="secondary">Сброс</Button>
@@ -14,61 +25,52 @@
 </template>
 
 <script setup lang="ts">
-import { type Component } from 'vue'
+import { computed, type Component } from 'vue'
 
-import { DoubleInput } from '@/shared/ui/double-input';
 import { RangeDatepicker } from '@/shared/ui/range-datepicker';
-import { TagsInputCombobox } from '@/shared/ui/tags-input-combobox';
 import { Button } from '@/shared/ui/button';
+import { DoubleInput } from '@/shared/ui/double-input';
 
-enum FilterType {
-    Date = 'date',
-    Input = 'input',
-    Tags = 'tags'
-}
+const props = defineProps({
+    store: {
+        type: Object,
+        required: true
+    }
+})
 
 interface FilterConfig {
+    name: string[],
     title: string,
     component: Component,
-    type: FilterType,
     class?: string,
     options?: Record<string, string | number>[],
     placeholders?: string[]
 }
 
-const options = [
-  { value: 'ml', label: 'ML' },
-  { value: 'web3', label: 'Web3' },
-  { value: 'nft', label: 'NFT' },
-  { value: 'saas', label: 'SaaS' },
-]
-
 const filters: FilterConfig[] = [
     {
+        name: ['date_from', 'date_to'],
+        title: 'Дата проведения',
+        component: RangeDatepicker,
+    },
+    {
+        name: ['people_from', 'people_to'],
         title: 'Участники',
         component: DoubleInput,
-        type: FilterType.Input,
         class: 'max-w-[64px]',
         placeholders: ['1', '5'],
     },
     {
-        title: 'Дата проведения',
-        component: RangeDatepicker,
-        type: FilterType.Input,
-    },
-    {
+        name: ['people_from', 'people_to'],
         title: 'Призовой фонд',
         component: DoubleInput,
-        type: FilterType.Input,
         placeholders: ['100 000', '1 000 000'],
     },
-    {
-        title: 'Теги',
-        component: TagsInputCombobox,
-        type: FilterType.Tags,
-        options: options
-    }
 ]
+
+const setFilter = (name: string, value: string) => {
+    props.store.setFilterValue(name, value);
+}
 </script>
 
 <style scoped lang="scss">
