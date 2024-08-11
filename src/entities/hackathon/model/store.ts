@@ -18,6 +18,9 @@ export const useHackathonStore = defineStore("hackathon", () => {
 
     const searchQuery = ref<string>('');
 
+    const selectedFilters = ref<Record<string, string | undefined>>({});
+    const activeFilters = ref<Record<string, string | undefined>>({});
+
     const updateSearchQuery = async (query?: string) => {
         hackathons.value = [];
         hackathonsCursor.value = undefined;
@@ -28,7 +31,11 @@ export const useHackathonStore = defineStore("hackathon", () => {
     const fetchList = async () => {
         try {
             isListLoading.value = true;
-            const { data, status} = await http.hackathon.list({cursor: hackathonsCursor.value, start_with: searchQuery.value});
+            const { data, status} = await http.hackathon.list({
+                cursor: hackathonsCursor.value,
+                start_with: searchQuery.value,
+                ...activeFilters.value
+            });
             if (status !== StatusCodes.OK) {
                 toast({
                     variant: 'destructive',
@@ -96,9 +103,27 @@ export const useHackathonStore = defineStore("hackathon", () => {
         cases.value = data;
     }
 
-    const setFilterValue = (name: string, value: string) => {
-        alert(name)
-        alert(value)
+    const activateFilters = () => {
+        Object.keys(selectedFilters.value).forEach((key) => {            
+            const nameArray = key.split(',');
+            const valueArray = selectedFilters.value[key]?.split(',');
+
+            nameArray.forEach((name, index) => {
+                activeFilters.value[name] = valueArray?.[index]
+            })
+        });
+
+        fetchList();
+    }
+
+    const resetFilters = () => {
+        Object.keys(activeFilters.value).forEach((key) => {
+            activeFilters.value[key] = undefined
+        });
+        Object.keys(selectedFilters.value).forEach((key) => {
+            selectedFilters.value[key] = undefined
+        });
+        fetchList();
     }
 
     const getList = computed<HackathonDto[]>(() => hackathons.value);
@@ -118,6 +143,9 @@ export const useHackathonStore = defineStore("hackathon", () => {
         isListLoading,
         updateSearchQuery,
         searchQuery,
-        setFilterValue
+        selectedFilters,
+        activeFilters,
+        activateFilters,
+        resetFilters
     }
 })

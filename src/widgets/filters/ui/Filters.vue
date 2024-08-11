@@ -10,16 +10,13 @@
                     :placeholders="filter.placeholders" 
                     :options="filter.options" 
                     :class="filter.class"
-                    v-model:model-value1="filter[filter.name[0] as keyof FilterConfig]"
-                    v-model:model-value2="filter[filter.name[1] as keyof FilterConfig]"
-                    @update:modelValue1="(ev: string) =>setFilter(filter.name[0], ev)"
-                    @update:modelValue2="(ev: string) =>setFilter(filter.name[1], ev)"
+                    v-model="selectedFilters[filter.name]"
                 />
             </div>
         </div>
         <div class="filters__actions">
-            <Button class="filters__action" variant="secondary">Сброс</Button>
-            <Button class="filters__action">Применить</Button>
+            <Button @click="resetFilters" class="filters__action" variant="secondary">Сброс</Button>
+            <Button :disabled="disabledApply" :loading="isLoading" @click="activateFilters" class="filters__action">Применить</Button>
         </div>
     </div>
 </template>
@@ -37,6 +34,8 @@ const props = defineProps({
         required: true
     }
 })
+
+const selectedFilters = computed(() => props.store.selectedFilters)
 
 interface FilterConfig {
     name: string[],
@@ -61,16 +60,28 @@ const filters: FilterConfig[] = [
         placeholders: ['1', '5'],
     },
     {
-        name: ['people_from', 'people_to'],
+        name: ['prize_from', 'prize_to'],
         title: 'Призовой фонд',
         component: DoubleInput,
         placeholders: ['100 000', '1 000 000'],
     },
 ]
 
-const setFilter = (name: string, value: string) => {
-    props.store.setFilterValue(name, value);
+const activateFilters = () => {
+    props.store.activateFilters()
 }
+
+const resetFilters = () => {
+    props.store.resetFilters()
+}
+
+const isLoading = computed(() => {
+    return props.store.isListLoading
+})
+
+const disabledApply = computed(() => {
+    return Object.keys(selectedFilters.value).length === 0 || Object.keys(selectedFilters.value).every((key) => !selectedFilters.value[key])
+})
 </script>
 
 <style scoped lang="scss">
