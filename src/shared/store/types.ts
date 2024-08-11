@@ -12,6 +12,12 @@ export interface LoadingState {
   itemMe: boolean;
 }
 
+export interface SortProperty {
+  name: string;
+  value: boolean;
+  title: string;
+}
+
 export interface CrudStore<T extends BaseDto> {
   items: T[];
   itemsMe?: T[];

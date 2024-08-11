@@ -3,8 +3,10 @@ import type { AxiosInstance } from 'axios';
 import { BaseDto, CursorListDto } from '../types';
 
 export interface IListParameters {
-    cursor?: number
-    start_with?: string
+    cursor?: number;
+    start_with?: string;
+    sort?: string;
+    
 }
 
 export class  CrudRepository<T extends BaseDto> {

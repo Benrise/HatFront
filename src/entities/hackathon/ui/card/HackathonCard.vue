@@ -18,14 +18,6 @@
                         {{ hackathon.description }}
                     </div>
                 </div>
-                <!-- <div class="hackathon-card__tags">
-                    <Badge>go</Badge>
-                    <Badge>backend</Badge>
-                    <Badge>ml</Badge>
-                    <Badge>go</Badge>
-                    <Badge>backend</Badge>
-                    <Badge>ml</Badge>
-                </div> -->
                 <div class="hackathon-card__tags">
                     <Badge variant="outline" v-if="hackathon.time_start && hackathon.time_end">
                         <IconCalendar class="mr-2"/>

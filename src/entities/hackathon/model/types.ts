@@ -32,3 +32,4 @@ export class TimingsDto {
     photo_url?: string;
     cases: CaseDto[] = [];
   }
+  

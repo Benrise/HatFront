@@ -5,6 +5,7 @@ import { StatusCodes } from 'http-status-codes';
 import { computed, ref } from 'vue';
 import { HackathonDto } from './types';
 import type { CaseDto } from '@/entities/case/model';
+import type { SortProperty } from '@/shared/store';
 
 export const useHackathonStore = defineStore("hackathon", () => {
     const { toast } = useToast();
@@ -18,8 +19,19 @@ export const useHackathonStore = defineStore("hackathon", () => {
 
     const searchQuery = ref<string>('');
 
+    const sort = ref<Record<string, boolean>>({
+        'date_is_ascending': true
+    })
+
     const selectedFilters = ref<Record<string, string | undefined>>({});
     const activeFilters = ref<Record<string, string | undefined>>({});
+
+    const updateSort = async (newSort: SortProperty) => {
+        sort.value = {
+            [newSort.name]: newSort.value
+        }
+        await fetchList();
+    }
 
     const updateSearchQuery = async (query?: string) => {
         hackathons.value = [];
@@ -34,6 +46,7 @@ export const useHackathonStore = defineStore("hackathon", () => {
             const { data, status} = await http.hackathon.list({
                 cursor: hackathonsCursor.value,
                 start_with: searchQuery.value,
+                ...sort.value,
                 ...activeFilters.value
             });
             if (status !== StatusCodes.OK) {
@@ -146,6 +159,8 @@ export const useHackathonStore = defineStore("hackathon", () => {
         selectedFilters,
         activeFilters,
         activateFilters,
-        resetFilters
+        resetFilters,
+        updateSort,
+        sort
     }
 })

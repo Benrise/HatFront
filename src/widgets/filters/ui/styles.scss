@@ -41,6 +41,24 @@
             grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
         }
     }
+
+    &_mobile {
+        @media screen and (min-width: 1366px) {
+            display: none;
+        }
+    }
+
+    &_desktop {
+        @media screen and (max-width: 1366px) {
+            display: none;
+        }
+    }
+
+    &_modal {
+        height: 100%;
+        max-width: none;
+        justify-content: space-between;
+    }
 }
 
 .item {

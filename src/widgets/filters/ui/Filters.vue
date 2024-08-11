@@ -1,5 +1,5 @@
 <template>
-    <div class="filters">
+    <div v-if="type === 'desktop' || type === 'modal'" class="filters" :class="{'filters_desktop': type === 'desktop',  'filters_modal': type === 'modal'}" >
         <div class="filters__main">
             <div v-for="(filter, index) in filters" :key="index" class="filters__item item">
                 <div class="item__title">
@@ -19,56 +19,55 @@
             <Button :disabled="disabledApply" :loading="isLoading" @click="activateFilters" class="filters__action">Применить</Button>
         </div>
     </div>
+    <Sheet v-else v-model:open="openFiltersModal">
+        <SheetTrigger class="filters_mobile" as-child>
+            <Button @click="openFiltersModal = true" variant="outline" class="border-border" >Фильтры</Button>
+        </SheetTrigger>
+        <SheetContent side="left">
+            <SheetHeader>Фильтры</SheetHeader>
+            <Filters :filters="filters" :applyCallback="() => openFiltersModal = false" :store="store" type="modal"/>
+        </SheetContent>
+    </Sheet>
 </template>
 
 <script setup lang="ts">
-import { computed, type Component } from 'vue'
-
-import { RangeDatepicker } from '@/shared/ui/range-datepicker';
+import { computed, ref, type PropType } from 'vue'
 import { Button } from '@/shared/ui/button';
-import { DoubleInput } from '@/shared/ui/double-input';
+import type { FilterConfig } from '../model';
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTrigger,
+} from '@/shared/ui/sheet'
 
 const props = defineProps({
     store: {
         type: Object,
         required: true
-    }
+    },
+    filters: {
+        type: Array as PropType<FilterConfig[]>,
+        required: true
+    },
+    type: {
+        type: String as PropType<'desktop' | 'mobile' | 'modal'>,
+        default: 'desktop'
+    },
+    applyCallback: {
+        type: Function
+    },
 })
+
+const openFiltersModal = ref(false);
 
 const selectedFilters = computed(() => props.store.selectedFilters)
 
-interface FilterConfig {
-    name: string[],
-    title: string,
-    component: Component,
-    class?: string,
-    options?: Record<string, string | number>[],
-    placeholders?: string[]
-}
-
-const filters: FilterConfig[] = [
-    {
-        name: ['date_from', 'date_to'],
-        title: 'Дата проведения',
-        component: RangeDatepicker,
-    },
-    {
-        name: ['people_from', 'people_to'],
-        title: 'Участники',
-        component: DoubleInput,
-        class: 'max-w-[64px]',
-        placeholders: ['1', '5'],
-    },
-    {
-        name: ['prize_from', 'prize_to'],
-        title: 'Призовой фонд',
-        component: DoubleInput,
-        placeholders: ['100 000', '1 000 000'],
-    },
-]
-
 const activateFilters = () => {
     props.store.activateFilters()
+    if (props.type === 'modal') {
+        props.applyCallback && props.applyCallback()
+    }
 }
 
 const resetFilters = () => {
@@ -80,7 +79,7 @@ const isLoading = computed(() => {
 })
 
 const disabledApply = computed(() => {
-    return Object.keys(selectedFilters.value).length === 0 || Object.keys(selectedFilters.value).every((key) => !selectedFilters.value[key])
+    return Object.keys(selectedFilters.value).length === 0 || Object.keys(selectedFilters.value).every((key) => !selectedFilters.value[key] || selectedFilters.value[key] === ',')
 })
 </script>
 
