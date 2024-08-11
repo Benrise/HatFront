@@ -7,4 +7,5 @@ export interface FilterConfig {
     class?: string,
     options?: Record<string, string | number>[],
     placeholders?: string[]
+    type?: string;
 }

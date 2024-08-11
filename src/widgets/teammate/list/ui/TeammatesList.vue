@@ -6,13 +6,13 @@
                 <TeammateCard v-for="user in users" :key="user.id" :user="user"/>
             </TransitionGroup>
         </div>
+        <div ref="observer"></div>
         <div v-if="userStore.isListLoading" class="w-full flex items-center justify-center">
             <IconLoading class="h-12 w-12 mr-2 animate-spin text-primary" />
         </div>
         <div v-if="!users.length && !userStore.isListLoading" class="w-full flex items-center justify-center">
             <p>Ничего не найдено</p>
         </div>
-        <div ref="observer"></div>
     </div>
 </template>
 

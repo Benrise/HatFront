@@ -11,12 +11,13 @@
                     :options="filter.options" 
                     :class="filter.class"
                     v-model="selectedFilters[filter.name]"
+                    :type="filter.type"
                 />
             </div>
         </div>
         <div class="filters__actions">
             <Button @click="resetFilters" class="filters__action" variant="secondary">Сброс</Button>
-            <Button :disabled="disabledApply" :loading="isLoading" @click="activateFilters" class="filters__action">Применить</Button>
+            <Button :disabled="disabledApply" @click="activateFilters" class="filters__action">Применить</Button>
         </div>
     </div>
     <Sheet v-else v-model:open="openFiltersModal">
@@ -73,10 +74,6 @@ const activateFilters = () => {
 const resetFilters = () => {
     props.store.resetFilters()
 }
-
-const isLoading = computed(() => {
-    return props.store.isListLoading
-})
 
 const disabledApply = computed(() => {
     return Object.keys(selectedFilters.value).length === 0 || Object.keys(selectedFilters.value).every((key) => !selectedFilters.value[key] || selectedFilters.value[key] === ',')

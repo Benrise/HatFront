@@ -1,8 +1,8 @@
 <template>
     <div class="double-input">
-        <Input :placeholder="props.placeholders[0]" v-model="fromValue" :class="props.class"/>
+        <Input :type="type" :placeholder="props.placeholders[0]" v-model="fromValue" :class="props.class"/>
         <Separator class="w-4 bg-foreground"/>
-        <Input :placeholder="props.placeholders[1]" v-model="toValue" :class="props.class"/>
+        <Input :type="type" :placeholder="props.placeholders[1]" v-model="toValue" :class="props.class"/>
     </div>
 </template>
 
@@ -26,6 +26,11 @@ const props = defineProps({
         type: String,
         required: true,
         default: () => '',
+    },
+    type: {
+        type: String,
+        required: false,
+        default: () => 'text',
     }
 })
 

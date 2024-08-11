@@ -1,5 +1,5 @@
 <template>
-    <div class="flex gap-6 w-full">
+    <div class="flex gap-6 w-full" ref="scroll">
         <Filters :filters="filters" :store="hackathonStore" type="desktop"/>
         <div class="flex flex-col gap-3 w-full">
             <div class="flex gap-3">
@@ -15,13 +15,13 @@
                     <HackathonCard v-for="hackathon in hackathons" :key="hackathon.id" :hackathon="hackathon"/>
                 </TransitionGroup>
             </div>
+            <div ref="observer"></div>
             <div v-if="hackathonStore.isListLoading" class="w-full flex items-center justify-center">
                 <IconLoading class="h-12 w-12 mr-2 animate-spin text-primary" />
             </div>
             <div v-if="!hackathons.length && !hackathonStore.isListLoading" class="w-full flex items-center justify-center">
                 <p>Ничего не найдено</p>
             </div>
-            <div ref="observer"></div>
         </div>
     </div>
 </template>
@@ -65,12 +65,14 @@ const filters: FilterConfig[] = [
         name: ['people_from', 'people_to'],
         title: 'Участники',
         component: DoubleInput,
+        type: 'number',
         class: 'max-w-[64px]',
         placeholders: ['1', '5'],
     },
     {
         name: ['prize_from', 'prize_to'],
         title: 'Призовой фонд',
+        type: 'number',
         component: DoubleInput,
         placeholders: ['100 000', '1 000 000'],
     },
@@ -101,16 +103,16 @@ const sort: SortConfig[] = [
 
 useIntersectionObserver(
     observer,
-    ([{ isIntersecting }]) => {
+    async ([{ isIntersecting }]) => {
         if (isIntersecting) {
-            fetch(intersect.value);
+            await fetch(intersect.value);
             intersect.value = true
         }
     },
     {
         root: null,
         rootMargin: '0px',
-        threshold: 1
+        threshold: 0.5,
     }
 )
 </script>

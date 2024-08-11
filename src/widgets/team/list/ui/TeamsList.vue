@@ -6,13 +6,13 @@
                 <TeamCard v-for="team in teams" :key="team.id" :team="team"/>
             </TransitionGroup>
         </div>
+        <div ref="observer"></div>
         <div v-if="teamStore.isListLoading" class="w-full flex items-center justify-center">
             <IconLoading class="h-12 w-12 mr-2 animate-spin text-primary" />
         </div>
         <div v-if="!teams.length && !teamStore.isListLoading" class="w-full flex items-center justify-center">
             <p>Ничего не найдено</p>
         </div>
-        <div ref="observer"></div>
     </div>  
 </template>
 
