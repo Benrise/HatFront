@@ -104,7 +104,7 @@ const sort: SortConfig[] = [
 useIntersectionObserver(
     observer,
     async ([{ isIntersecting }]) => {
-        if (isIntersecting) {
+        if (isIntersecting && !hackathonStore.isListLoading) {
             await fetch(intersect.value);
             intersect.value = true
         }

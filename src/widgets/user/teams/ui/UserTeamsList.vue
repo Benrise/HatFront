@@ -32,7 +32,7 @@ const intersect = ref(false);
 useIntersectionObserver(
     observer,
     ([{ isIntersecting }]) => {
-        if (isIntersecting) {
+        if (isIntersecting && !teamStore.isListLoading) {
             fetch(intersect.value);
             intersect.value = true
         }
