@@ -191,7 +191,7 @@ export const useUserStore = defineStore("user", () => {
     const fetchList = async () => {
         try {
             isListLoading.value = true;
-            const { data, status} = await http.user.list({cursor: usersCursor.value, start_with: searchQuery.value});
+            const { data, status} = await http.user.list({cursor: usersCursor.value, search: searchQuery.value});
             if (status !== StatusCodes.OK) {
                 return
             }

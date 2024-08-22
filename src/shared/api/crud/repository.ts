@@ -4,7 +4,7 @@ import { BaseDto, CursorListDto } from '../types';
 
 export interface IListParameters {
     cursor?: number;
-    start_with?: string;
+    search?: string;
     sort?: string;
     
 }

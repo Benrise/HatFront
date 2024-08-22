@@ -45,7 +45,7 @@ export const useHackathonStore = defineStore("hackathon", () => {
             isListLoading.value = true;
             const { data, status} = await http.hackathon.list({
                 cursor: hackathonsCursor.value,
-                start_with: searchQuery.value,
+                search: searchQuery.value,
                 ...sort.value,
                 ...activeFilters.value
             });

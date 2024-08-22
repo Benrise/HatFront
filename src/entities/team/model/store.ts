@@ -40,7 +40,7 @@ export const useTeamStore = defineStore("team", () => {
     const fetchList = async () => {
         try {
             isListLoading.value = true;
-            const { data, status} = await http.team.list({cursor: teamsCursor.value, start_with: searchQuery.value});
+            const { data, status} = await http.team.list({cursor: teamsCursor.value, search: searchQuery.value});
             if (status !== StatusCodes.OK) {
                 toast({
                     variant: 'destructive',
