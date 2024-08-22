@@ -8,6 +8,9 @@
                         <div class="hackathon-detail__description">
                             {{ hackathon.description }}
                         </div>
+                        <a v-if="hackathon?.url_web" :href="hackathon?.url_web">
+                            <Button class="w-fit text-primary" variant="link">На страницу организатора</Button>
+                        </a>
                     </div>
                     <div class="hackathon-detail__tags">
                         <Badge variant="outline" v-if="hackathon.time_start && hackathon.time_end">
@@ -27,9 +30,6 @@
                             Регистрация открыта до {{ format(hackathon.time_end_registration, "DD.MM.YYYY HH:mm")}}
                         </Badge>
                     </div>
-                    <a v-if="hackathon?.url_web" :href="hackathon?.url_web">
-                        <Button class="w-fit text-muted-foreground hover:text-foreground" variant="link">На страницу организатора</Button>
-                    </a>
                 </div>
                 <div class="hackathon-detail__actions">
                     <!-- <Button  class="w-full" disabled>Найти команду</Button> -->

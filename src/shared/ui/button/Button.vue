@@ -26,6 +26,6 @@ const props = withDefaults(defineProps<Props>(), {
     :disabled="loading"
   >
     <IconLoading v-if="loading" class="h-4 w-4 mr-2 animate-spin" />
-    <slot v-else />
+    <slot/>
   </Primitive>
 </template>

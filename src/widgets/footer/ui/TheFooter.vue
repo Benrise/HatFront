@@ -6,7 +6,7 @@
                 <!-- <img src="/images/svg/github-mono.svg" alt="Github">
                 <img src="/images/svg/vk-mono.svg" alt="Vk">
                 <img src="/images/svg/telegram-mono.svg" alt="Telegram"> -->
-                <p class="footer__text">Версия: pre-alpha</p>
+                <p class="footer__text">Версия: beta</p>
             </div>
         </div>
     </footer>

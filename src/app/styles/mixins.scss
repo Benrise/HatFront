@@ -44,7 +44,7 @@
 ) {
 	font-weight: $font-weight;
 	@include adaptiveValue("font-size", $font-size, $font-size-mobile);
-	@include adaptiveValue("line-height", $line-height, 19);
+	@include adaptiveValue("line-height", $line-height, $line-height);
 	color: hsl(var(--foreground));
 }
 
@@ -59,12 +59,12 @@
 		$font-size: 16,
 		$font-size-mobile: 12,
 		$font-weight: 400,
-		$line-height: 24
+		$line-height: 28
 	) {
     font-weight: $font-weight;
 	color: var(--foreground);
     @include adaptiveValue("font-size", $font-size, $font-size-mobile);
-	@include adaptiveValue("line-height", $line-height, 20);
+	@include adaptiveValue("line-height", $line-height, $line-height);
 }
 
 @mixin adaptiveValue($property, $startSize, $minSize, $widthFrom: $containerWidth, $widthTo: $minWidth, $keepSize: 0) {

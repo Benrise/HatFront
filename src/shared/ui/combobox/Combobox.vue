@@ -8,9 +8,12 @@
           class="justify-between border-border"
           :disabled="disabled"
         >
-          {{ value
-            ? items.find((item: BaseDto) => item.id === value)?.name
-            : placeholder }}
+          <Ellipsis>
+            {{ value
+              ? items.find((item: BaseDto) => item.id === value)?.name
+              : placeholder 
+            }}
+          </Ellipsis>
           <IconChevronDown class="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
@@ -68,6 +71,8 @@ PopoverTrigger,
 } from '@/shared/ui/popover'
 
 import { Button } from '@/shared/ui/button'
+
+import { Ellipsis } from '@/shared/ui/ellipsis';
 
 import IconChevronDown from '~icons/heroicons/chevron-down-20-solid';
 import { CheckIcon } from '@radix-icons/vue'
